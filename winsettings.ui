@@ -1,0 +1,2126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WinSettings</class>
+ <widget class="QDialog" name="WinSettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>624</width>
+    <height>643</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Settings</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="MainPanel">
+     <property name="title">
+      <string>Main control</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="1">
+       <widget class="QPushButton" name="MainStop">
+        <property name="text">
+         <string>Stop</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="MainClose0">
+        <property name="text">
+         <string>Close set</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="MainRestart">
+        <property name="text">
+         <string>Restart</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="MainStart">
+        <property name="text">
+         <string>Start</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QLabel" name="MainFPS">
+        <property name="text">
+         <string>FPS</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QPushButton" name="MainClose">
+        <property name="text">
+         <string>Close app</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="Tab">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="Tab1">
+      <attribute name="title">
+       <string>Picture and display</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="5" column="1">
+        <widget class="QComboBox" name="PicMouseTypeT">
+         <item>
+          <property name="text">
+           <string>None</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>High contrast</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Negative</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="PicMouseTypeL">
+         <property name="text">
+          <string>Mouse type:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="PicMouseSizeL">
+         <property name="text">
+          <string>Mouse size:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="PicMouseSizeT">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QSpinBox" name="PicYT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="PicXT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="MarginLeftL">
+         <property name="text">
+          <string>Margin left:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="PicXYL">
+         <property name="text">
+          <string>Grab position:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="ViewXYL">
+         <property name="text">
+          <string>View position:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="ViewXT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="PicWT">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="PicWHL">
+         <property name="text">
+          <string>Grab size:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLabel" name="MarginTopL">
+         <property name="text">
+          <string>Margin top:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QSpinBox" name="MarginRightT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QSpinBox" name="PicHT">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QSpinBox" name="MarginTopT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="MarginRightL">
+         <property name="text">
+          <string>Margin right:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QSpinBox" name="ViewYT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="ViewWT">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLabel" name="MarginBottomL">
+         <property name="text">
+          <string>Margin bottom:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QSpinBox" name="MarginLeftT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="DelayLineCountL">
+         <property name="text">
+          <string>Delay line length:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="DelayLineFileNameL">
+         <property name="text">
+          <string>Delay line temp file:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="ViewWHL">
+         <property name="text">
+          <string>View size:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4">
+        <widget class="QSpinBox" name="MarginBottomT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1" colspan="2">
+        <widget class="QLineEdit" name="DelayLineFileNameT"/>
+       </item>
+       <item row="10" column="1">
+        <widget class="QSpinBox" name="DelayLineCountT">
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QSpinBox" name="ViewHT">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="3" colspan="2">
+        <widget class="QPushButton" name="DelayLineFileNameB">
+         <property name="text">
+          <string>Browse</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="PicThreadsL">
+         <property name="text">
+          <string>Threads:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="4">
+        <widget class="QSpinBox" name="PicGammaT">
+         <property name="maximum">
+          <number>100000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="3">
+        <widget class="QLabel" name="PicGammaL">
+         <property name="text">
+          <string>Gamma x1000:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="PicThreadsL0">
+         <property name="text">
+          <string>Pipes:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="PicThreadsT0">
+         <property name="minimum">
+          <number>-16</number>
+         </property>
+         <property name="maximum">
+          <number>16</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QSpinBox" name="PicThreadsT">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QCheckBox" name="PicFollowMouse">
+         <property name="text">
+          <string>Follow mouse</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="4">
+        <widget class="QSpinBox" name="PicMouseMarginT">
+         <property name="maximum">
+          <number>500</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="3">
+        <widget class="QLabel" name="PicMouseMarginL">
+         <property name="text">
+          <string>Mouse margin:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="3" colspan="2">
+        <widget class="QPushButton" name="ViewColor">
+         <property name="text">
+          <string>Background color</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QLabel" name="OffsetXL">
+         <property name="text">
+          <string>Offset X:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="4">
+        <widget class="QSpinBox" name="OffsetXT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QComboBox" name="ViewStretch">
+         <item>
+          <property name="text">
+           <string>Center</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Margin</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Margin smooth</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Fill</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Fill smooth</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Stretch</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Stretch smooth</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Tile center</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Tile corner</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLabel" name="ViewStretchL">
+         <property name="text">
+          <string>View mode:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QLabel" name="OffsetYL">
+         <property name="text">
+          <string>Offset Y:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="4">
+        <widget class="QSpinBox" name="OffsetYT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QSpinBox" name="PicMouseSizeTT">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Tab3">
+      <attribute name="title">
+       <string>Transform</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_10">
+       <item row="0" column="0">
+        <widget class="QListWidget" name="TransListView"/>
+       </item>
+       <item row="1" column="0">
+        <layout class="QGridLayout" name="ProcessBtn">
+         <item row="0" column="4">
+          <widget class="QPushButton" name="TransMoveUp">
+           <property name="text">
+            <string>Move up</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="TransAdd">
+           <property name="text">
+            <string>Add item</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="TransListLoad">
+           <property name="text">
+            <string>Load list</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="TransListSave">
+           <property name="text">
+            <string>Save list</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="TransRemove">
+           <property name="text">
+            <string>Remove item</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QPushButton" name="TransMoveDown">
+           <property name="text">
+            <string>Move down</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QPushButton" name="TransEnable">
+           <property name="text">
+            <string>Enable/disable</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0">
+        <widget class="QTabWidget" name="ProcessTabs">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="Trans0">
+          <attribute name="title">
+           <string>Triple 256-item LUT</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_11">
+           <item row="3" column="0">
+            <widget class="QRadioButton" name="Trans0Op3">
+             <property name="text">
+              <string>Negative</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QRadioButton" name="Trans0Op1">
+             <property name="text">
+              <string>Brightness</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QRadioButton" name="Trans0Op2">
+             <property name="text">
+              <string>Contrast</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QSlider" name="Trans0ConG">
+             <property name="minimum">
+              <number>-201</number>
+             </property>
+             <property name="maximum">
+              <number>201</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSlider" name="Trans0ConR">
+             <property name="minimum">
+              <number>-201</number>
+             </property>
+             <property name="maximum">
+              <number>201</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="Trans0Op0">
+             <property name="text">
+              <string>From file</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSlider" name="Trans0BriR">
+             <property name="minimum">
+              <number>-255</number>
+             </property>
+             <property name="maximum">
+              <number>255</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QSlider" name="Trans0BriB">
+             <property name="minimum">
+              <number>-255</number>
+             </property>
+             <property name="maximum">
+              <number>255</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QSlider" name="Trans0BriG">
+             <property name="minimum">
+              <number>-255</number>
+             </property>
+             <property name="maximum">
+              <number>255</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" colspan="3">
+            <layout class="QGridLayout" name="gridLayout_23">
+             <item row="0" column="0">
+              <widget class="QLineEdit" name="Trans0File"/>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="Trans0FileBtn">
+               <property name="text">
+                <string>Browse</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="Trans0FileSave">
+               <property name="text">
+                <string>Save</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QCheckBox" name="Trans0Gamma">
+               <property name="text">
+                <string>Gamma correction</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="3" column="1">
+            <widget class="QSlider" name="Trans0InvR">
+             <property name="minimum">
+              <number>-256</number>
+             </property>
+             <property name="maximum">
+              <number>256</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QSlider" name="Trans0ConB">
+             <property name="minimum">
+              <number>-201</number>
+             </property>
+             <property name="maximum">
+              <number>201</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QSlider" name="Trans0InvG">
+             <property name="minimum">
+              <number>-256</number>
+             </property>
+             <property name="maximum">
+              <number>256</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QSlider" name="Trans0InvB">
+             <property name="minimum">
+              <number>-256</number>
+             </property>
+             <property name="maximum">
+              <number>256</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QRadioButton" name="Trans0Op4">
+             <property name="text">
+              <string>Gamma</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QSlider" name="Trans0GammaR">
+             <property name="minimum">
+              <number>-201</number>
+             </property>
+             <property name="maximum">
+              <number>201</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QSlider" name="Trans0GammaG">
+             <property name="minimum">
+              <number>-201</number>
+             </property>
+             <property name="maximum">
+              <number>201</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QSlider" name="Trans0GammaB">
+             <property name="minimum">
+              <number>-201</number>
+             </property>
+             <property name="maximum">
+              <number>201</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="Trans1">
+          <attribute name="title">
+           <string>Single 16M LUT</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_12">
+           <item row="1" column="0">
+            <widget class="QRadioButton" name="Trans1Op1">
+             <property name="text">
+              <string>Saturation</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="Trans1Op0">
+             <property name="text">
+              <string>From file</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QRadioButton" name="Trans1Op2">
+             <property name="text">
+              <string>RGB -&gt; L/C</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QRadioButton" name="Trans1Op4">
+             <property name="text">
+              <string>Channels</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QRadioButton" name="Trans1Op3">
+             <property name="text">
+              <string>L/C -&gt; RGB</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <layout class="QGridLayout" name="gridLayout_22">
+             <item row="0" column="1">
+              <widget class="QPushButton" name="Trans1FileBtn">
+               <property name="text">
+                <string>Browse</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLineEdit" name="Trans1File"/>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="Trans1FileSave">
+               <property name="text">
+                <string>Save</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QCheckBox" name="Trans1Gamma">
+               <property name="text">
+                <string>Gamma correction</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSlider" name="Trans1Sat">
+             <property name="minimum">
+              <number>-201</number>
+             </property>
+             <property name="maximum">
+              <number>201</number>
+             </property>
+             <property name="pageStep">
+              <number>1</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QComboBox" name="Trans1Chan">
+             <item>
+              <property name="text">
+               <string>Swap R &lt;-&gt; G</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Swap G &lt;-&gt; B</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Swap B &lt;-&gt; R</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Rotate RGB -&gt; GBR</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Rotate RGB -&gt; BRG</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copy R to GB</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copy G to BR</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copy B to RG</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copy R to G</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copy G to B</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copy B to R</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copy B to G</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copy G to R</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copy R to B</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="2" column="1" rowspan="2">
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
+              <widget class="QComboBox" name="Trans1YuvType">
+               <item>
+                <property name="text">
+                 <string>Red-Luma-Blue</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Red-Green-Luma</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Luma-Green-Blue</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Chroma only</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="Trans1YuvWeightL">
+               <property name="text">
+                <string>RGB weight:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLineEdit" name="Trans1YuvWeightG"/>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLineEdit" name="Trans1YuvWeightR"/>
+             </item>
+             <item row="0" column="4">
+              <widget class="QLineEdit" name="Trans1YuvWeightB"/>
+             </item>
+             <item row="0" column="5">
+              <widget class="QLabel" name="Trans1YuvLumaL">
+               <property name="text">
+                <string>Luma:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="6">
+              <widget class="QLineEdit" name="Trans1YuvLumaT"/>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="Trans2">
+          <attribute name="title">
+           <string>Convolution</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="1" column="1" colspan="3">
+            <widget class="QComboBox" name="Trans2CommonT">
+             <item>
+              <property name="text">
+               <string>Separated</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Common from R</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Common from G</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Common from B</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>R =&gt; G</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>G =&gt; B</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>B =&gt; R</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>R =&gt; B</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>G =&gt; R</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>B =&gt; G</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="Trans2CommonL">
+             <property name="text">
+              <string>Common:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLineEdit" name="Trans2Offset1B"/>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLineEdit" name="Trans2Offset1G"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="Trans2Offset1R"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="Trans2Offset1L">
+             <property name="text">
+              <string>In offset:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLineEdit" name="Trans2GainB"/>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLineEdit" name="Trans2GainG"/>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="Trans2GainR"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="Trans2GainL">
+             <property name="text">
+              <string>Divider:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4" rowspan="5">
+            <widget class="QTabWidget" name="Trans2Chan">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <widget class="QWidget" name="Trans2R">
+              <attribute name="title">
+               <string>Red</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_14">
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="Trans2ChanR00"/>
+               </item>
+               <item row="0" column="2">
+                <widget class="QLineEdit" name="Trans2ChanR01"/>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="Trans2ChanR10"/>
+               </item>
+               <item row="0" column="3">
+                <widget class="QLineEdit" name="Trans2ChanR02"/>
+               </item>
+               <item row="0" column="4">
+                <widget class="QLineEdit" name="Trans2ChanR03"/>
+               </item>
+               <item row="0" column="5">
+                <widget class="QLineEdit" name="Trans2ChanR04"/>
+               </item>
+               <item row="1" column="2">
+                <widget class="QLineEdit" name="Trans2ChanR11"/>
+               </item>
+               <item row="1" column="3">
+                <widget class="QLineEdit" name="Trans2ChanR12"/>
+               </item>
+               <item row="1" column="4">
+                <widget class="QLineEdit" name="Trans2ChanR13"/>
+               </item>
+               <item row="1" column="5">
+                <widget class="QLineEdit" name="Trans2ChanR14"/>
+               </item>
+               <item row="2" column="2">
+                <widget class="QLineEdit" name="Trans2ChanR21"/>
+               </item>
+               <item row="2" column="3">
+                <widget class="QLineEdit" name="Trans2ChanR22"/>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="Trans2ChanR20"/>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="Trans2ChanR30"/>
+               </item>
+               <item row="2" column="5">
+                <widget class="QLineEdit" name="Trans2ChanR24"/>
+               </item>
+               <item row="3" column="2">
+                <widget class="QLineEdit" name="Trans2ChanR31"/>
+               </item>
+               <item row="2" column="4">
+                <widget class="QLineEdit" name="Trans2ChanR23"/>
+               </item>
+               <item row="3" column="4">
+                <widget class="QLineEdit" name="Trans2ChanR33"/>
+               </item>
+               <item row="3" column="5">
+                <widget class="QLineEdit" name="Trans2ChanR34"/>
+               </item>
+               <item row="3" column="3">
+                <widget class="QLineEdit" name="Trans2ChanR32"/>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="Trans2ChanR40"/>
+               </item>
+               <item row="4" column="2">
+                <widget class="QLineEdit" name="Trans2ChanR41"/>
+               </item>
+               <item row="4" column="3">
+                <widget class="QLineEdit" name="Trans2ChanR42"/>
+               </item>
+               <item row="4" column="4">
+                <widget class="QLineEdit" name="Trans2ChanR43"/>
+               </item>
+               <item row="4" column="5">
+                <widget class="QLineEdit" name="Trans2ChanR44"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="Trans2G">
+              <attribute name="title">
+               <string>Green</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_15">
+               <item row="3" column="0">
+                <widget class="QLineEdit" name="Trans2ChanG30"/>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="Trans2ChanG31"/>
+               </item>
+               <item row="3" column="4">
+                <widget class="QLineEdit" name="Trans2ChanG34"/>
+               </item>
+               <item row="3" column="3">
+                <widget class="QLineEdit" name="Trans2ChanG33"/>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLineEdit" name="Trans2ChanG00"/>
+               </item>
+               <item row="0" column="2">
+                <widget class="QLineEdit" name="Trans2ChanG02"/>
+               </item>
+               <item row="0" column="3">
+                <widget class="QLineEdit" name="Trans2ChanG03"/>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="Trans2ChanG01"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLineEdit" name="Trans2ChanG10"/>
+               </item>
+               <item row="0" column="4">
+                <widget class="QLineEdit" name="Trans2ChanG04"/>
+               </item>
+               <item row="1" column="3">
+                <widget class="QLineEdit" name="Trans2ChanG13"/>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="Trans2ChanG11"/>
+               </item>
+               <item row="1" column="2">
+                <widget class="QLineEdit" name="Trans2ChanG12"/>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLineEdit" name="Trans2ChanG20"/>
+               </item>
+               <item row="1" column="4">
+                <widget class="QLineEdit" name="Trans2ChanG14"/>
+               </item>
+               <item row="2" column="2">
+                <widget class="QLineEdit" name="Trans2ChanG22"/>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="Trans2ChanG21"/>
+               </item>
+               <item row="2" column="3">
+                <widget class="QLineEdit" name="Trans2ChanG23"/>
+               </item>
+               <item row="2" column="4">
+                <widget class="QLineEdit" name="Trans2ChanG24"/>
+               </item>
+               <item row="3" column="2">
+                <widget class="QLineEdit" name="Trans2ChanG32"/>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLineEdit" name="Trans2ChanG40"/>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="Trans2ChanG41"/>
+               </item>
+               <item row="4" column="2">
+                <widget class="QLineEdit" name="Trans2ChanG42"/>
+               </item>
+               <item row="4" column="3">
+                <widget class="QLineEdit" name="Trans2ChanG43"/>
+               </item>
+               <item row="4" column="4">
+                <widget class="QLineEdit" name="Trans2ChanG44"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="Trans2B">
+              <attribute name="title">
+               <string>Blue</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_16">
+               <item row="3" column="4">
+                <widget class="QLineEdit" name="Trans2ChanB34"/>
+               </item>
+               <item row="3" column="3">
+                <widget class="QLineEdit" name="Trans2ChanB33"/>
+               </item>
+               <item row="3" column="2">
+                <widget class="QLineEdit" name="Trans2ChanB32"/>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="Trans2ChanB01"/>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLineEdit" name="Trans2ChanB00"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLineEdit" name="Trans2ChanB10"/>
+               </item>
+               <item row="0" column="4">
+                <widget class="QLineEdit" name="Trans2ChanB04"/>
+               </item>
+               <item row="0" column="3">
+                <widget class="QLineEdit" name="Trans2ChanB03"/>
+               </item>
+               <item row="0" column="2">
+                <widget class="QLineEdit" name="Trans2ChanB02"/>
+               </item>
+               <item row="1" column="4">
+                <widget class="QLineEdit" name="Trans2ChanB14"/>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="Trans2ChanB11"/>
+               </item>
+               <item row="1" column="2">
+                <widget class="QLineEdit" name="Trans2ChanB12"/>
+               </item>
+               <item row="1" column="3">
+                <widget class="QLineEdit" name="Trans2ChanB13"/>
+               </item>
+               <item row="2" column="3">
+                <widget class="QLineEdit" name="Trans2ChanB23"/>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLineEdit" name="Trans2ChanB20"/>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="Trans2ChanB21"/>
+               </item>
+               <item row="2" column="2">
+                <widget class="QLineEdit" name="Trans2ChanB22"/>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="Trans2ChanB31"/>
+               </item>
+               <item row="2" column="4">
+                <widget class="QLineEdit" name="Trans2ChanB24"/>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLineEdit" name="Trans2ChanB30"/>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLineEdit" name="Trans2ChanB40"/>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="Trans2ChanB41"/>
+               </item>
+               <item row="4" column="2">
+                <widget class="QLineEdit" name="Trans2ChanB42"/>
+               </item>
+               <item row="4" column="3">
+                <widget class="QLineEdit" name="Trans2ChanB43"/>
+               </item>
+               <item row="4" column="4">
+                <widget class="QLineEdit" name="Trans2ChanB44"/>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLineEdit" name="Trans2Offset2B"/>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLineEdit" name="Trans2Offset2G"/>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="Trans2Offset2R"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="Trans2Offset2L">
+             <property name="text">
+              <string>Out offset:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="4">
+            <widget class="QCheckBox" name="Trans2Gamma">
+             <property name="text">
+              <string>Gamma correction</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="Trans3">
+          <attribute name="title">
+           <string>Dedithering</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_21">
+           <item row="0" column="0">
+            <widget class="QLabel" name="Trans3Info">
+             <property name="text">
+              <string>0/0</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" rowspan="3">
+            <layout class="QGridLayout" name="gridLayout_18">
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="Trans3Matrix01"/>
+             </item>
+             <item row="0" column="4">
+              <widget class="QLineEdit" name="Trans3Matrix04"/>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLineEdit" name="Trans3Matrix03"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLineEdit" name="Trans3Matrix10"/>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLineEdit" name="Trans3Matrix02"/>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLineEdit" name="Trans3Matrix12"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="Trans3Matrix11"/>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLineEdit" name="Trans3Matrix13"/>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="Trans3Matrix21"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLineEdit" name="Trans3Matrix20"/>
+             </item>
+             <item row="1" column="4">
+              <widget class="QLineEdit" name="Trans3Matrix14"/>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLineEdit" name="Trans3Matrix22"/>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLineEdit" name="Trans3Matrix23"/>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="Trans3Matrix31"/>
+             </item>
+             <item row="2" column="4">
+              <widget class="QLineEdit" name="Trans3Matrix24"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLineEdit" name="Trans3Matrix30"/>
+             </item>
+             <item row="3" column="3">
+              <widget class="QLineEdit" name="Trans3Matrix33"/>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLineEdit" name="Trans3Matrix32"/>
+             </item>
+             <item row="3" column="4">
+              <widget class="QLineEdit" name="Trans3Matrix34"/>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLineEdit" name="Trans3Matrix00"/>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLineEdit" name="Trans3Matrix40"/>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="Trans3Matrix41"/>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLineEdit" name="Trans3Matrix42"/>
+             </item>
+             <item row="4" column="3">
+              <widget class="QLineEdit" name="Trans3Matrix43"/>
+             </item>
+             <item row="4" column="4">
+              <widget class="QLineEdit" name="Trans3Matrix44"/>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0">
+            <layout class="QGridLayout" name="gridLayout_19">
+             <item row="0" column="2">
+              <widget class="QPushButton" name="Trans3MovePrev">
+               <property name="text">
+                <string>Move prev</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="Trans3Add">
+               <property name="text">
+                <string>Add</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QPushButton" name="Trans3Rem">
+               <property name="text">
+                <string>Rem</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QPushButton" name="Trans3MoveNext">
+               <property name="text">
+                <string>Move next</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QPushButton" name="Trans3DispPrev">
+               <property name="text">
+                <string>Prev</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QPushButton" name="Trans3DispNext">
+               <property name="text">
+                <string>Next</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="3" column="1">
+            <layout class="QGridLayout" name="gridLayout_5">
+             <item row="0" column="4">
+              <widget class="QComboBox" name="Trans3Rot1">
+               <item>
+                <property name="text">
+                 <string>None</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Straight</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>U/D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Hori</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Vert</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Main D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Other D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Clk</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Cnt clk</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QComboBox" name="Trans3Rot0">
+               <item>
+                <property name="text">
+                 <string>None</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Straight</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>U/D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Hori</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Vert</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Main D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Other D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Clk</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Cnt clk</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="5">
+              <widget class="QComboBox" name="Trans3Rot2">
+               <item>
+                <property name="text">
+                 <string>None</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Straight</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>U/D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Hori</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Vert</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Main D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Other D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Clk</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Cnt clk</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="6">
+              <widget class="QComboBox" name="Trans3Rot3">
+               <item>
+                <property name="text">
+                 <string>None</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Straight</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>U/D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Hori</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Vert</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Main D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Other D</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Clk</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Cnt clk</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="0" rowspan="2">
+            <layout class="QGridLayout" name="gridLayout_20">
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="Trans3Color2"/>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLineEdit" name="Trans3Color3"/>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLineEdit" name="Trans3Color4"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLineEdit" name="Trans3Color1"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="Trans3Color1L">
+               <property name="text">
+                <string>Color 1:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLabel" name="Trans3Color2L">
+               <property name="text">
+                <string>Color 2:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="Trans3Color3L">
+               <property name="text">
+                <string>Color 3:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLabel" name="Trans3Color4L">
+               <property name="text">
+                <string>Color 4:</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="Trans4">
+          <attribute name="title">
+           <string>Resize/scale</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_17">
+           <item row="0" column="1" colspan="3">
+            <widget class="QComboBox" name="Trans4Size">
+             <item>
+              <property name="text">
+               <string>No smoothing</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Fast smoothing</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>High quality smoothing</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="Trans4Op0">
+             <property name="text">
+              <string>Resize</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QRadioButton" name="Trans4Op1">
+             <property name="text">
+              <string>Scale</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QRadioButton" name="Trans4Op2">
+             <property name="text">
+              <string>Subpixels</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1" colspan="3">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLabel" name="Trans4LcdWeightL">
+               <property name="text">
+                <string>RGB weight:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="Trans4LcdWeightR"/>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="Trans4LcdWeightG"/>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="Trans4LcdWeightB"/>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="1" colspan="3">
+            <layout class="QGridLayout" name="gridLayout_6">
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="Trans4Size1W"/>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="Trans4Size1L">
+               <property name="text">
+                <string>Size numerator (width, height):</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLineEdit" name="Trans4Size1H"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="Trans4Size2L">
+               <property name="text">
+                <string>Size denominator (width, height):</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="Trans4Size2W"/>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLineEdit" name="Trans4Size2H"/>
+             </item>
+            </layout>
+           </item>
+           <item row="4" column="1" colspan="3">
+            <layout class="QGridLayout" name="gridLayout_7">
+             <item row="0" column="0">
+              <widget class="QComboBox" name="Trans4Scale">
+               <item>
+                <property name="text">
+                 <string>Scale2x</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Scale3x</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Scale4x</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>HQ2x</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>HQ3x</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>HQ4x</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="Trans4ScaleChannels">
+               <property name="text">
+                <string>Separate channels</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="6" column="1" colspan="3">
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="0" column="1">
+              <widget class="QComboBox" name="Trans4LcdOp">
+               <item>
+                <property name="text">
+                 <string>Composite color</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Composite luminance</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - color subpixels</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - gray subpixels</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - luma only</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - luma + chroma 1</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - luma + chroma 3</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - luma + chroma 5</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - luma + chroma 1+1</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - luma + chroma 3+1</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - luma + chroma 5+1</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - luma + chroma 3+3</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - luma + chroma 5+3</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Decomposite - luma + chroma 5+5</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QComboBox" name="Trans4LcdType">
+               <item>
+                <property name="text">
+                 <string>H-RGB</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>H-BGR</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>V-RGB</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>V-BGR</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QCheckBox" name="Trans4LcdInterpolation">
+               <property name="text">
+                <string>Smoothing</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="Trans5">
+          <attribute name="title">
+           <string>Flip/rotate</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_24">
+           <item row="0" column="0">
+            <widget class="QLabel" name="Trans5RotateL">
+             <property name="text">
+              <string>Flip or rotate:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="Trans5RotateT">
+             <item>
+              <property name="text">
+               <string>Straight</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Upside down</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Flip horizontal</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Flip vertical</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Flip by main diagonal (one thread regardless of settings)</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Flip by other diagonal (one thread regardless of settings)</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Rotate clockwise (one thread regardless of settings)</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Rotate counter clockwise (one thread regardless of settings)</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
