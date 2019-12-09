@@ -155,14 +155,39 @@ Composite luminance without smoothing – {L(RL,GL,BL), L(R,G,B), L(RR,GR,BR)}
 Composite luminance with smoothing – {(L(RLL,GLL,BLL)+L(RL,GL,BL)+L(R,G,B))/3, (L(RL,GL,BL)+L(R,G,B)+L(RR,GR,BR))/3, (L(R,G,B)+L(RR,GR,BR)+L(RRR,GRR,BRR))/3}
 
 ### Subpixel decomposition
-In theory, the subpixel decomposition is inverse of subpixel composition and it can be used to zoom subpixel-rendered text and pictures. The decomposition means three time picture enlarging both horizontally and vertically. In practice, the horizontally enlarging is not simple zoom in due to subpixels layout.
+In theory, the subpixel decomposition is inverse of subpixel composition and it can be used to zoom subpixel-rendered text and pictures. The decomposition means three time picture enlarging both horizontally and vertically. In practice, the horizontally enlarging is not simple zoom in due to layout of subpixels.
 The vertically enlarging is simple three times zoom in with smoothing or without it, depending on Smoothing field checking. The "Color subpixels" and "Gray subpixels" are the simple simulation, how image is actually displayed on screen (the only difference between this models is displaying color or gray simulated subpixels). The color areas will be rendered with vertical stripes due to varying subpixel intensity.
-The other decomposite modes uses luminance (luma) and may use chrominance (chroma). In all this cases, the luminance is calculated using channel weights from RGB weight fields. The decomposite of one pixel really uses three pixels of source image (the current and two adjacent), the chrominance calculation may also use pixels above and below current pixels. This uses the fact, that every subpixel with two adjacent subpixels creates whole RGB color.
-In the following description, the three pixels of source images are signed as: {RL,GL,BL}{R,G,B}{RR,GR,BR}
+The third decomposite modes uses luminance (luma) and may use chrominance (chroma) and there is most recommended decomposite mode. The luminance is calculated using channel weights from RGB weight fields. The decomposite of one pixel really uses three pixels of source image (the current and two adjacent). The chrominance calculation may use adjacent pixels and pixels above and below current pixels. This uses the fact, that every subpixel with two adjacent subpixels creates whole RGB color.
+The _Decomposite chroma_ field allows to set, how many horizontally placed subpixels are used to calculate average chrominance, by following:
+* _Base_ - The number of sumbixels in current line.
+* _Line 1_ - The number of sumbixels in the first lines above and below current line.
+* _Line 2_ - The number of sumbixels in the second lines above and below current line.
+The number indicates, how many subpixels in this lines are used horizontally. The higher number causes more chrominance blur and less chrominance artifacts. The _0_ value indicates, that chrominance will not be used.
 The luminance is L(R,G,B) = ((R\*RWeight+G\*GWeight+B\*BWeight)/(RWeight+GWeight+BWeight)).
-The one pixel of source image creates three pixels with following luminance: {L(R,G,BL),L(R,G,BL),L(R,G,BL)}{L(R,G,B),L(R,G,B),L(R,G,B)}{L(RR,G,B),L(RR,G,B),L(RR,G,B)}
-The chrominance of one channel is the difference between luminance value and color channel value, so, it can be positive or negative value, the 0 means, that the color has not tint of the color channel.
-The chrominance are signed as "1", "3" and "5". This number means number of subpixels are used to calculate average chrominance for output pixel. The "+1", "+3" and "+5" in mode description means additionally added chrominance of one, three or five subpixels from one above and one below line to averaging chrominance. If the chrominance average area is larger, the rainbow shade around subpixel-rendered text/image edge will be less visible, but the color objects may be more blurred.
+The one pixel of source image creates three pixels, where luminance will be calculated from values::
+* {R,G,BL1}
+* {R,G,B}
+* {RR1,G,B}
+In the one line, there can be used three or five adjacent pixels for chrominance, which will be signed as: {RL2,GL2,BL2}{RL1,GL1,BL1}{R,G,B}{RR1,GR1,BR1}{RR2,GR2,BR2}
+The chrominance for 11 subpixels (the most widest variant) will be calculated using following pixel values:
+* {RL2,GL2,BL2}
+* {RL1,GL2,BL2}
+* {RL1,GL1,BL2}
+* {RL1,GL1,BL1}
+* {R,GL1,BL1}
+* {R,G,BL1}
+* {R,G,B}
+* {RR1,G,B}
+* {RR1,GR1,B}
+* {RR1,GR1,BR1}
+* {RR2,GR1,BR1}
+* {RR2,GR2,BR1}
+* {RR2,GR2,BR2}
+There are 13 chrominance values, for final pixel there will be used as follows:
+* For red subpixel: The first 11 values.
+* For gree subpixel: The 11 values without the first and the last value.
+* For blue subpixel: The last 11 values.
+The chrominance of one channel is the difference between luminance value and color channel value, so, it can be positive or negative value.
 
 # Transform: Flip/rotate
 This is a simple transform, which flips or rotates image depending on selection in __Flip or rotate__ field. The rotation or flipping by diagonal are executed in one thread regardless number of threads in settings due to complexity of this operation when is splitted into threads.

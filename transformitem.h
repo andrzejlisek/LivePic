@@ -28,6 +28,9 @@ public:
     int Trans0ConR = 0;
     int Trans0ConG = 0;
     int Trans0ConB = 0;
+    int Trans0ConBiasR = 0;
+    int Trans0ConBiasG = 0;
+    int Trans0ConBiasB = 0;
     int Trans0InvR = 0;
     int Trans0InvG = 0;
     int Trans0InvB = 0;
@@ -95,6 +98,9 @@ public:
     bool Trans4Channels = false;
     int Trans4LcdType = 0;
     int Trans4LcdOp = 0;
+    int Trans4LcdChromaB = 0;
+    int Trans4LcdChromaV = 0;
+    int Trans4LcdChromaX = 0;
     int Trans4LcdWeightR = 1;
     int Trans4LcdWeightG = 1;
     int Trans4LcdWeightB = 1;

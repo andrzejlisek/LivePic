@@ -491,6 +491,9 @@ void WinSettings::TransformSet()
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConR = ui->Trans0ConR->value();
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConG = ui->Trans0ConG->value();
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConB = ui->Trans0ConB->value();
+        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasR = ui->Trans0ConBiasR->value();
+        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasG = ui->Trans0ConBiasG->value();
+        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasB = ui->Trans0ConBiasB->value();
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvR = ui->Trans0InvR->value();
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvG = ui->Trans0InvG->value();
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvB = ui->Trans0InvB->value();
@@ -651,6 +654,9 @@ void WinSettings::TransformSet()
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Channels = ui->Trans4ScaleChannels->isChecked();
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdType = ui->Trans4LcdType->currentIndex();
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdOp = ui->Trans4LcdOp->currentIndex();
+        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaB = ui->Trans4LcdChromaB->currentIndex();
+        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaV = ui->Trans4LcdChromaV->currentIndex();
+        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaX = ui->Trans4LcdChromaX->currentIndex();
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightR = Eden::ToInt(ui->Trans4LcdWeightR->text());
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightG = Eden::ToInt(ui->Trans4LcdWeightG->text());
         TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightB = Eden::ToInt(ui->Trans4LcdWeightB->text());
@@ -687,6 +693,9 @@ void WinSettings::TransformGet()
         ui->Trans0ConR->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConR);
         ui->Trans0ConG->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConG);
         ui->Trans0ConB->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConB);
+        ui->Trans0ConBiasR->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasR);
+        ui->Trans0ConBiasG->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasG);
+        ui->Trans0ConBiasB->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasB);
         ui->Trans0InvR->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvR);
         ui->Trans0InvG->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvG);
         ui->Trans0InvB->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvB);
@@ -853,6 +862,9 @@ void WinSettings::TransformGet()
         ui->Trans4ScaleChannels->setChecked(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Channels);
         ui->Trans4LcdType->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdType);
         ui->Trans4LcdOp->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdOp);
+        ui->Trans4LcdChromaB->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaB);
+        ui->Trans4LcdChromaV->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaV);
+        ui->Trans4LcdChromaX->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaX);
         ui->Trans4LcdWeightR->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightR));
         ui->Trans4LcdWeightG->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightG));
         ui->Trans4LcdWeightB->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightB));
@@ -1888,6 +1900,36 @@ void WinSettings::on_Trans3Rot2_currentIndexChanged(int index)
 }
 
 void WinSettings::on_Trans3Rot3_currentIndexChanged(int index)
+{
+    TransformSet();
+}
+
+void WinSettings::on_Trans0ConBiasR_valueChanged(int value)
+{
+    TransformSet();
+}
+
+void WinSettings::on_Trans0ConBiasG_valueChanged(int value)
+{
+    TransformSet();
+}
+
+void WinSettings::on_Trans0ConBiasB_valueChanged(int value)
+{
+    TransformSet();
+}
+
+void WinSettings::on_Trans4LcdChromaB_currentIndexChanged(int index)
+{
+    TransformSet();
+}
+
+void WinSettings::on_Trans4LcdChromaV_currentIndexChanged(int index)
+{
+    TransformSet();
+}
+
+void WinSettings::on_Trans4LcdChromaX_currentIndexChanged(int index)
 {
     TransformSet();
 }

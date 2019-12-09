@@ -411,7 +411,7 @@ void PicThread::OpLoad()
                         break;
                     case 4: // Resizing
                         {
-                            OpMatrixX = new uchar[14];
+                            OpMatrixX = new uchar[17];
                             if (TransformItem_.Trans4Type == 0)
                             {
                                 OpMatrixX[0] = TransformItem_.Trans4Size;
@@ -448,6 +448,11 @@ void PicThread::OpLoad()
                                 OpMatrixX[11] = (TransformItem_.Trans4LcdWeightG & 255);
                                 OpMatrixX[12] = (TransformItem_.Trans4LcdWeightB >> 8);
                                 OpMatrixX[13] = (TransformItem_.Trans4LcdWeightB & 255);
+
+                                OpMatrixX[14] = (TransformItem_.Trans4LcdChromaB > 0) ? (TransformItem_.Trans4LcdChromaB * 2 - 1) : 0;
+                                OpMatrixX[15] = (TransformItem_.Trans4LcdChromaV > 0) ? (TransformItem_.Trans4LcdChromaV * 2 - 1) : 0;
+                                OpMatrixX[16] = (TransformItem_.Trans4LcdChromaX > 0) ? (TransformItem_.Trans4LcdChromaX * 2 - 1) : 0;
+
                                 if ((TransformItem_.Trans4LcdWeightR < 0) || (TransformItem_.Trans4LcdWeightG < 0) || (TransformItem_.Trans4LcdWeightB < 0) || ((TransformItem_.Trans4LcdWeightR + TransformItem_.Trans4LcdWeightG + TransformItem_.Trans4LcdWeightB) == 0))
                                 {
                                     OpMatrixX[8] = 0;

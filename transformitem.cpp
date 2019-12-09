@@ -79,7 +79,7 @@ string TransformItem::GetInfo()
                 {
                     case 0: StrX = StrX + " From file " + Trans0File; break;
                     case 1: StrX = StrX + " Brightness " + InfoVal(Trans0BriR) + "/" + InfoVal(Trans0BriG) + "/" + InfoVal(Trans0BriB); break;
-                    case 2: StrX = StrX + " Contract " + InfoDbVal(Trans0ConR) + "/" + InfoDbVal(Trans0ConG) + "/" + InfoDbVal(Trans0ConB); break;
+                    case 2: StrX = StrX + " Contrast " + InfoDbVal(Trans0ConR) + "/" + InfoDbVal(Trans0ConG) + "/" + InfoDbVal(Trans0ConB) + " - bias " + InfoVal(Trans0ConBiasR) + "/" + InfoVal(Trans0ConBiasG) + "/" + InfoVal(Trans0ConBiasB); break;
                     case 3: StrX = StrX + " Invert " + InfoVal(Trans0InvR) + "/" + InfoVal(Trans0InvG) + "/" + InfoVal(Trans0InvB); break;
                     case 4: StrX = StrX + " Gamma " + InfoDbVal(Trans0GammaR) + "/" + InfoDbVal(Trans0GammaG) + "/" + InfoDbVal(Trans0GammaB); break;
                 }
@@ -257,16 +257,21 @@ string TransformItem::GetInfo()
                                 case 1: StrX = StrX + "Composite luminance"; break;
                                 case 2: StrX = StrX + "Decomposite - color subpixels"; break;
                                 case 3: StrX = StrX + "Decomposite - gray subpixels"; break;
-                                case 4: StrX = StrX + "Decomposite - luma only"; break;
-                                case 5: StrX = StrX + "Decomposite - luma + chroma 1"; break;
-                                case 6: StrX = StrX + "Decomposite - luma + chroma 3"; break;
-                                case 7: StrX = StrX + "Decomposite - luma + chroma 5"; break;
-                                case 8: StrX = StrX + "Decomposite - luma + chroma 1+1"; break;
-                                case 9: StrX = StrX + "Decomposite - luma + chroma 3+1"; break;
-                                case 10: StrX = StrX + "Decomposite - luma + chroma 5+1"; break;
-                                case 11: StrX = StrX + "Decomposite - luma + chroma 3+3"; break;
-                                case 12: StrX = StrX + "Decomposite - luma + chroma 5+3"; break;
-                                case 13: StrX = StrX + "Decomposite - luma + chroma 5+5"; break;
+                                case 4: {
+
+                                        if ((Trans4LcdChromaB == 0) && (Trans4LcdChromaV == 0) && (Trans4LcdChromaX == 0))
+                                        {
+                                            StrX = StrX + "Decomposite - luminance";
+                                        }
+                                        else
+                                        {
+                                            int ChB = (Trans4LcdChromaB > 0) ? (Trans4LcdChromaB * 2 - 1) : 0;
+                                            int ChV = (Trans4LcdChromaV > 0) ? (Trans4LcdChromaV * 2 - 1) : 0;
+                                            int ChX = (Trans4LcdChromaX > 0) ? (Trans4LcdChromaX * 2 - 1) : 0;
+                                            StrX = StrX + "Decomposite - luma and chroma (" + Eden::ToStr(ChB) + "/" + Eden::ToStr(ChV) + "/" + Eden::ToStr(ChX) + ")";
+                                        }
+                                    }
+                                    break;
                             }
                             if ((Trans4LcdOp >= 4) || (Trans4LcdOp == 1))
                             {
@@ -551,31 +556,53 @@ void TransformItem::FillLUT(uchar *LUT_R, uchar *LUT_G, uchar *LUT_B)
                         break;
                     case 2: // Contrast
                         {
-                            double I_;
+                            int T, BiasR, BiasG, BiasB;
+                            double I_, BiasR_, BiasG_, BiasB_;
                             double ValR = ValDecibel(Trans0ConR);
                             double ValG = ValDecibel(Trans0ConG);
                             double ValB = ValDecibel(Trans0ConB);
+                            double OffsetR;
                             if (Trans0Gamma)
                             {
+                                BiasR = 65535 + (Trans0ConBiasR * 256);
+                                BiasG = 65535 + (Trans0ConBiasG * 256);
+                                BiasB = 65535 + (Trans0ConBiasB * 256);
+                                BiasR_ = BiasR;
+                                BiasG_ = BiasG;
+                                BiasB_ = BiasB;
                                 for (int I = 0; I < 256; I++)
                                 {
-                                    I_ = (GammaLUT_I[I] * 2) - 65535;
-                                    int T = Range(round(((I_ * ValR) + 65535.0) / 2.0), 0, 70000);
+                                    I_ = (GammaLUT_I[I] * 2) - BiasR;
+                                    T = Range(round(((I_ * ValR) + BiasR_) / 2.0), 0, 70000);
                                     LUT_R[I] = GammaLUT_O[T];
-                                    T = Range(round(((I_ * ValG) + 65535.0) / 2.0), 0, 70000);
+
+                                    I_ = (GammaLUT_I[I] * 2) - BiasG;
+                                    T = Range(round(((I_ * ValG) + BiasG_) / 2.0), 0, 70000);
                                     LUT_G[I] = GammaLUT_O[T];
-                                    T = Range(round(((I_ * ValB) + 65535.0) / 2.0), 0, 70000);
+
+                                    I_ = (GammaLUT_I[I] * 2) - BiasB;
+                                    T = Range(round(((I_ * ValB) + BiasB_) / 2.0), 0, 70000);
                                     LUT_B[I] = GammaLUT_O[T];
                                 }
                             }
                             else
                             {
+                                BiasR = 255 + Trans0ConBiasR;
+                                BiasG = 255 + Trans0ConBiasG;
+                                BiasB = 255 + Trans0ConBiasB;
+                                BiasR_ = BiasR;
+                                BiasG_ = BiasG;
+                                BiasB_ = BiasB;
                                 for (int I = 0; I < 256; I++)
                                 {
-                                    I_ = (I << 1) - 255;
-                                    LUT_R[I] = Range(round(((I_ * ValR) + 255.0) / 2.0), 0, 255);
-                                    LUT_G[I] = Range(round(((I_ * ValG) + 255.0) / 2.0), 0, 255);
-                                    LUT_B[I] = Range(round(((I_ * ValB) + 255.0) / 2.0), 0, 255);
+                                    I_ = (I << 1) - BiasR;
+                                    LUT_R[I] = Range(round(((I_ * ValR) + BiasR_) / 2.0), 0, 255);
+
+                                    I_ = (I << 1) - BiasG;
+                                    LUT_G[I] = Range(round(((I_ * ValG) + BiasG_) / 2.0), 0, 255);
+
+                                    I_ = (I << 1) - BiasB;
+                                    LUT_B[I] = Range(round(((I_ * ValB) + BiasB_) / 2.0), 0, 255);
                                 }
                             }
                         }

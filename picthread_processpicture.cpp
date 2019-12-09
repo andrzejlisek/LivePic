@@ -397,24 +397,24 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
 
 
                                 PicP = ((YY1 * PicW_) + XX1) << 2;
-                                R11 = BmpBuf_[PicP + 2];
-                                G11 = BmpBuf_[PicP + 1];
-                                B11 = BmpBuf_[PicP + 0];
+                                R11 = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                G11 = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                B11 = GammaLUT_I[BmpBuf_[PicP + 0]];
 
                                 PicP = ((YY2 * PicW_) + XX1) << 2;
-                                R12 = BmpBuf_[PicP + 2];
-                                G12 = BmpBuf_[PicP + 1];
-                                B12 = BmpBuf_[PicP + 0];
+                                R12 = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                G12 = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                B12 = GammaLUT_I[BmpBuf_[PicP + 0]];
 
                                 PicP = ((YY1 * PicW_) + XX2) << 2;
-                                R21 = BmpBuf_[PicP + 2];
-                                G21 = BmpBuf_[PicP + 1];
-                                B21 = BmpBuf_[PicP + 0];
+                                R21 = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                G21 = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                B21 = GammaLUT_I[BmpBuf_[PicP + 0]];
 
                                 PicP = ((YY2 * PicW_) + XX2) << 2;
-                                R22 = BmpBuf_[PicP + 2];
-                                G22 = BmpBuf_[PicP + 1];
-                                B22 = BmpBuf_[PicP + 0];
+                                R22 = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                G22 = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                B22 = GammaLUT_I[BmpBuf_[PicP + 0]];
 
 
                                 if ((XDist1 + XDist2) == 0)
@@ -442,9 +442,9 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                 B12 = ((B12 * XDist2) + (B22 * XDist1));
                                 B = ((B11 * YDist2 + B12 * YDist1) / DistTotal);
 
-                                BmpBufX_[P + 2] = R;
-                                BmpBufX_[P + 1] = G;
-                                BmpBufX_[P + 0] = B;
+                                BmpBufX_[P + 2] = GammaLUT_O[R];
+                                BmpBufX_[P + 1] = GammaLUT_O[G];
+                                BmpBufX_[P + 0] = GammaLUT_O[B];
                                 P += 4;
                             }
                         }
@@ -515,9 +515,9 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                 B12 = ((B12 * XDist2 / T12) + (B22 * XDist1 / T22));
                                 B = ((B11 * YDist2 + B12 * YDist1) / DistTotal);
 
-                                BmpBufX_[P + 2] = R;
-                                BmpBufX_[P + 1] = G;
-                                BmpBufX_[P + 0] = B;
+                                BmpBufX_[P + 2] = GammaLUT_O[R];
+                                BmpBufX_[P + 1] = GammaLUT_O[G];
+                                BmpBufX_[P + 0] = GammaLUT_O[B];
                                 P += 4;
                             }
                         }
@@ -1085,37 +1085,33 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
 
                         // 0 - Color subpixels
                         // 1 - Gray subpixels
-                        // 2 - Subpixel luminance
-                        // 3 - Subpixel luminance with chrominance 1
-                        // 4 - Subpixel luminance with chrominance 3
-                        // 5 - Subpixel luminance with chrominance 5
-                        // 6 - Subpixel luminance with chrominance 1+1
-                        // 7 - Subpixel luminance with chrominance 3+1
-                        // 8 - Subpixel luminance with chrominance 5+1
-                        // 9 - Subpixel luminance with chrominance 3+3
-                        // 10 - Subpixel luminance with chrominance 5+3
-                        // 11 - Subpixel luminance with chrominance 5+5
+                        // 2 - Subpixel luminance and chrominance
                         int Mode = OpMatrix[OpNr][5] - 2;
 
-                        bool ChromaBase1 = (Mode == 3) || (Mode == 6);
-                        bool ChromaBase3 = (Mode == 4) || (Mode == 7) || (Mode == 9);
-                        bool ChromaBase5 = (Mode == 5) || (Mode == 8) || (Mode == 10) || (Mode == 11);
+                        int ChromaBaseNum = OpMatrix[OpNr][14];
+                        int ChromaVertNum = OpMatrix[OpNr][15];
+                        int ChromaVerxNum = OpMatrix[OpNr][16];
 
-                        bool ChromaVert1 = (Mode == 6) || (Mode == 7) || (Mode == 8);
-                        bool ChromaVert3 = (Mode == 9) || (Mode == 10);
-                        bool ChromaVert5 = (Mode == 11);
-
-                        bool ChromaBase = (Mode > 2);
-                        bool ChromaVert = (Mode > 5);
+                        bool ChromaBase = ChromaBaseNum != 0;
+                        bool ChromaVert = ChromaVertNum != 0;
+                        bool ChromaVerx = ChromaVerxNum != 0;
 
                         int ChromaDiv = 1;
-                        if (ChromaBase1) { ChromaDiv = 1; }
-                        if (ChromaBase3) { ChromaDiv = 3; }
-                        if (ChromaBase5) { ChromaDiv = 5; }
+                        if (ChromaBaseNum > 0)
+                        {
+                            ChromaDiv = ChromaBaseNum;
+                        }
+                        if (ChromaVertNum > 0)
+                        {
+                            ChromaDiv = ChromaDiv + ChromaVertNum + ChromaVertNum;
+                        }
+                        if (ChromaVerxNum > 0)
+                        {
+                            ChromaDiv = ChromaDiv + ChromaVerxNum + ChromaVerxNum;
+                        }
 
-                        if (ChromaVert1) { ChromaDiv += 2; }
-                        if (ChromaVert3) { ChromaDiv += 6; }
-                        if (ChromaVert5) { ChromaDiv += 10; }
+                        bool ChromaExt = ((ChromaBaseNum >= 7) || (ChromaVertNum >= 7));
+                        bool ChromaExt2 = ((ChromaVerxNum >= 7));
 
 
                         int RWeight = (((int)OpMatrix[OpNr][8]) << 8) + ((int)OpMatrix[OpNr][9]);
@@ -1125,18 +1121,42 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
 
                         int L1 = PicW_X << 2;
                         int L2 = L1 << 1;
-                        int XW, XE, YN, YS;
+                        int XW, XE, YN, YS, XWW, XEE, YNN, YSS;
                         int PicW_1 = PicW_ - 1;
                         int PicH_1 = PicH_ - 1;
+
                         int _P__R, _P__G, _P__B;
+
                         int _N__R, _N__G, _N__B;
                         int _S__R, _S__G, _S__B;
                         int _E__R, _E__G, _E__B;
                         int _W__R, _W__G, _W__B;
+
                         int _NE_R, _NE_G, _NE_B;
                         int _SE_R, _SE_G, _SE_B;
                         int _NW_R, _NW_G, _NW_B;
                         int _SW_R, _SW_G, _SW_B;
+
+                        int _NE2R, _NE2G, _NE2B;
+                        int _SE2R, _SE2G, _SE2B;
+                        int _NW2R, _NW2G, _NW2B;
+                        int _SW2R, _SW2G, _SW2B;
+
+                        int _NN_R, _NN_G, _NN_B;
+                        int _SS_R, _SS_G, _SS_B;
+                        int _EE_R, _EE_G, _EE_B;
+                        int _WW_R, _WW_G, _WW_B;
+
+                        int _NNER, _NNEG, _NNEB;
+                        int _SSER, _SSEG, _SSEB;
+                        int _NNWR, _NNWG, _NNWB;
+                        int _SSWR, _SSWG, _SSWB;
+
+                        int _NEER, _NEEG, _NEEB;
+                        int _SEER, _SEEG, _SEEB;
+                        int _NWWR, _NWWG, _NWWB;
+                        int _SWWR, _SWWG, _SWWB;
+
                         int PicP;
                         int _NER, _NWR, _SER, _SWR, _N_R, _S_R, _E_R, _W_R, _P_R;
                         int _NEG, _NWG, _SEG, _SWG, _N_G, _S_G, _E_G, _W_G, _P_G;
@@ -1145,10 +1165,14 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                         {
                             YN = Max(Y - 1, 0);
                             YS = Min(Y + 1, PicH_1);
+                            YNN = Max(Y - 2, 0);
+                            YSS = Min(Y + 2, PicH_1);
                             for (X = 0; X < PicW_; X++)
                             {
                                 XW = Max(X - 1, 0);
                                 XE = Min(X + 1, PicW_1);
+                                XWW = Max(X - 2, 0);
+                                XEE = Min(X + 2, PicW_1);
 
                                 switch (LcdLayout)
                                 {
@@ -1198,6 +1222,95 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                             _SW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
                                             _SW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _SW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                            if (ChromaExt)
+                                            {
+                                                PicP = ((Y * PicW_) + XEE) << 2;
+                                                _EE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _EE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _EE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((Y * PicW_) + XWW) << 2;
+                                                _WW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _WW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _WW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YN * PicW_) + XEE) << 2;
+                                                _NEER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NEEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NEEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YS * PicW_) + XEE) << 2;
+                                                _SEER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SEEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SEEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YN * PicW_) + XWW) << 2;
+                                                _NWWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NWWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NWWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YS * PicW_) + XWW) << 2;
+                                                _SWWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SWWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SWWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
+
+                                            if (ChromaVerx)
+                                            {
+                                                PicP = ((YNN * PicW_) + X) << 2;
+                                                _NN_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NN_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NN_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + X) << 2;
+                                                _SS_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SS_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SS_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XE) << 2;
+                                                _NNER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NNEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NNEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XE) << 2;
+                                                _SSER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SSEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SSEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XW) << 2;
+                                                _NNWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NNWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NNWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XW) << 2;
+                                                _SSWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SSWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SSWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
+
+                                            if (ChromaExt2)
+                                            {
+                                                PicP = ((YNN * PicW_) + XEE) << 2;
+                                                _NE2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NE2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NE2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XEE) << 2;
+                                                _SE2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SE2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SE2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XWW) << 2;
+                                                _NW2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NW2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NW2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XWW) << 2;
+                                                _SW2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SW2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SW2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
                                         }
                                         break;
                                     case 1: // H-BGR
@@ -1217,15 +1330,25 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                             _S__G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _S__B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
+                                            PicP = ((Y * PicW_) + XW) << 2;
+                                            _E__R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _E__G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _E__B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
                                             PicP = ((Y * PicW_) + XE) << 2;
                                             _W__R = GammaLUT_I[BmpBuf_[PicP + 2]];
                                             _W__G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _W__B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
-                                            PicP = ((Y * PicW_) + XW) << 2;
-                                            _E__R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _E__G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _E__B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            PicP = ((YN * PicW_) + XW) << 2;
+                                            _NE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _NE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _NE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                            PicP = ((YS * PicW_) + XW) << 2;
+                                            _SE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _SE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _SE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
                                             PicP = ((YN * PicW_) + XE) << 2;
                                             _NW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
@@ -1237,15 +1360,94 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                             _SW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _SW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
-                                            PicP = ((YN * PicW_) + XW) << 2;
-                                            _NE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _NE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _NE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            if (ChromaExt)
+                                            {
+                                                PicP = ((Y * PicW_) + XWW) << 2;
+                                                _EE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _EE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _EE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
-                                            PicP = ((YS * PicW_) + XW) << 2;
-                                            _SE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _SE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _SE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                                PicP = ((Y * PicW_) + XEE) << 2;
+                                                _WW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _WW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _WW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YN * PicW_) + XWW) << 2;
+                                                _NEER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NEEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NEEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YS * PicW_) + XWW) << 2;
+                                                _SEER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SEEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SEEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YN * PicW_) + XEE) << 2;
+                                                _NWWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NWWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NWWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YS * PicW_) + XEE) << 2;
+                                                _SWWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SWWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SWWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
+
+                                            if (ChromaVerx)
+                                            {
+                                                PicP = ((YNN * PicW_) + X) << 2;
+                                                _NN_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NN_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NN_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + X) << 2;
+                                                _SS_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SS_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SS_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XW) << 2;
+                                                _NNER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NNEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NNEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XW) << 2;
+                                                _SSER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SSEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SSEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XE) << 2;
+                                                _NNWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NNWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NNWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XE) << 2;
+                                                _SSWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SSWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SSWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
+
+                                            if (ChromaExt2)
+                                            {
+                                                PicP = ((YNN * PicW_) + XWW) << 2;
+                                                _NE2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NE2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NE2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XWW) << 2;
+                                                _SE2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SE2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SE2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XEE) << 2;
+                                                _NW2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NW2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NW2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XEE) << 2;
+                                                _SW2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SW2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SW2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
                                         }
                                         break;
                                     case 2: // V-RGB
@@ -1255,30 +1457,30 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                             _P__G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _P__B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
-                                            PicP = ((YN * PicW_) + X) << 2;
-                                            _W__R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _W__G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _W__B = GammaLUT_I[BmpBuf_[PicP + 0]];
-
-                                            PicP = ((YS * PicW_) + X) << 2;
-                                            _E__R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _E__G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _E__B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            PicP = ((Y * PicW_) + XW) << 2;
+                                            _N__R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _N__G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _N__B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
                                             PicP = ((Y * PicW_) + XE) << 2;
                                             _S__R = GammaLUT_I[BmpBuf_[PicP + 2]];
                                             _S__G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _S__B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
-                                            PicP = ((Y * PicW_) + XW) << 2;
-                                            _N__R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _N__G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _N__B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            PicP = ((YS * PicW_) + X) << 2;
+                                            _E__R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _E__G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _E__B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
-                                            PicP = ((YN * PicW_) + XE) << 2;
-                                            _SW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _SW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _SW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            PicP = ((YN * PicW_) + X) << 2;
+                                            _W__R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _W__G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _W__B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                            PicP = ((YS * PicW_) + XW) << 2;
+                                            _NE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _NE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _NE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
                                             PicP = ((YS * PicW_) + XE) << 2;
                                             _SE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
@@ -1290,10 +1492,99 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                             _NW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _NW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
-                                            PicP = ((YS * PicW_) + XW) << 2;
-                                            _NE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _NE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _NE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            PicP = ((YN * PicW_) + XE) << 2;
+                                            _SW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _SW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _SW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                            if (ChromaExt)
+                                            {
+                                                PicP = ((YSS * PicW_) + X) << 2;
+                                                _EE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _EE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _EE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + X) << 2;
+                                                _WW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _WW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _WW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XW) << 2;
+                                                _NEER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NEEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NEEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XE) << 2;
+                                                _SEER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SEEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SEEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XW) << 2;
+                                                _NWWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NWWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NWWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XE) << 2;
+                                                _SWWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SWWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SWWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
+
+                                            if (ChromaVerx)
+                                            {
+                                                PicP = ((Y * PicW_) + XWW) << 2;
+                                                _NN_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NN_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NN_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((Y * PicW_) + XEE) << 2;
+                                                _SS_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SS_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SS_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YS * PicW_) + XWW) << 2;
+                                                _NNER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NNEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NNEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YS * PicW_) + XEE) << 2;
+                                                _SSER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SSEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SSEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YN * PicW_) + XWW) << 2;
+                                                _NNWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NNWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NNWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YN * PicW_) + XEE) << 2;
+                                                _SSWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SSWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SSWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
+
+                                            if (ChromaExt2)
+                                            {
+                                                PicP = ((YSS * PicW_) + XWW) << 2;
+                                                _NE2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NE2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NE2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XEE) << 2;
+                                                _SE2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SE2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SE2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XWW) << 2;
+                                                _NW2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NW2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NW2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XEE) << 2;
+                                                _SW2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SW2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SW2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
                                         }
                                         break;
                                     case 3: // V-BGR
@@ -1303,6 +1594,16 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                             _P__G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _P__B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
+                                            PicP = ((Y * PicW_) + XW) << 2;
+                                            _N__R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _N__G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _N__B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                            PicP = ((Y * PicW_) + XE) << 2;
+                                            _S__R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _S__G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _S__B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
                                             PicP = ((YN * PicW_) + X) << 2;
                                             _E__R = GammaLUT_I[BmpBuf_[PicP + 2]];
                                             _E__G = GammaLUT_I[BmpBuf_[PicP + 1]];
@@ -1313,35 +1614,114 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                             _W__G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _W__B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
-                                            PicP = ((Y * PicW_) + XE) << 2;
-                                            _S__R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _S__G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _S__B = GammaLUT_I[BmpBuf_[PicP + 0]];
-
-                                            PicP = ((Y * PicW_) + XW) << 2;
-                                            _N__R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _N__G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _N__B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            PicP = ((YN * PicW_) + XW) << 2;
+                                            _NE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _NE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _NE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
                                             PicP = ((YN * PicW_) + XE) << 2;
                                             _SE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
                                             _SE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _SE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
+                                            PicP = ((YS * PicW_) + XW) << 2;
+                                            _NW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                            _NW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                            _NW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
                                             PicP = ((YS * PicW_) + XE) << 2;
                                             _SW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
                                             _SW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
                                             _SW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
-                                            PicP = ((YN * PicW_) + XW) << 2;
-                                            _NE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _NE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _NE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            if (ChromaExt)
+                                            {
+                                                PicP = ((YNN * PicW_) + X) << 2;
+                                                _EE_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _EE_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _EE_B = GammaLUT_I[BmpBuf_[PicP + 0]];
 
-                                            PicP = ((YS * PicW_) + XW) << 2;
-                                            _NW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
-                                            _NW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
-                                            _NW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                                PicP = ((YSS * PicW_) + X) << 2;
+                                                _WW_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _WW_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _WW_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XW) << 2;
+                                                _NEER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NEEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NEEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XE) << 2;
+                                                _SEER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SEEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SEEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XW) << 2;
+                                                _NWWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NWWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NWWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XE) << 2;
+                                                _SWWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SWWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SWWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
+
+                                            if (ChromaVerx)
+                                            {
+                                                PicP = ((Y * PicW_) + XWW) << 2;
+                                                _NN_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NN_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NN_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((Y * PicW_) + XEE) << 2;
+                                                _SS_R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SS_G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SS_B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YN * PicW_) + XWW) << 2;
+                                                _NNER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NNEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NNEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YN * PicW_) + XEE) << 2;
+                                                _SSER = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SSEG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SSEB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YS * PicW_) + XWW) << 2;
+                                                _NNWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NNWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NNWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YS * PicW_) + XEE) << 2;
+                                                _SSWR = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SSWG = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SSWB = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
+
+                                            if (ChromaExt2)
+                                            {
+                                                PicP = ((YNN * PicW_) + XWW) << 2;
+                                                _NE2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NE2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NE2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YNN * PicW_) + XEE) << 2;
+                                                _SE2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SE2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SE2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XWW) << 2;
+                                                _NW2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _NW2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _NW2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+
+                                                PicP = ((YSS * PicW_) + XEE) << 2;
+                                                _SW2R = GammaLUT_I[BmpBuf_[PicP + 2]];
+                                                _SW2G = GammaLUT_I[BmpBuf_[PicP + 1]];
+                                                _SW2B = GammaLUT_I[BmpBuf_[PicP + 0]];
+                                            }
                                         }
                                         break;
                                 }
@@ -1380,16 +1760,8 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                         }
                                         break;
                                     case 2:
-                                    case 3:
-                                    case 4:
-                                    case 5:
-                                    case 6:
-                                    case 7:
-                                    case 8:
-                                    case 9:
-                                    case 10:
-                                    case 11:
                                         {
+                                            int LumaL6, LumaL5, LumaL4, LumaR4, LumaR5, LumaR6;
 
                                             int LumaL3 = YUV_RGB_L(_W__R, _W__G, _W__B);
                                             int LumaL2 = YUV_RGB_L(_P__R, _W__G, _W__B);
@@ -1399,49 +1771,57 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                             int LumaR2 = YUV_RGB_L(_E__R, _E__G, _P__B);
                                             int LumaR3 = YUV_RGB_L(_E__R, _E__G, _E__B);
 
-                                            int ChromaRL3B = 0;
-                                            int ChromaGL3B = 0;
-                                            int ChromaBL3B = 0;
-                                            int ChromaRL2B = 0;
-                                            int ChromaGL2B = 0;
-                                            int ChromaBL2B = 0;
-                                            int ChromaRL1B = 0;
-                                            int ChromaGL1B = 0;
-                                            int ChromaBL1B = 0;
-                                            int ChromaR00B = 0;
-                                            int ChromaG00B = 0;
-                                            int ChromaB00B = 0;
-                                            int ChromaRR1B = 0;
-                                            int ChromaGR1B = 0;
-                                            int ChromaBR1B = 0;
-                                            int ChromaRR2B = 0;
-                                            int ChromaGR2B = 0;
-                                            int ChromaBR2B = 0;
-                                            int ChromaRR3B = 0;
-                                            int ChromaGR3B = 0;
-                                            int ChromaBR3B = 0;
+                                            if (ChromaExt)
+                                            {
+                                                LumaL6 = YUV_RGB_L(_WW_R, _WW_G, _WW_B);
+                                                LumaL5 = YUV_RGB_L(_W__R, _WW_G, _WW_B);
+                                                LumaL4 = YUV_RGB_L(_W__R, _W__G, _WW_B);
+                                                LumaR4 = YUV_RGB_L(_EE_R, _E__G, _E__B);
+                                                LumaR5 = YUV_RGB_L(_EE_R, _EE_G, _E__B);
+                                                LumaR6 = YUV_RGB_L(_EE_R, _EE_G, _EE_B);
+                                            }
 
-                                            int ChromaRL3V = 0;
-                                            int ChromaGL3V = 0;
-                                            int ChromaBL3V = 0;
-                                            int ChromaRL2V = 0;
-                                            int ChromaGL2V = 0;
-                                            int ChromaBL2V = 0;
-                                            int ChromaRL1V = 0;
-                                            int ChromaGL1V = 0;
-                                            int ChromaBL1V = 0;
-                                            int ChromaR00V = 0;
-                                            int ChromaG00V = 0;
-                                            int ChromaB00V = 0;
-                                            int ChromaRR1V = 0;
-                                            int ChromaGR1V = 0;
-                                            int ChromaBR1V = 0;
-                                            int ChromaRR2V = 0;
-                                            int ChromaGR2V = 0;
-                                            int ChromaBR2V = 0;
-                                            int ChromaRR3V = 0;
-                                            int ChromaGR3V = 0;
-                                            int ChromaBR3V = 0;
+                                            int ChromaRL6B, ChromaGL6B, ChromaBL6B;
+                                            int ChromaRL5B, ChromaGL5B, ChromaBL5B;
+                                            int ChromaRL4B, ChromaGL4B, ChromaBL4B;
+                                            int ChromaRL3B, ChromaGL3B, ChromaBL3B;
+                                            int ChromaRL2B, ChromaGL2B, ChromaBL2B;
+                                            int ChromaRL1B, ChromaGL1B, ChromaBL1B;
+                                            int ChromaR00B, ChromaG00B, ChromaB00B;
+                                            int ChromaRR1B, ChromaGR1B, ChromaBR1B;
+                                            int ChromaRR2B, ChromaGR2B, ChromaBR2B;
+                                            int ChromaRR3B, ChromaGR3B, ChromaBR3B;
+                                            int ChromaRR4B, ChromaGR4B, ChromaBR4B;
+                                            int ChromaRR5B, ChromaGR5B, ChromaBR5B;
+                                            int ChromaRR6B, ChromaGR6B, ChromaBR6B;
+
+                                            int ChromaRL6V, ChromaGL6V, ChromaBL6V;
+                                            int ChromaRL5V, ChromaGL5V, ChromaBL5V;
+                                            int ChromaRL4V, ChromaGL4V, ChromaBL4V;
+                                            int ChromaRL3V, ChromaGL3V, ChromaBL3V;
+                                            int ChromaRL2V, ChromaGL2V, ChromaBL2V;
+                                            int ChromaRL1V, ChromaGL1V, ChromaBL1V;
+                                            int ChromaR00V, ChromaG00V, ChromaB00V;
+                                            int ChromaRR1V, ChromaGR1V, ChromaBR1V;
+                                            int ChromaRR2V, ChromaGR2V, ChromaBR2V;
+                                            int ChromaRR3V, ChromaGR3V, ChromaBR3V;
+                                            int ChromaRR4V, ChromaGR4V, ChromaBR4V;
+                                            int ChromaRR5V, ChromaGR5V, ChromaBR5V;
+                                            int ChromaRR6V, ChromaGR6V, ChromaBR6V;
+
+                                            int ChromaRL6X, ChromaGL6X, ChromaBL6X;
+                                            int ChromaRL5X, ChromaGL5X, ChromaBL5X;
+                                            int ChromaRL4X, ChromaGL4X, ChromaBL4X;
+                                            int ChromaRL3X, ChromaGL3X, ChromaBL3X;
+                                            int ChromaRL2X, ChromaGL2X, ChromaBL2X;
+                                            int ChromaRL1X, ChromaGL1X, ChromaBL1X;
+                                            int ChromaR00X, ChromaG00X, ChromaB00X;
+                                            int ChromaRR1X, ChromaGR1X, ChromaBR1X;
+                                            int ChromaRR2X, ChromaGR2X, ChromaBR2X;
+                                            int ChromaRR3X, ChromaGR3X, ChromaBR3X;
+                                            int ChromaRR4X, ChromaGR4X, ChromaBR4X;
+                                            int ChromaRR5X, ChromaGR5X, ChromaBR5X;
+                                            int ChromaRR6X, ChromaGR6X, ChromaBR6X;
 
                                             if (ChromaBase)
                                             {
@@ -1466,6 +1846,29 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                                 ChromaRR3B = YUV_RGB_R(LumaR3, _E__R);
                                                 ChromaGR3B = YUV_RGB_G(LumaR3, _E__G);
                                                 ChromaBR3B = YUV_RGB_B(LumaR3, _E__B);
+
+                                                if (ChromaExt)
+                                                {
+                                                    ChromaRL6B = YUV_RGB_R(LumaL6, _WW_R);
+                                                    ChromaGL6B = YUV_RGB_G(LumaL6, _WW_G);
+                                                    ChromaBL6B = YUV_RGB_B(LumaL6, _WW_B);
+                                                    ChromaRL5B = YUV_RGB_R(LumaL5, _W__R);
+                                                    ChromaGL5B = YUV_RGB_G(LumaL5, _WW_G);
+                                                    ChromaBL5B = YUV_RGB_B(LumaL5, _WW_B);
+                                                    ChromaRL4B = YUV_RGB_R(LumaL4, _W__R);
+                                                    ChromaGL4B = YUV_RGB_G(LumaL4, _W__G);
+                                                    ChromaBL4B = YUV_RGB_B(LumaL4, _WW_B);
+
+                                                    ChromaRR4B = YUV_RGB_R(LumaR4, _EE_R);
+                                                    ChromaGR4B = YUV_RGB_G(LumaR4, _E__G);
+                                                    ChromaBR4B = YUV_RGB_B(LumaR4, _E__B);
+                                                    ChromaRR5B = YUV_RGB_R(LumaR5, _EE_R);
+                                                    ChromaGR5B = YUV_RGB_G(LumaR5, _EE_G);
+                                                    ChromaBR5B = YUV_RGB_B(LumaR5, _E__B);
+                                                    ChromaRR6B = YUV_RGB_R(LumaR6, _EE_R);
+                                                    ChromaGR6B = YUV_RGB_G(LumaR6, _EE_G);
+                                                    ChromaBR6B = YUV_RGB_B(LumaR6, _EE_B);
+                                                }
                                             }
 
                                             if (ChromaVert)
@@ -1507,94 +1910,350 @@ void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, 
                                                 ChromaRR3V = YUV_RGB_R(LumaR3N, _NE_R) + YUV_RGB_R(LumaR3S, _SE_R);
                                                 ChromaGR3V = YUV_RGB_G(LumaR3N, _NE_G) + YUV_RGB_G(LumaR3S, _SE_G);
                                                 ChromaBR3V = YUV_RGB_B(LumaR3N, _NE_B) + YUV_RGB_B(LumaR3S, _SE_B);
+
+                                                if (ChromaExt)
+                                                {
+                                                    int LumaL6N = YUV_RGB_L(_NWWR, _NWWG, _NWWB);
+                                                    int LumaL5N = YUV_RGB_L(_NW_R, _NWWG, _NWWB);
+                                                    int LumaL4N = YUV_RGB_L(_NW_R, _NW_G, _NWWB);
+
+                                                    int LumaR4N = YUV_RGB_L(_NEER, _NE_G, _NE_B);
+                                                    int LumaR5N = YUV_RGB_L(_NEER, _NEEG, _NE_B);
+                                                    int LumaR6N = YUV_RGB_L(_NEER, _NEEG, _NEEB);
+
+                                                    int LumaL6S = YUV_RGB_L(_SWWR, _SWWG, _SWWB);
+                                                    int LumaL5S = YUV_RGB_L(_SW_R, _SWWG, _SWWB);
+                                                    int LumaL4S = YUV_RGB_L(_SW_R, _SW_G, _SWWB);
+
+                                                    int LumaR4S = YUV_RGB_L(_SEER, _SE_G, _SE_B);
+                                                    int LumaR5S = YUV_RGB_L(_SEER, _SEEG, _SE_B);
+                                                    int LumaR6S = YUV_RGB_L(_SEER, _SEEG, _SEEB);
+
+                                                    ChromaRL6V = YUV_RGB_R(LumaL6N, _NWWR) + YUV_RGB_R(LumaL6S, _SWWR);
+                                                    ChromaGL6V = YUV_RGB_G(LumaL6N, _NWWG) + YUV_RGB_G(LumaL6S, _SWWG);
+                                                    ChromaBL6V = YUV_RGB_B(LumaL6N, _NWWB) + YUV_RGB_B(LumaL6S, _SWWB);
+                                                    ChromaRL5V = YUV_RGB_R(LumaL5N, _NW_R) + YUV_RGB_R(LumaL5S, _SW_R);
+                                                    ChromaGL5V = YUV_RGB_G(LumaL5N, _NWWG) + YUV_RGB_G(LumaL5S, _SWWG);
+                                                    ChromaBL5V = YUV_RGB_B(LumaL5N, _NWWB) + YUV_RGB_B(LumaL5S, _SWWB);
+                                                    ChromaRL4V = YUV_RGB_R(LumaL4N, _NW_R) + YUV_RGB_R(LumaL4S, _SW_R);
+                                                    ChromaGL4V = YUV_RGB_G(LumaL4N, _NW_G) + YUV_RGB_G(LumaL4S, _SW_G);
+                                                    ChromaBL4V = YUV_RGB_B(LumaL4N, _NWWB) + YUV_RGB_B(LumaL4S, _SWWB);
+
+                                                    ChromaRR4V = YUV_RGB_R(LumaR4N, _NEER) + YUV_RGB_R(LumaR4S, _SEER);
+                                                    ChromaGR4V = YUV_RGB_G(LumaR4N, _NE_G) + YUV_RGB_G(LumaR4S, _SE_G);
+                                                    ChromaBR4V = YUV_RGB_B(LumaR4N, _NE_B) + YUV_RGB_B(LumaR4S, _SE_B);
+                                                    ChromaRR5V = YUV_RGB_R(LumaR5N, _NEER) + YUV_RGB_R(LumaR5S, _SEER);
+                                                    ChromaGR5V = YUV_RGB_G(LumaR5N, _NEEG) + YUV_RGB_G(LumaR5S, _SEEG);
+                                                    ChromaBR5V = YUV_RGB_B(LumaR5N, _NE_B) + YUV_RGB_B(LumaR5S, _SE_B);
+                                                    ChromaRR6V = YUV_RGB_R(LumaR6N, _NEER) + YUV_RGB_R(LumaR6S, _SEER);
+                                                    ChromaGR6V = YUV_RGB_G(LumaR6N, _NEEG) + YUV_RGB_G(LumaR6S, _SEEG);
+                                                    ChromaBR6V = YUV_RGB_B(LumaR6N, _NEEB) + YUV_RGB_B(LumaR6S, _SEEB);
+                                                }
                                             }
 
-                                            int ChromaXRL1 = 0;
-                                            int ChromaXGL1 = 0;
-                                            int ChromaXBL1 = 0;
-                                            int ChromaXR00 = 0;
-                                            int ChromaXG00 = 0;
-                                            int ChromaXB00 = 0;
-                                            int ChromaXRR1 = 0;
-                                            int ChromaXGR1 = 0;
-                                            int ChromaXBR1 = 0;
-
-                                            if (ChromaBase1)
+                                            if (ChromaVerx)
                                             {
-                                                ChromaXRL1 = ChromaRL1B;
-                                                ChromaXGL1 = ChromaGL1B;
-                                                ChromaXBL1 = ChromaBL1B;
-                                                ChromaXR00 = ChromaR00B;
-                                                ChromaXG00 = ChromaG00B;
-                                                ChromaXB00 = ChromaB00B;
-                                                ChromaXRR1 = ChromaRR1B;
-                                                ChromaXGR1 = ChromaGR1B;
-                                                ChromaXBR1 = ChromaBR1B;
+                                                int LumaL3N = YUV_RGB_L(_NNWR, _NNWG, _NNWB);
+                                                int LumaL2N = YUV_RGB_L(_NN_R, _NNWG, _NNWB);
+                                                int LumaL1N = YUV_RGB_L(_NN_R, _NN_G, _NNWB);
+                                                int Luma00N = YUV_RGB_L(_NN_R, _NN_G, _NN_B);
+                                                int LumaR1N = YUV_RGB_L(_NNER, _NN_G, _NN_B);
+                                                int LumaR2N = YUV_RGB_L(_NNER, _NNEG, _NN_B);
+                                                int LumaR3N = YUV_RGB_L(_NNER, _NNEG, _NNEB);
+
+                                                int LumaL3S = YUV_RGB_L(_SSWR, _SSWG, _SSWB);
+                                                int LumaL2S = YUV_RGB_L(_SS_R, _SSWG, _SSWB);
+                                                int LumaL1S = YUV_RGB_L(_SS_R, _SS_G, _SSWB);
+                                                int Luma00S = YUV_RGB_L(_SS_R, _SS_G, _SS_B);
+                                                int LumaR1S = YUV_RGB_L(_SSER, _SS_G, _SS_B);
+                                                int LumaR2S = YUV_RGB_L(_SSER, _SSEG, _SS_B);
+                                                int LumaR3S = YUV_RGB_L(_SSER, _SSEG, _SSEB);
+
+                                                ChromaRL3X = YUV_RGB_R(LumaL3N, _NNWR) + YUV_RGB_R(LumaL3S, _SSWR);
+                                                ChromaGL3X = YUV_RGB_G(LumaL3N, _NNWG) + YUV_RGB_G(LumaL3S, _SSWG);
+                                                ChromaBL3X = YUV_RGB_B(LumaL3N, _NNWB) + YUV_RGB_B(LumaL3S, _SSWB);
+                                                ChromaRL2X = YUV_RGB_R(LumaL2N, _NN_R) + YUV_RGB_R(LumaL2S, _SS_R);
+                                                ChromaGL2X = YUV_RGB_G(LumaL2N, _NNWG) + YUV_RGB_G(LumaL2S, _SSWG);
+                                                ChromaBL2X = YUV_RGB_B(LumaL2N, _NNWB) + YUV_RGB_B(LumaL2S, _SSWB);
+                                                ChromaRL1X = YUV_RGB_R(LumaL1N, _NN_R) + YUV_RGB_R(LumaL1S, _SS_R);
+                                                ChromaGL1X = YUV_RGB_G(LumaL1N, _NN_G) + YUV_RGB_G(LumaL1S, _SS_G);
+                                                ChromaBL1X = YUV_RGB_B(LumaL1N, _NNWB) + YUV_RGB_B(LumaL1S, _SSWB);
+                                                ChromaR00X = YUV_RGB_R(Luma00N, _NN_R) + YUV_RGB_R(Luma00S, _SS_R);
+                                                ChromaG00X = YUV_RGB_G(Luma00N, _NN_G) + YUV_RGB_G(Luma00S, _SS_G);
+                                                ChromaB00X = YUV_RGB_B(Luma00N, _NN_B) + YUV_RGB_B(Luma00S, _SS_B);
+                                                ChromaRR1X = YUV_RGB_R(LumaR1N, _NNER) + YUV_RGB_R(LumaR1S, _SSER);
+                                                ChromaGR1X = YUV_RGB_G(LumaR1N, _NN_G) + YUV_RGB_G(LumaR1S, _SS_G);
+                                                ChromaBR1X = YUV_RGB_B(LumaR1N, _NN_B) + YUV_RGB_B(LumaR1S, _SS_B);
+                                                ChromaRR2X = YUV_RGB_R(LumaR2N, _NNER) + YUV_RGB_R(LumaR2S, _SSER);
+                                                ChromaGR2X = YUV_RGB_G(LumaR2N, _NNEG) + YUV_RGB_G(LumaR2S, _SSEG);
+                                                ChromaBR2X = YUV_RGB_B(LumaR2N, _NN_B) + YUV_RGB_B(LumaR2S, _SS_B);
+                                                ChromaRR3X = YUV_RGB_R(LumaR3N, _NNER) + YUV_RGB_R(LumaR3S, _SSER);
+                                                ChromaGR3X = YUV_RGB_G(LumaR3N, _NNEG) + YUV_RGB_G(LumaR3S, _SSEG);
+                                                ChromaBR3X = YUV_RGB_B(LumaR3N, _NNEB) + YUV_RGB_B(LumaR3S, _SSEB);
+
+                                                if (ChromaExt2)
+                                                {
+                                                    int LumaL6N = YUV_RGB_L(_NW2R, _NW2G, _NW2B);
+                                                    int LumaL5N = YUV_RGB_L(_NNWR, _NW2G, _NW2B);
+                                                    int LumaL4N = YUV_RGB_L(_NNWR, _NNWG, _NW2B);
+
+                                                    int LumaR4N = YUV_RGB_L(_NE2R, _NNEG, _NNEB);
+                                                    int LumaR5N = YUV_RGB_L(_NE2R, _NE2G, _NNEB);
+                                                    int LumaR6N = YUV_RGB_L(_NE2R, _NE2G, _NE2B);
+
+                                                    int LumaL6S = YUV_RGB_L(_SW2R, _SW2G, _SW2B);
+                                                    int LumaL5S = YUV_RGB_L(_SSWR, _SW2G, _SW2B);
+                                                    int LumaL4S = YUV_RGB_L(_SSWR, _SSWG, _SW2B);
+
+                                                    int LumaR4S = YUV_RGB_L(_SE2R, _SSEG, _SSEB);
+                                                    int LumaR5S = YUV_RGB_L(_SE2R, _SE2G, _SSEB);
+                                                    int LumaR6S = YUV_RGB_L(_SE2R, _SE2G, _SE2B);
+
+                                                    ChromaRL6X = YUV_RGB_R(LumaL6N, _NW2R) + YUV_RGB_R(LumaL6S, _SW2R);
+                                                    ChromaGL6X = YUV_RGB_G(LumaL6N, _NW2G) + YUV_RGB_G(LumaL6S, _SW2G);
+                                                    ChromaBL6X = YUV_RGB_B(LumaL6N, _NW2B) + YUV_RGB_B(LumaL6S, _SW2B);
+                                                    ChromaRL5X = YUV_RGB_R(LumaL5N, _NNWR) + YUV_RGB_R(LumaL5S, _SSWR);
+                                                    ChromaGL5X = YUV_RGB_G(LumaL5N, _NW2G) + YUV_RGB_G(LumaL5S, _SW2G);
+                                                    ChromaBL5X = YUV_RGB_B(LumaL5N, _NW2B) + YUV_RGB_B(LumaL5S, _SW2B);
+                                                    ChromaRL4X = YUV_RGB_R(LumaL4N, _NNWR) + YUV_RGB_R(LumaL4S, _SSWR);
+                                                    ChromaGL4X = YUV_RGB_G(LumaL4N, _NNWG) + YUV_RGB_G(LumaL4S, _SSWG);
+                                                    ChromaBL4X = YUV_RGB_B(LumaL4N, _NW2B) + YUV_RGB_B(LumaL4S, _SW2B);
+
+                                                    ChromaRR4X = YUV_RGB_R(LumaR4N, _NE2R) + YUV_RGB_R(LumaR4S, _SE2R);
+                                                    ChromaGR4X = YUV_RGB_G(LumaR4N, _NNEG) + YUV_RGB_G(LumaR4S, _SSEG);
+                                                    ChromaBR4X = YUV_RGB_B(LumaR4N, _NNEB) + YUV_RGB_B(LumaR4S, _SSEB);
+                                                    ChromaRR5X = YUV_RGB_R(LumaR5N, _NE2R) + YUV_RGB_R(LumaR5S, _SE2R);
+                                                    ChromaGR5X = YUV_RGB_G(LumaR5N, _NE2G) + YUV_RGB_G(LumaR5S, _SE2G);
+                                                    ChromaBR5X = YUV_RGB_B(LumaR5N, _NNEB) + YUV_RGB_B(LumaR5S, _SSEB);
+                                                    ChromaRR6X = YUV_RGB_R(LumaR6N, _NE2R) + YUV_RGB_R(LumaR6S, _SE2R);
+                                                    ChromaGR6X = YUV_RGB_G(LumaR6N, _NE2G) + YUV_RGB_G(LumaR6S, _SE2G);
+                                                    ChromaBR6X = YUV_RGB_B(LumaR6N, _NE2B) + YUV_RGB_B(LumaR6S, _SE2B);
+                                                }
                                             }
 
-                                            if (ChromaBase3)
+                                            int ChromaXRL1, ChromaXGL1, ChromaXBL1;
+                                            int ChromaXR00, ChromaXG00, ChromaXB00;
+                                            int ChromaXRR1, ChromaXGR1, ChromaXBR1;
+
+                                            switch (ChromaBaseNum)
                                             {
-                                                ChromaXRL1 = ChromaRL2B + ChromaRL1B + ChromaR00B;
-                                                ChromaXGL1 = ChromaGL2B + ChromaGL1B + ChromaG00B;
-                                                ChromaXBL1 = ChromaBL2B + ChromaBL1B + ChromaB00B;
-                                                ChromaXR00 = ChromaRL1B + ChromaR00B + ChromaRR1B;
-                                                ChromaXG00 = ChromaGL1B + ChromaG00B + ChromaGR1B;
-                                                ChromaXB00 = ChromaBL1B + ChromaB00B + ChromaBR1B;
-                                                ChromaXRR1 = ChromaR00B + ChromaRR1B + ChromaRR2B;
-                                                ChromaXGR1 = ChromaG00B + ChromaGR1B + ChromaGR2B;
-                                                ChromaXBR1 = ChromaB00B + ChromaBR1B + ChromaBR2B;
+                                                case 1:
+                                                    ChromaXRL1 = ChromaRL1B;
+                                                    ChromaXGL1 = ChromaGL1B;
+                                                    ChromaXBL1 = ChromaBL1B;
+                                                    ChromaXR00 = ChromaR00B;
+                                                    ChromaXG00 = ChromaG00B;
+                                                    ChromaXB00 = ChromaB00B;
+                                                    ChromaXRR1 = ChromaRR1B;
+                                                    ChromaXGR1 = ChromaGR1B;
+                                                    ChromaXBR1 = ChromaBR1B;
+                                                    break;
+                                                case 3:
+                                                    ChromaXRL1 = ChromaRL2B + ChromaRL1B + ChromaR00B;
+                                                    ChromaXGL1 = ChromaGL2B + ChromaGL1B + ChromaG00B;
+                                                    ChromaXBL1 = ChromaBL2B + ChromaBL1B + ChromaB00B;
+                                                    ChromaXR00 = ChromaRL1B + ChromaR00B + ChromaRR1B;
+                                                    ChromaXG00 = ChromaGL1B + ChromaG00B + ChromaGR1B;
+                                                    ChromaXB00 = ChromaBL1B + ChromaB00B + ChromaBR1B;
+                                                    ChromaXRR1 = ChromaR00B + ChromaRR1B + ChromaRR2B;
+                                                    ChromaXGR1 = ChromaG00B + ChromaGR1B + ChromaGR2B;
+                                                    ChromaXBR1 = ChromaB00B + ChromaBR1B + ChromaBR2B;
+                                                    break;
+                                                case 5:
+                                                    ChromaXRL1 = ChromaRL3B + ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B;
+                                                    ChromaXGL1 = ChromaGL3B + ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B;
+                                                    ChromaXBL1 = ChromaBL3B + ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B;
+                                                    ChromaXR00 = ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B;
+                                                    ChromaXG00 = ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B;
+                                                    ChromaXB00 = ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B;
+                                                    ChromaXRR1 = ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B + ChromaRR3B;
+                                                    ChromaXGR1 = ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B + ChromaGR3B;
+                                                    ChromaXBR1 = ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B + ChromaBR3B;
+                                                    break;
+                                                case 7:
+                                                    ChromaXRL1 = ChromaRL4B + ChromaRL3B + ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B;
+                                                    ChromaXGL1 = ChromaGL4B + ChromaGL3B + ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B;
+                                                    ChromaXBL1 = ChromaBL4B + ChromaBL3B + ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B;
+                                                    ChromaXR00 = ChromaRL3B + ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B + ChromaRR3B;
+                                                    ChromaXG00 = ChromaGL3B + ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B + ChromaGR3B;
+                                                    ChromaXB00 = ChromaBL3B + ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B + ChromaBR3B;
+                                                    ChromaXRR1 = ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B + ChromaRR3B + ChromaRR4B;
+                                                    ChromaXGR1 = ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B + ChromaGR3B + ChromaGR4B;
+                                                    ChromaXBR1 = ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B + ChromaBR3B + ChromaBR4B;
+                                                    break;
+                                                case 9:
+                                                    ChromaXRL1 = ChromaRL5B + ChromaRL4B + ChromaRL3B + ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B + ChromaRR3B;
+                                                    ChromaXGL1 = ChromaGL5B + ChromaGL4B + ChromaGL3B + ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B + ChromaGR3B;
+                                                    ChromaXBL1 = ChromaBL5B + ChromaBL4B + ChromaBL3B + ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B + ChromaBR3B;
+                                                    ChromaXR00 = ChromaRL4B + ChromaRL3B + ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B + ChromaRR3B + ChromaRR4B;
+                                                    ChromaXG00 = ChromaGL4B + ChromaGL3B + ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B + ChromaGR3B + ChromaGR4B;
+                                                    ChromaXB00 = ChromaBL4B + ChromaBL3B + ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B + ChromaBR3B + ChromaBR4B;
+                                                    ChromaXRR1 = ChromaRL3B + ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B + ChromaRR3B + ChromaRR4B + ChromaRR5B;
+                                                    ChromaXGR1 = ChromaGL3B + ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B + ChromaGR3B + ChromaGR4B + ChromaGR5B;
+                                                    ChromaXBR1 = ChromaBL3B + ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B + ChromaBR3B + ChromaBR4B + ChromaBR5B;
+                                                    break;
+                                                case 11:
+                                                    ChromaXRL1 = ChromaRL6B + ChromaRL5B + ChromaRL4B + ChromaRL3B + ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B + ChromaRR3B + ChromaRR4B;
+                                                    ChromaXGL1 = ChromaGL6B + ChromaGL5B + ChromaGL4B + ChromaGL3B + ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B + ChromaGR3B + ChromaGR4B;
+                                                    ChromaXBL1 = ChromaBL6B + ChromaBL5B + ChromaBL4B + ChromaBL3B + ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B + ChromaBR3B + ChromaBR4B;
+                                                    ChromaXR00 = ChromaRL5B + ChromaRL4B + ChromaRL3B + ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B + ChromaRR3B + ChromaRR4B + ChromaRR5B;
+                                                    ChromaXG00 = ChromaGL5B + ChromaGL4B + ChromaGL3B + ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B + ChromaGR3B + ChromaGR4B + ChromaGR5B;
+                                                    ChromaXB00 = ChromaBL5B + ChromaBL4B + ChromaBL3B + ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B + ChromaBR3B + ChromaBR4B + ChromaBR5B;
+                                                    ChromaXRR1 = ChromaRL4B + ChromaRL3B + ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B + ChromaRR3B + ChromaRR4B + ChromaRR5B + ChromaRR6B;
+                                                    ChromaXGR1 = ChromaGL4B + ChromaGL3B + ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B + ChromaGR3B + ChromaGR4B + ChromaGR5B + ChromaGR6B;
+                                                    ChromaXBR1 = ChromaBL4B + ChromaBL3B + ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B + ChromaBR3B + ChromaBR4B + ChromaBR5B + ChromaBR6B;
+                                                    break;
+                                                default:
+                                                    ChromaXRL1 = 0;
+                                                    ChromaXGL1 = 0;
+                                                    ChromaXBL1 = 0;
+                                                    ChromaXR00 = 0;
+                                                    ChromaXG00 = 0;
+                                                    ChromaXB00 = 0;
+                                                    ChromaXRR1 = 0;
+                                                    ChromaXGR1 = 0;
+                                                    ChromaXBR1 = 0;
+                                                    break;
                                             }
 
-                                            if (ChromaBase5)
+                                            switch (ChromaVertNum)
                                             {
-                                                ChromaXRL1 = ChromaRL3B + ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B;
-                                                ChromaXGL1 = ChromaGL3B + ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B;
-                                                ChromaXBL1 = ChromaBL3B + ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B;
-                                                ChromaXR00 = ChromaRL2B + ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B;
-                                                ChromaXG00 = ChromaGL2B + ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B;
-                                                ChromaXB00 = ChromaBL2B + ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B;
-                                                ChromaXRR1 = ChromaRL1B + ChromaR00B + ChromaRR1B + ChromaRR2B + ChromaRR3B;
-                                                ChromaXGR1 = ChromaGL1B + ChromaG00B + ChromaGR1B + ChromaGR2B + ChromaGR3B;
-                                                ChromaXBR1 = ChromaBL1B + ChromaB00B + ChromaBR1B + ChromaBR2B + ChromaBR3B;
+                                                case 1:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL1V;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL1V;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL1V;
+                                                    ChromaXR00 = ChromaXR00 + ChromaR00V;
+                                                    ChromaXG00 = ChromaXG00 + ChromaG00V;
+                                                    ChromaXB00 = ChromaXB00 + ChromaB00V;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaRR1V;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaGR1V;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaBR1V;
+                                                    break;
+                                                case 3:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL2V + ChromaRL1V + ChromaR00V;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL2V + ChromaGL1V + ChromaG00V;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL2V + ChromaBL1V + ChromaB00V;
+                                                    ChromaXR00 = ChromaXR00 + ChromaRL1V + ChromaR00V + ChromaRR1V;
+                                                    ChromaXG00 = ChromaXG00 + ChromaGL1V + ChromaG00V + ChromaGR1V;
+                                                    ChromaXB00 = ChromaXB00 + ChromaBL1V + ChromaB00V + ChromaBR1V;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaR00V + ChromaRR1V + ChromaRR2V;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaG00V + ChromaGR1V + ChromaGR2V;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaB00V + ChromaBR1V + ChromaBR2V;
+                                                    break;
+                                                case 5:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL3V + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL3V + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL3V + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V;
+                                                    ChromaXR00 = ChromaXR00 + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V;
+                                                    ChromaXG00 = ChromaXG00 + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V;
+                                                    ChromaXB00 = ChromaXB00 + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V + ChromaRR3V;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V + ChromaGR3V;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V + ChromaBR3V;
+                                                    break;
+                                                case 7:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL4V + ChromaRL3V + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL4V + ChromaGL3V + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL4V + ChromaBL3V + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V;
+                                                    ChromaXR00 = ChromaXR00 + ChromaRL3V + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V + ChromaRR3V;
+                                                    ChromaXG00 = ChromaXG00 + ChromaGL3V + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V + ChromaGR3V;
+                                                    ChromaXB00 = ChromaXB00 + ChromaBL3V + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V + ChromaBR3V;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V + ChromaRR3V + ChromaRR4V;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V + ChromaGR3V + ChromaGR4V;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V + ChromaBR3V + ChromaBR4V;
+                                                    break;
+                                                case 9:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL5V + ChromaRL4V + ChromaRL3V + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V + ChromaRR3V;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL5V + ChromaGL4V + ChromaGL3V + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V + ChromaGR3V;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL5V + ChromaBL4V + ChromaBL3V + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V + ChromaBR3V;
+                                                    ChromaXR00 = ChromaXR00 + ChromaRL4V + ChromaRL3V + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V + ChromaRR3V + ChromaRR4V;
+                                                    ChromaXG00 = ChromaXG00 + ChromaGL4V + ChromaGL3V + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V + ChromaGR3V + ChromaGR4V;
+                                                    ChromaXB00 = ChromaXB00 + ChromaBL4V + ChromaBL3V + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V + ChromaBR3V + ChromaBR4V;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaRL3V + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V + ChromaRR3V + ChromaRR4V + ChromaRR5V;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaGL3V + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V + ChromaGR3V + ChromaGR4V + ChromaGR5V;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaBL3V + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V + ChromaBR3V + ChromaBR4V + ChromaBR5V;
+                                                    break;
+                                                case 11:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL6V + ChromaRL5V + ChromaRL4V + ChromaRL3V + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V + ChromaRR3V + ChromaRR4V;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL6V + ChromaGL5V + ChromaGL4V + ChromaGL3V + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V + ChromaGR3V + ChromaGR4V;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL6V + ChromaBL5V + ChromaBL4V + ChromaBL3V + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V + ChromaBR3V + ChromaBR4V;
+                                                    ChromaXR00 = ChromaXR00 + ChromaRL5V + ChromaRL4V + ChromaRL3V + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V + ChromaRR3V + ChromaRR4V + ChromaRR5V;
+                                                    ChromaXG00 = ChromaXG00 + ChromaGL5V + ChromaGL4V + ChromaGL3V + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V + ChromaGR3V + ChromaGR4V + ChromaGR5V;
+                                                    ChromaXB00 = ChromaXB00 + ChromaBL5V + ChromaBL4V + ChromaBL3V + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V + ChromaBR3V + ChromaBR4V + ChromaBR5V;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaRL4V + ChromaRL3V + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V + ChromaRR3V + ChromaRR4V + ChromaRR5V + ChromaRR6V;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaGL4V + ChromaGL3V + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V + ChromaGR3V + ChromaGR4V + ChromaGR5V + ChromaGR6V;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaBL4V + ChromaBL3V + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V + ChromaBR3V + ChromaBR4V + ChromaBR5V + ChromaBR6V;
+                                                    break;
                                             }
 
-                                            if (ChromaVert1)
+                                            switch (ChromaVerxNum)
                                             {
-                                                ChromaXRL1 = ChromaXRL1 + ChromaRL1V;
-                                                ChromaXGL1 = ChromaXGL1 + ChromaGL1V;
-                                                ChromaXBL1 = ChromaXBL1 + ChromaBL1V;
-                                                ChromaXR00 = ChromaXR00 + ChromaR00V;
-                                                ChromaXG00 = ChromaXG00 + ChromaG00V;
-                                                ChromaXB00 = ChromaXB00 + ChromaB00V;
-                                                ChromaXRR1 = ChromaXRR1 + ChromaRR1V;
-                                                ChromaXGR1 = ChromaXGR1 + ChromaGR1V;
-                                                ChromaXBR1 = ChromaXBR1 + ChromaBR1V;
-                                            }
-
-                                            if (ChromaVert3)
-                                            {
-                                                ChromaXRL1 = ChromaXRL1 + ChromaRL2V + ChromaRL1V + ChromaR00V;
-                                                ChromaXGL1 = ChromaXGL1 + ChromaGL2V + ChromaGL1V + ChromaG00V;
-                                                ChromaXBL1 = ChromaXBL1 + ChromaBL2V + ChromaBL1V + ChromaB00V;
-                                                ChromaXR00 = ChromaXR00 + ChromaRL1V + ChromaR00V + ChromaRR1V;
-                                                ChromaXG00 = ChromaXG00 + ChromaGL1V + ChromaG00V + ChromaGR1V;
-                                                ChromaXB00 = ChromaXB00 + ChromaBL1V + ChromaB00V + ChromaBR1V;
-                                                ChromaXRR1 = ChromaXRR1 + ChromaR00V + ChromaRR1V + ChromaRR2V;
-                                                ChromaXGR1 = ChromaXGR1 + ChromaG00V + ChromaGR1V + ChromaGR2V;
-                                                ChromaXBR1 = ChromaXBR1 + ChromaB00V + ChromaBR1V + ChromaBR2V;
-                                            }
-
-                                            if (ChromaVert5)
-                                            {
-                                                ChromaXRL1 = ChromaXRL1 + ChromaRL3V + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V;
-                                                ChromaXGL1 = ChromaXGL1 + ChromaGL3V + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V;
-                                                ChromaXBL1 = ChromaXBL1 + ChromaBL3V + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V;
-                                                ChromaXR00 = ChromaXR00 + ChromaRL2V + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V;
-                                                ChromaXG00 = ChromaXG00 + ChromaGL2V + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V;
-                                                ChromaXB00 = ChromaXB00 + ChromaBL2V + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V;
-                                                ChromaXRR1 = ChromaXRR1 + ChromaRL1V + ChromaR00V + ChromaRR1V + ChromaRR2V + ChromaRR3V;
-                                                ChromaXGR1 = ChromaXGR1 + ChromaGL1V + ChromaG00V + ChromaGR1V + ChromaGR2V + ChromaGR3V;
-                                                ChromaXBR1 = ChromaXBR1 + ChromaBL1V + ChromaB00V + ChromaBR1V + ChromaBR2V + ChromaBR3V;
+                                                case 1:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL1X;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL1X;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL1X;
+                                                    ChromaXR00 = ChromaXR00 + ChromaR00X;
+                                                    ChromaXG00 = ChromaXG00 + ChromaG00X;
+                                                    ChromaXB00 = ChromaXB00 + ChromaB00X;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaRR1X;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaGR1X;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaBR1X;
+                                                    break;
+                                                case 3:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL2X + ChromaRL1X + ChromaR00X;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL2X + ChromaGL1X + ChromaG00X;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL2X + ChromaBL1X + ChromaB00X;
+                                                    ChromaXR00 = ChromaXR00 + ChromaRL1X + ChromaR00X + ChromaRR1X;
+                                                    ChromaXG00 = ChromaXG00 + ChromaGL1X + ChromaG00X + ChromaGR1X;
+                                                    ChromaXB00 = ChromaXB00 + ChromaBL1X + ChromaB00X + ChromaBR1X;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaR00X + ChromaRR1X + ChromaRR2X;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaG00X + ChromaGR1X + ChromaGR2X;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaB00X + ChromaBR1X + ChromaBR2X;
+                                                    break;
+                                                case 5:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL3X + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL3X + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL3X + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X;
+                                                    ChromaXR00 = ChromaXR00 + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X;
+                                                    ChromaXG00 = ChromaXG00 + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X;
+                                                    ChromaXB00 = ChromaXB00 + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X + ChromaRR3X;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X + ChromaGR3X;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X + ChromaBR3X;
+                                                    break;
+                                                case 7:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL4X + ChromaRL3X + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL4X + ChromaGL3X + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL4X + ChromaBL3X + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X;
+                                                    ChromaXR00 = ChromaXR00 + ChromaRL3X + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X + ChromaRR3X;
+                                                    ChromaXG00 = ChromaXG00 + ChromaGL3X + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X + ChromaGR3X;
+                                                    ChromaXB00 = ChromaXB00 + ChromaBL3X + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X + ChromaBR3X;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X + ChromaRR3X + ChromaRR4X;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X + ChromaGR3X + ChromaGR4X;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X + ChromaBR3X + ChromaBR4X;
+                                                    break;
+                                                case 9:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL5X + ChromaRL4X + ChromaRL3X + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X + ChromaRR3X;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL5X + ChromaGL4X + ChromaGL3X + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X + ChromaGR3X;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL5X + ChromaBL4X + ChromaBL3X + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X + ChromaBR3X;
+                                                    ChromaXR00 = ChromaXR00 + ChromaRL4X + ChromaRL3X + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X + ChromaRR3X + ChromaRR4X;
+                                                    ChromaXG00 = ChromaXG00 + ChromaGL4X + ChromaGL3X + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X + ChromaGR3X + ChromaGR4X;
+                                                    ChromaXB00 = ChromaXB00 + ChromaBL4X + ChromaBL3X + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X + ChromaBR3X + ChromaBR4X;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaRL3X + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X + ChromaRR3X + ChromaRR4X + ChromaRR5X;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaGL3X + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X + ChromaGR3X + ChromaGR4X + ChromaGR5X;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaBL3X + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X + ChromaBR3X + ChromaBR4X + ChromaBR5X;
+                                                    break;
+                                                case 11:
+                                                    ChromaXRL1 = ChromaXRL1 + ChromaRL6X + ChromaRL5X + ChromaRL4X + ChromaRL3X + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X + ChromaRR3X + ChromaRR4X;
+                                                    ChromaXGL1 = ChromaXGL1 + ChromaGL6X + ChromaGL5X + ChromaGL4X + ChromaGL3X + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X + ChromaGR3X + ChromaGR4X;
+                                                    ChromaXBL1 = ChromaXBL1 + ChromaBL6X + ChromaBL5X + ChromaBL4X + ChromaBL3X + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X + ChromaBR3X + ChromaBR4X;
+                                                    ChromaXR00 = ChromaXR00 + ChromaRL5X + ChromaRL4X + ChromaRL3X + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X + ChromaRR3X + ChromaRR4X + ChromaRR5X;
+                                                    ChromaXG00 = ChromaXG00 + ChromaGL5X + ChromaGL4X + ChromaGL3X + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X + ChromaGR3X + ChromaGR4X + ChromaGR5X;
+                                                    ChromaXB00 = ChromaXB00 + ChromaBL5X + ChromaBL4X + ChromaBL3X + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X + ChromaBR3X + ChromaBR4X + ChromaBR5X;
+                                                    ChromaXRR1 = ChromaXRR1 + ChromaRL4X + ChromaRL3X + ChromaRL2X + ChromaRL1X + ChromaR00X + ChromaRR1X + ChromaRR2X + ChromaRR3X + ChromaRR4X + ChromaRR5X + ChromaRR6X;
+                                                    ChromaXGR1 = ChromaXGR1 + ChromaGL4X + ChromaGL3X + ChromaGL2X + ChromaGL1X + ChromaG00X + ChromaGR1X + ChromaGR2X + ChromaGR3X + ChromaGR4X + ChromaGR5X + ChromaGR6X;
+                                                    ChromaXBR1 = ChromaXBR1 + ChromaBL4X + ChromaBL3X + ChromaBL2X + ChromaBL1X + ChromaB00X + ChromaBR1X + ChromaBR2X + ChromaBR3X + ChromaBR4X + ChromaBR5X + ChromaBR6X;
+                                                    break;
                                             }
 
                                             ChromaXRL1 = ChromaXRL1 / ChromaDiv;
@@ -2170,9 +2829,9 @@ inline void PicThread::GetColor(uchar * Bmp, int PicW__, int PicH__, int X, int 
                 if ((XX >= 0) && (XX < PicW__))
                 {
                     PicP = ((YY * PicW__) + XX) << 2;
-                    R = R + Bmp[PicP + 2];
-                    G = G + Bmp[PicP + 1];
-                    B = B + Bmp[PicP + 0];
+                    R = R + GammaLUT_I[Bmp[PicP + 2]];
+                    G = G + GammaLUT_I[Bmp[PicP + 1]];
+                    B = B + GammaLUT_I[Bmp[PicP + 0]];
                     T++;
                 }
             }

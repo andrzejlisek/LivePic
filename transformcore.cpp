@@ -104,6 +104,9 @@ void TransformCore::ListLoad(string FileName)
         CF.ParamGet(ItemId + "Trans0ConR", ItemX.Trans0ConR);
         CF.ParamGet(ItemId + "Trans0ConG", ItemX.Trans0ConG);
         CF.ParamGet(ItemId + "Trans0ConB", ItemX.Trans0ConB);
+        CF.ParamGet(ItemId + "Trans0ConBiasR", ItemX.Trans0ConBiasR);
+        CF.ParamGet(ItemId + "Trans0ConBiasG", ItemX.Trans0ConBiasG);
+        CF.ParamGet(ItemId + "Trans0ConBiasB", ItemX.Trans0ConBiasB);
         CF.ParamGet(ItemId + "Trans0InvR", ItemX.Trans0InvR);
         CF.ParamGet(ItemId + "Trans0InvG", ItemX.Trans0InvG);
         CF.ParamGet(ItemId + "Trans0InvB", ItemX.Trans0InvB);
@@ -164,6 +167,9 @@ void TransformCore::ListLoad(string FileName)
         CF.ParamGet(ItemId + "Trans4Scale", ItemX.Trans4Scale);
         CF.ParamGet(ItemId + "Trans4LcdType", ItemX.Trans4LcdType);
         CF.ParamGet(ItemId + "Trans4LcdOp", ItemX.Trans4LcdOp);
+        CF.ParamGet(ItemId + "Trans4LcdChromaB", ItemX.Trans4LcdChromaB);
+        CF.ParamGet(ItemId + "Trans4LcdChromaV", ItemX.Trans4LcdChromaV);
+        CF.ParamGet(ItemId + "Trans4LcdChromaX", ItemX.Trans4LcdChromaX);
         CF.ParamGet(ItemId + "Trans4LcdWeightR", ItemX.Trans4LcdWeightR);
         CF.ParamGet(ItemId + "Trans4LcdWeightG", ItemX.Trans4LcdWeightG);
         CF.ParamGet(ItemId + "Trans4LcdWeightB", ItemX.Trans4LcdWeightB);
@@ -194,6 +200,9 @@ void TransformCore::ListSave(string FileName)
         CF.ParamSet(ItemId + "Trans0ConR", TransformList[I].Trans0ConR);
         CF.ParamSet(ItemId + "Trans0ConG", TransformList[I].Trans0ConG);
         CF.ParamSet(ItemId + "Trans0ConB", TransformList[I].Trans0ConB);
+        CF.ParamSet(ItemId + "Trans0ConBiasR", TransformList[I].Trans0ConBiasR);
+        CF.ParamSet(ItemId + "Trans0ConBiasG", TransformList[I].Trans0ConBiasG);
+        CF.ParamSet(ItemId + "Trans0ConBiasB", TransformList[I].Trans0ConBiasB);
         CF.ParamSet(ItemId + "Trans0InvR", TransformList[I].Trans0InvR);
         CF.ParamSet(ItemId + "Trans0InvG", TransformList[I].Trans0InvG);
         CF.ParamSet(ItemId + "Trans0InvB", TransformList[I].Trans0InvB);
@@ -253,6 +262,9 @@ void TransformCore::ListSave(string FileName)
         CF.ParamSet(ItemId + "Trans4Scale", TransformList[I].Trans4Scale);
         CF.ParamSet(ItemId + "Trans4LcdType", TransformList[I].Trans4LcdType);
         CF.ParamSet(ItemId + "Trans4LcdOp", TransformList[I].Trans4LcdOp);
+        CF.ParamSet(ItemId + "Trans4LcdChromaB", TransformList[I].Trans4LcdChromaB);
+        CF.ParamSet(ItemId + "Trans4LcdChromaV", TransformList[I].Trans4LcdChromaV);
+        CF.ParamSet(ItemId + "Trans4LcdChromaX", TransformList[I].Trans4LcdChromaX);
         CF.ParamSet(ItemId + "Trans4LcdWeightR", TransformList[I].Trans4LcdWeightR);
         CF.ParamSet(ItemId + "Trans4LcdWeightG", TransformList[I].Trans4LcdWeightG);
         CF.ParamSet(ItemId + "Trans4LcdWeightB", TransformList[I].Trans4LcdWeightB);

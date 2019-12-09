@@ -489,6 +489,18 @@ private slots:
 
     void on_Trans3Rot3_currentIndexChanged(int index);
 
+    void on_Trans0ConBiasR_valueChanged(int value);
+
+    void on_Trans0ConBiasG_valueChanged(int value);
+
+    void on_Trans0ConBiasB_valueChanged(int value);
+
+    void on_Trans4LcdChromaB_currentIndexChanged(int index);
+
+    void on_Trans4LcdChromaV_currentIndexChanged(int index);
+
+    void on_Trans4LcdChromaX_currentIndexChanged(int index);
+
 private:
     Ui::WinSettings *ui;
     bool Working;
