@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>624</width>
+    <width>695</width>
     <height>643</height>
    </rect>
   </property>
@@ -20,17 +20,10 @@
       <string>Main control</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="1">
-       <widget class="QPushButton" name="MainStop">
+      <item row="0" column="3">
+       <widget class="QPushButton" name="MainClose">
         <property name="text">
-         <string>Stop</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="MainClose0">
-        <property name="text">
-         <string>Close set</string>
+         <string>Close app</string>
         </property>
        </widget>
       </item>
@@ -41,10 +34,10 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="MainStart">
+      <item row="0" column="4">
+       <widget class="QPushButton" name="MainClose0">
         <property name="text">
-         <string>Start</string>
+         <string>Close set</string>
         </property>
        </widget>
       </item>
@@ -55,10 +48,17 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <widget class="QPushButton" name="MainClose">
+      <item row="0" column="1">
+       <widget class="QPushButton" name="MainStop">
         <property name="text">
-         <string>Close app</string>
+         <string>Stop</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="MainStart">
+        <property name="text">
+         <string>Start</string>
         </property>
        </widget>
       </item>
@@ -68,164 +68,22 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="Tab">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Tab1">
       <attribute name="title">
        <string>Picture and display</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="5" column="1">
-        <widget class="QComboBox" name="PicMouseTypeT">
-         <item>
-          <property name="text">
-           <string>None</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>High contrast</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Negative</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="PicMouseTypeL">
-         <property name="text">
-          <string>Mouse type:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="PicMouseSizeL">
-         <property name="text">
-          <string>Mouse size:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QSpinBox" name="PicMouseSizeT">
+       <item row="9" column="4">
+        <widget class="QSpinBox" name="PicMouseMarginT">
          <property name="maximum">
-          <number>100</number>
+          <number>500</number>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QSpinBox" name="PicYT">
-         <property name="minimum">
-          <number>-10000</number>
-         </property>
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QSpinBox" name="PicXT">
-         <property name="minimum">
-          <number>-10000</number>
-         </property>
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="MarginLeftL">
-         <property name="text">
-          <string>Margin left:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="PicXYL">
-         <property name="text">
-          <string>Grab position:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="ViewXYL">
-         <property name="text">
-          <string>View position:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QSpinBox" name="ViewXT">
-         <property name="minimum">
-          <number>-10000</number>
-         </property>
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="PicWT">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="PicWHL">
-         <property name="text">
-          <string>Grab size:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QLabel" name="MarginTopL">
-         <property name="text">
-          <string>Margin top:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QSpinBox" name="MarginRightT">
-         <property name="minimum">
-          <number>-10000</number>
-         </property>
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QSpinBox" name="PicHT">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QSpinBox" name="MarginTopT">
-         <property name="minimum">
-          <number>-10000</number>
-         </property>
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QLabel" name="MarginRightL">
-         <property name="text">
-          <string>Margin right:</string>
-         </property>
-        </widget>
+       <item row="12" column="1" colspan="2">
+        <widget class="QLineEdit" name="DelayLineFileNameT"/>
        </item>
        <item row="2" column="2">
         <widget class="QSpinBox" name="ViewYT">
@@ -234,54 +92,6 @@
          </property>
          <property name="maximum">
           <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QSpinBox" name="ViewWT">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3">
-        <widget class="QLabel" name="MarginBottomL">
-         <property name="text">
-          <string>Margin bottom:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QSpinBox" name="MarginLeftT">
-         <property name="minimum">
-          <number>-10000</number>
-         </property>
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="DelayLineCountL">
-         <property name="text">
-          <string>Delay line length:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="0">
-        <widget class="QLabel" name="DelayLineFileNameL">
-         <property name="text">
-          <string>Delay line temp file:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="ViewWHL">
-         <property name="text">
-          <string>View size:</string>
          </property>
         </widget>
        </item>
@@ -295,109 +105,17 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="1" colspan="2">
-        <widget class="QLineEdit" name="DelayLineFileNameT"/>
-       </item>
-       <item row="10" column="1">
-        <widget class="QSpinBox" name="DelayLineCountT">
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QSpinBox" name="ViewHT">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>10000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="3" colspan="2">
-        <widget class="QPushButton" name="DelayLineFileNameB">
+       <item row="3" column="0">
+        <widget class="QLabel" name="ViewWHL">
          <property name="text">
-          <string>Browse</string>
+          <string>View size:</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="PicThreadsL">
+       <item row="5" column="0">
+        <widget class="QLabel" name="PicMouseTypeL">
          <property name="text">
-          <string>Threads:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="4">
-        <widget class="QSpinBox" name="PicGammaT">
-         <property name="maximum">
-          <number>100000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="3">
-        <widget class="QLabel" name="PicGammaL">
-         <property name="text">
-          <string>Gamma x1000:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="PicThreadsL0">
-         <property name="text">
-          <string>Pipes:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QSpinBox" name="PicThreadsT0">
-         <property name="minimum">
-          <number>-16</number>
-         </property>
-         <property name="maximum">
-          <number>16</number>
-         </property>
-         <property name="value">
-          <number>1</number>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QSpinBox" name="PicThreadsT">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>16</number>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QCheckBox" name="PicFollowMouse">
-         <property name="text">
-          <string>Follow mouse</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="4">
-        <widget class="QSpinBox" name="PicMouseMarginT">
-         <property name="maximum">
-          <number>500</number>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="3">
-        <widget class="QLabel" name="PicMouseMarginL">
-         <property name="text">
-          <string>Mouse margin:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="3" colspan="2">
-        <widget class="QPushButton" name="ViewColor">
-         <property name="text">
-          <string>Background color</string>
+          <string>Mouse type:</string>
          </property>
         </widget>
        </item>
@@ -408,10 +126,10 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="4">
-        <widget class="QSpinBox" name="OffsetXT">
+       <item row="3" column="2">
+        <widget class="QSpinBox" name="ViewHT">
          <property name="minimum">
-          <number>-10000</number>
+          <number>1</number>
          </property>
          <property name="maximum">
           <number>10000</number>
@@ -467,6 +185,158 @@
          </item>
         </widget>
        </item>
+       <item row="11" column="1">
+        <widget class="QSpinBox" name="DelayLineCountT">
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="ViewWT">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="PicThreadsT0">
+         <property name="minimum">
+          <number>-16</number>
+         </property>
+         <property name="maximum">
+          <number>16</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="PicXT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QComboBox" name="PicMouseTypeT">
+         <item>
+          <property name="text">
+           <string>None</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>High contrast</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Negative</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="5" column="4">
+        <widget class="QSpinBox" name="OffsetXT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QSpinBox" name="PicYT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QSpinBox" name="MarginLeftT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="PicThreadsL0">
+         <property name="text">
+          <string>Pipes:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="ViewXYL">
+         <property name="text">
+          <string>View position:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="3" colspan="2">
+        <widget class="QPushButton" name="ViewColor">
+         <property name="text">
+          <string>Background color</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLabel" name="MarginTopL">
+         <property name="text">
+          <string>Margin top:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="MarginRightL">
+         <property name="text">
+          <string>Margin right:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="PicMouseSizeL">
+         <property name="text">
+          <string>Mouse size:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QSpinBox" name="PicMouseSizeTT">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="PicWHL">
+         <property name="text">
+          <string>Grab size:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0">
+        <widget class="QLabel" name="DelayLineFileNameL">
+         <property name="text">
+          <string>Delay line temp file:</string>
+         </property>
+        </widget>
+       </item>
        <item row="4" column="3">
         <widget class="QLabel" name="ViewStretchL">
          <property name="text">
@@ -474,10 +344,126 @@
          </property>
         </widget>
        </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="PicMouseSizeT">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="PicXYL">
+         <property name="text">
+          <string>Grab position:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="DelayLineCountL">
+         <property name="text">
+          <string>Delay line length:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QSpinBox" name="PicThreadsT">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
        <item row="6" column="3">
         <widget class="QLabel" name="OffsetYL">
          <property name="text">
           <string>Offset Y:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="PicWT">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="ViewXT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="MarginLeftL">
+         <property name="text">
+          <string>Margin left:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="3" colspan="2">
+        <widget class="QPushButton" name="DelayLineFileNameB">
+         <property name="text">
+          <string>Browse</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QSpinBox" name="MarginRightT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="3">
+        <widget class="QLabel" name="PicMouseMarginL">
+         <property name="text">
+          <string>Mouse margin:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QSpinBox" name="MarginTopT">
+         <property name="minimum">
+          <number>-10000</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QSpinBox" name="PicHT">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLabel" name="MarginBottomL">
+         <property name="text">
+          <string>Margin bottom:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="PicThreadsL">
+         <property name="text">
+          <string>Threads:</string>
          </property>
         </widget>
        </item>
@@ -491,10 +477,48 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="2">
-        <widget class="QSpinBox" name="PicMouseSizeTT">
+       <item row="10" column="0">
+        <widget class="QLabel" name="ThrottleL">
+         <property name="text">
+          <string>Throttle (ms):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QSpinBox" name="ThrottleT">
+         <property name="minimum">
+          <number>-60000</number>
+         </property>
          <property name="maximum">
-          <number>100</number>
+          <number>60000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="3">
+        <widget class="QLabel" name="PicGammaL">
+         <property name="text">
+          <string>Gamma x1000:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="4">
+        <widget class="QSpinBox" name="PicGammaT">
+         <property name="maximum">
+          <number>100000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QCheckBox" name="PicFollowMouse">
+         <property name="text">
+          <string>Follow mouse</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QCheckBox" name="ViewFullscreenT">
+         <property name="text">
+          <string>Fullscreen</string>
          </property>
         </widget>
        </item>
@@ -567,7 +591,7 @@
           <bool>true</bool>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="Trans0">
           <attribute name="title">
@@ -2255,10 +2279,516 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="Tab4">
+      <attribute name="title">
+       <string>Input/Output</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_9">
+       <item row="7" column="0">
+        <widget class="QPlainTextEdit" name="NetMsgLog"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="OnTopPictuceC">
+         <property name="text">
+          <string>Picture window on top</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="NetAddrL">
+           <property name="text">
+            <string>Address:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="NetAddrT"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="NetPortL">
+           <property name="text">
+            <string>Port:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="NetPortT">
+           <property name="maximum">
+            <number>65535</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="NetQualityL">
+           <property name="text">
+            <string>Picture quality:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="NetQuality1T">
+           <property name="minimum">
+            <number>-1</number>
+           </property>
+           <property name="maximum">
+            <number>100</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="NetQuality2T">
+           <property name="minimum">
+            <number>-1</number>
+           </property>
+           <property name="maximum">
+            <number>100</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="SetCloseApp">
+         <property name="text">
+          <string>Close application by closing Settings window</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QPushButton" name="NetMsgSend">
+           <property name="text">
+            <string>One-way test</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="NetMsgTest">
+           <property name="text">
+            <string>Two-way test</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="NetMsgClear">
+           <property name="text">
+            <string>Clear log</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="OnTopSettingsC">
+         <property name="text">
+          <string>Settings window on top</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="NetStartSrv">
+           <property name="text">
+            <string>Start TCP server</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="NetStartCli">
+           <property name="text">
+            <string>Start TCP client</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="NetStartBind">
+           <property name="text">
+            <string>Bind UDP</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="NetStop">
+           <property name="text">
+            <string>Disconnect</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="4" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QLabel" name="NetPicSrcDstL">
+           <property name="text">
+            <string>Picture input and output:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="NetPicSrcDst">
+           <item>
+            <property name="text">
+             <string>From screen to screen</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>From screen to network - normal</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>From screen to network - differential</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>From network to screen</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="NetPicSrcDstRefresh">
+           <property name="text">
+            <string>Refresh</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="ScreenBoundsT">
+           <property name="text">
+            <string>Screen bounds (L, T, R, B):</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="ScreenBoundsX1">
+           <property name="minimum">
+            <number>-999999</number>
+           </property>
+           <property name="maximum">
+            <number>999999</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="ScreenBoundsY1">
+           <property name="minimum">
+            <number>-999999</number>
+           </property>
+           <property name="maximum">
+            <number>999999</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="ScreenBoundsX2">
+           <property name="minimum">
+            <number>-999999</number>
+           </property>
+           <property name="maximum">
+            <number>999999</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="ScreenBoundsY2">
+           <property name="minimum">
+            <number>-999999</number>
+           </property>
+           <property name="maximum">
+            <number>999999</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ScreenBoundsAuto">
+           <property name="text">
+            <string>Auto</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="NetStatus">
+         <property name="text">
+          <string>Status:
+Size:
+Transfer:</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>Tab</tabstop>
+  <tabstop>PicXT</tabstop>
+  <tabstop>PicYT</tabstop>
+  <tabstop>PicWT</tabstop>
+  <tabstop>PicHT</tabstop>
+  <tabstop>ViewXT</tabstop>
+  <tabstop>ViewYT</tabstop>
+  <tabstop>ViewWT</tabstop>
+  <tabstop>ViewHT</tabstop>
+  <tabstop>ViewFullscreenT</tabstop>
+  <tabstop>PicMouseTypeT</tabstop>
+  <tabstop>PicFollowMouse</tabstop>
+  <tabstop>PicMouseSizeT</tabstop>
+  <tabstop>PicMouseSizeTT</tabstop>
+  <tabstop>PicThreadsT0</tabstop>
+  <tabstop>PicThreadsT</tabstop>
+  <tabstop>ThrottleT</tabstop>
+  <tabstop>DelayLineCountT</tabstop>
+  <tabstop>DelayLineFileNameT</tabstop>
+  <tabstop>DelayLineFileNameB</tabstop>
+  <tabstop>MarginLeftT</tabstop>
+  <tabstop>MarginTopT</tabstop>
+  <tabstop>MarginRightT</tabstop>
+  <tabstop>MarginBottomT</tabstop>
+  <tabstop>ViewStretch</tabstop>
+  <tabstop>OffsetXT</tabstop>
+  <tabstop>OffsetYT</tabstop>
+  <tabstop>ViewColor</tabstop>
+  <tabstop>PicMouseMarginT</tabstop>
+  <tabstop>PicGammaT</tabstop>
+  <tabstop>TransListView</tabstop>
+  <tabstop>TransListLoad</tabstop>
+  <tabstop>TransListSave</tabstop>
+  <tabstop>TransAdd</tabstop>
+  <tabstop>TransRemove</tabstop>
+  <tabstop>TransMoveUp</tabstop>
+  <tabstop>TransMoveDown</tabstop>
+  <tabstop>TransEnable</tabstop>
+  <tabstop>ProcessTabs</tabstop>
+  <tabstop>Trans0Op0</tabstop>
+  <tabstop>Trans0File</tabstop>
+  <tabstop>Trans0FileBtn</tabstop>
+  <tabstop>Trans0FileSave</tabstop>
+  <tabstop>Trans0Gamma</tabstop>
+  <tabstop>Trans0Op1</tabstop>
+  <tabstop>Trans0BriR</tabstop>
+  <tabstop>Trans0BriG</tabstop>
+  <tabstop>Trans0BriB</tabstop>
+  <tabstop>Trans0Op2</tabstop>
+  <tabstop>Trans0ConR</tabstop>
+  <tabstop>Trans0ConG</tabstop>
+  <tabstop>Trans0ConB</tabstop>
+  <tabstop>Trans0ConBiasR</tabstop>
+  <tabstop>Trans0ConBiasG</tabstop>
+  <tabstop>Trans0ConBiasB</tabstop>
+  <tabstop>Trans0Op3</tabstop>
+  <tabstop>Trans0InvR</tabstop>
+  <tabstop>Trans0InvG</tabstop>
+  <tabstop>Trans0InvB</tabstop>
+  <tabstop>Trans0Op4</tabstop>
+  <tabstop>Trans0GammaR</tabstop>
+  <tabstop>Trans0GammaG</tabstop>
+  <tabstop>Trans0GammaB</tabstop>
+  <tabstop>Trans1Op0</tabstop>
+  <tabstop>Trans1File</tabstop>
+  <tabstop>Trans1FileBtn</tabstop>
+  <tabstop>Trans1FileSave</tabstop>
+  <tabstop>Trans1Gamma</tabstop>
+  <tabstop>Trans1Op1</tabstop>
+  <tabstop>Trans1Sat</tabstop>
+  <tabstop>Trans1Op2</tabstop>
+  <tabstop>Trans1Op3</tabstop>
+  <tabstop>Trans1YuvType</tabstop>
+  <tabstop>Trans1YuvWeightR</tabstop>
+  <tabstop>Trans1YuvWeightG</tabstop>
+  <tabstop>Trans1YuvWeightB</tabstop>
+  <tabstop>Trans1YuvLumaT</tabstop>
+  <tabstop>Trans1Op4</tabstop>
+  <tabstop>Trans1Chan</tabstop>
+  <tabstop>Trans2Gamma</tabstop>
+  <tabstop>Trans2CommonT</tabstop>
+  <tabstop>Trans2Offset1R</tabstop>
+  <tabstop>Trans2Offset1G</tabstop>
+  <tabstop>Trans2Offset1B</tabstop>
+  <tabstop>Trans2GainR</tabstop>
+  <tabstop>Trans2GainG</tabstop>
+  <tabstop>Trans2GainB</tabstop>
+  <tabstop>Trans2Offset2R</tabstop>
+  <tabstop>Trans2Offset2G</tabstop>
+  <tabstop>Trans2Offset2B</tabstop>
+  <tabstop>Trans2Chan</tabstop>
+  <tabstop>Trans2ChanR00</tabstop>
+  <tabstop>Trans2ChanR01</tabstop>
+  <tabstop>Trans2ChanR02</tabstop>
+  <tabstop>Trans2ChanR03</tabstop>
+  <tabstop>Trans2ChanR04</tabstop>
+  <tabstop>Trans2ChanR10</tabstop>
+  <tabstop>Trans2ChanR11</tabstop>
+  <tabstop>Trans2ChanR12</tabstop>
+  <tabstop>Trans2ChanR13</tabstop>
+  <tabstop>Trans2ChanR14</tabstop>
+  <tabstop>Trans2ChanR20</tabstop>
+  <tabstop>Trans2ChanR21</tabstop>
+  <tabstop>Trans2ChanR22</tabstop>
+  <tabstop>Trans2ChanR23</tabstop>
+  <tabstop>Trans2ChanR24</tabstop>
+  <tabstop>Trans2ChanR30</tabstop>
+  <tabstop>Trans2ChanR31</tabstop>
+  <tabstop>Trans2ChanR32</tabstop>
+  <tabstop>Trans2ChanR33</tabstop>
+  <tabstop>Trans2ChanR34</tabstop>
+  <tabstop>Trans2ChanR40</tabstop>
+  <tabstop>Trans2ChanR41</tabstop>
+  <tabstop>Trans2ChanR42</tabstop>
+  <tabstop>Trans2ChanR43</tabstop>
+  <tabstop>Trans2ChanR44</tabstop>
+  <tabstop>Trans2ChanG00</tabstop>
+  <tabstop>Trans2ChanG01</tabstop>
+  <tabstop>Trans2ChanG02</tabstop>
+  <tabstop>Trans2ChanG03</tabstop>
+  <tabstop>Trans2ChanG04</tabstop>
+  <tabstop>Trans2ChanG10</tabstop>
+  <tabstop>Trans2ChanG11</tabstop>
+  <tabstop>Trans2ChanG12</tabstop>
+  <tabstop>Trans2ChanG13</tabstop>
+  <tabstop>Trans2ChanG14</tabstop>
+  <tabstop>Trans2ChanG20</tabstop>
+  <tabstop>Trans2ChanG21</tabstop>
+  <tabstop>Trans2ChanG22</tabstop>
+  <tabstop>Trans2ChanG23</tabstop>
+  <tabstop>Trans2ChanG24</tabstop>
+  <tabstop>Trans2ChanG30</tabstop>
+  <tabstop>Trans2ChanG31</tabstop>
+  <tabstop>Trans2ChanG32</tabstop>
+  <tabstop>Trans2ChanG33</tabstop>
+  <tabstop>Trans2ChanG34</tabstop>
+  <tabstop>Trans2ChanG40</tabstop>
+  <tabstop>Trans2ChanG41</tabstop>
+  <tabstop>Trans2ChanG42</tabstop>
+  <tabstop>Trans2ChanG43</tabstop>
+  <tabstop>Trans2ChanG44</tabstop>
+  <tabstop>Trans2ChanB00</tabstop>
+  <tabstop>Trans2ChanB01</tabstop>
+  <tabstop>Trans2ChanB02</tabstop>
+  <tabstop>Trans2ChanB03</tabstop>
+  <tabstop>Trans2ChanB04</tabstop>
+  <tabstop>Trans2ChanB10</tabstop>
+  <tabstop>Trans2ChanB11</tabstop>
+  <tabstop>Trans2ChanB12</tabstop>
+  <tabstop>Trans2ChanB13</tabstop>
+  <tabstop>Trans2ChanB14</tabstop>
+  <tabstop>Trans2ChanB20</tabstop>
+  <tabstop>Trans2ChanB21</tabstop>
+  <tabstop>Trans2ChanB22</tabstop>
+  <tabstop>Trans2ChanB23</tabstop>
+  <tabstop>Trans2ChanB24</tabstop>
+  <tabstop>Trans2ChanB30</tabstop>
+  <tabstop>Trans2ChanB31</tabstop>
+  <tabstop>Trans2ChanB32</tabstop>
+  <tabstop>Trans2ChanB33</tabstop>
+  <tabstop>Trans2ChanB34</tabstop>
+  <tabstop>Trans2ChanB40</tabstop>
+  <tabstop>Trans2ChanB41</tabstop>
+  <tabstop>Trans2ChanB42</tabstop>
+  <tabstop>Trans2ChanB43</tabstop>
+  <tabstop>Trans2ChanB44</tabstop>
+  <tabstop>Trans3Add</tabstop>
+  <tabstop>Trans3Rem</tabstop>
+  <tabstop>Trans3MovePrev</tabstop>
+  <tabstop>Trans3MoveNext</tabstop>
+  <tabstop>Trans3DispPrev</tabstop>
+  <tabstop>Trans3DispNext</tabstop>
+  <tabstop>Trans3Color1</tabstop>
+  <tabstop>Trans3Color2</tabstop>
+  <tabstop>Trans3Color3</tabstop>
+  <tabstop>Trans3Color4</tabstop>
+  <tabstop>Trans3Matrix00</tabstop>
+  <tabstop>Trans3Matrix01</tabstop>
+  <tabstop>Trans3Matrix02</tabstop>
+  <tabstop>Trans3Matrix03</tabstop>
+  <tabstop>Trans3Matrix04</tabstop>
+  <tabstop>Trans3Matrix10</tabstop>
+  <tabstop>Trans3Matrix11</tabstop>
+  <tabstop>Trans3Matrix12</tabstop>
+  <tabstop>Trans3Matrix13</tabstop>
+  <tabstop>Trans3Matrix14</tabstop>
+  <tabstop>Trans3Matrix20</tabstop>
+  <tabstop>Trans3Matrix21</tabstop>
+  <tabstop>Trans3Matrix22</tabstop>
+  <tabstop>Trans3Matrix23</tabstop>
+  <tabstop>Trans3Matrix24</tabstop>
+  <tabstop>Trans3Matrix30</tabstop>
+  <tabstop>Trans3Matrix31</tabstop>
+  <tabstop>Trans3Matrix32</tabstop>
+  <tabstop>Trans3Matrix33</tabstop>
+  <tabstop>Trans3Matrix34</tabstop>
+  <tabstop>Trans3Matrix40</tabstop>
+  <tabstop>Trans3Matrix41</tabstop>
+  <tabstop>Trans3Matrix42</tabstop>
+  <tabstop>Trans3Matrix43</tabstop>
+  <tabstop>Trans3Matrix44</tabstop>
+  <tabstop>Trans3Rot0</tabstop>
+  <tabstop>Trans3Rot1</tabstop>
+  <tabstop>Trans3Rot2</tabstop>
+  <tabstop>Trans3Rot3</tabstop>
+  <tabstop>Trans4Op0</tabstop>
+  <tabstop>Trans4Size</tabstop>
+  <tabstop>Trans4Size1W</tabstop>
+  <tabstop>Trans4Size2W</tabstop>
+  <tabstop>Trans4Size1H</tabstop>
+  <tabstop>Trans4Size2H</tabstop>
+  <tabstop>Trans4Op1</tabstop>
+  <tabstop>Trans4Scale</tabstop>
+  <tabstop>Trans4ScaleChannels</tabstop>
+  <tabstop>Trans4Op2</tabstop>
+  <tabstop>Trans4LcdType</tabstop>
+  <tabstop>Trans4LcdOp</tabstop>
+  <tabstop>Trans4LcdInterpolation</tabstop>
+  <tabstop>Trans4LcdChromaB</tabstop>
+  <tabstop>Trans4LcdChromaV</tabstop>
+  <tabstop>Trans4LcdChromaX</tabstop>
+  <tabstop>Trans4LcdWeightR</tabstop>
+  <tabstop>Trans4LcdWeightG</tabstop>
+  <tabstop>Trans4LcdWeightB</tabstop>
+  <tabstop>Trans5RotateT</tabstop>
+  <tabstop>OnTopPictuceC</tabstop>
+  <tabstop>OnTopSettingsC</tabstop>
+  <tabstop>SetCloseApp</tabstop>
+  <tabstop>ScreenBoundsX1</tabstop>
+  <tabstop>ScreenBoundsY1</tabstop>
+  <tabstop>ScreenBoundsX2</tabstop>
+  <tabstop>ScreenBoundsY2</tabstop>
+  <tabstop>ScreenBoundsAuto</tabstop>
+  <tabstop>NetPicSrcDst</tabstop>
+  <tabstop>NetPicSrcDstRefresh</tabstop>
+  <tabstop>NetAddrT</tabstop>
+  <tabstop>NetPortT</tabstop>
+  <tabstop>NetQuality1T</tabstop>
+  <tabstop>NetQuality2T</tabstop>
+  <tabstop>NetStartSrv</tabstop>
+  <tabstop>NetStartCli</tabstop>
+  <tabstop>NetStartBind</tabstop>
+  <tabstop>NetStop</tabstop>
+  <tabstop>NetMsgLog</tabstop>
+  <tabstop>NetMsgSend</tabstop>
+  <tabstop>NetMsgTest</tabstop>
+  <tabstop>NetMsgClear</tabstop>
+  <tabstop>MainStart</tabstop>
+  <tabstop>MainStop</tabstop>
+  <tabstop>MainRestart</tabstop>
+  <tabstop>MainClose</tabstop>
+  <tabstop>MainClose0</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

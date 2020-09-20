@@ -4,6 +4,9 @@
 #include <mutex>
 #include <configfile.h>
 #include <eden.h>
+#include <QScreen>
+#include <QGuiApplication>
+#include <vector>
 
 class Settings
 {
@@ -45,6 +48,33 @@ public:
     string DelayLineFileName = "";
     std::mutex MTX;
     bool NeedRecalc = true;
+
+    bool StayOnTopPic = false;
+    bool StayOnTopSet = false;
+    bool SetCloseApp = false;
+    int Throttle = 0;
+
+    string NetAddr = "0.0.0.0";
+    int NetPort = 8000;
+    int PicSrcDst = 0;
+    int NetQuality1 = 20;
+    int NetQuality2 = 20;
+
+    bool _PicSrcNet = false;
+    bool _PicDstNet = false;
+    void RefreshWorkingSettings();
+
+    int BoundX1 = -999999;
+    int BoundY1 = -999999;
+    int BoundX2 = 999999;
+    int BoundY2 = 999999;
+
+    vector<int> _BoundX1;
+    vector<int> _BoundY1;
+    vector<int> _BoundX2;
+    vector<int> _BoundY2;
+
+    bool ViewFullscreen = false;
 };
 
 #endif // SETTINGS_H

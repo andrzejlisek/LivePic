@@ -51,7 +51,7 @@ inline uint PicThread::ColorProp(uint Col1, uint Col2, uint Col3, uint Col4, uin
 /// \param MaxY - The one after the last picture line
 /// \param P - The first byte in the picture array
 ///
-void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, int PipeI__)
+void PicThread::ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_)
 {
     string ThrX;
     int X, Y;

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,6 +16,7 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     eden.cpp \
     configfile.cpp \
+    picnetwork.cpp \
     stopwatch.cpp \
     qmouselabel.cpp \
     picthread.cpp \
@@ -33,6 +34,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     eden.h \
     configfile.h \
+    picnetwork.h \
     stopwatch.h \
     qmouselabel.h \
     picthread.h \

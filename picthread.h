@@ -18,6 +18,7 @@
 #include "qmouselabel.h"
 #include "stopwatch.h"
 #include "transformcore.h"
+#include "picnetwork.h"
 
 using namespace std;
 
@@ -40,6 +41,7 @@ class PicThread : public QThread
 
     Q_OBJECT
 public:
+    PicNetwork * PicNetwork_;
     int PicThreads = 1;
     uchar ColorDiv3[65536 * 3];
     TransformCore * TransformCore_;
@@ -596,7 +598,7 @@ private:
     uint ColorProp(uint Col1, uint Col2, uint Col3, uint Val1, uint Val2, uint Val3);
     uint ColorProp(uint Col1, uint Col2, uint Col3, uint Col4, uint Val1, uint Val2, uint Val3, uint Val4);
     volatile bool Working;
-    void ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_, int PipeI__);
+    void ProcessPicture(int MinY, int MaxY, int P, int OpNr, int PipeI_);
     uchar ** BmpBuf = NULL;
     uint ** BmpBufIX_ = NULL;
     int BmpBufN = 0;
@@ -651,7 +653,7 @@ private:
     int * ThrStartPtr;
     int * ThrLineDiv;
     uchar * ThrMultiThread;
-    void ProcessThread(int PipeI, int PipeI_, int PipeI__);
+    void ProcessThread(int PipeI, int PipeI_);
     void ProcessThreadDummy();
     int MouseX_[MaxThreadCount];
     int MouseY_[MaxThreadCount];
@@ -671,7 +673,8 @@ private:
     fstream * DelayLineFileObj = NULL;
     void DelayLineProcess(uchar *Data);
 signals:
-    UpdatePixmap(QImage *Img);
+    void UpdatePixmap(QImage *Img);
+    void PicSetRefresh();
 
 public slots:
 };

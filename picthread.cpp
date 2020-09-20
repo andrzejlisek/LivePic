@@ -753,12 +753,12 @@ void PicThread::ReInit()
         PicRawDummyDisp[II] = rand();
     }
 
-
     if (BmpDisp != NULL)
     {
         if ((PicWDisp != BmpDispW) || (PicHDisp != BmpDispH))
         {
-            delete BmpDisp;
+            // The old BmpDisp object will be deleted in MainWindow::UpdatePixmap
+            //delete BmpDisp;
             BmpDisp = NULL;
         }
     }
@@ -773,8 +773,6 @@ void PicThread::ReInit()
 
     BmpBufIUnit = (PicWMax + PicBufIMargin + PicBufIMargin) * (PicHMax + PicBufIMargin + PicBufIMargin);
     BmpBufIN = BmpBufIUnit * PipeCount_;
-
-    int X, Y;
 
     int P = 0;
     BmpBufN = OpC1 * PipeCount_;
@@ -986,9 +984,9 @@ void PicThread::WorkLoop()
     OpLoad();
     Working = 1;
     FPS = 0;
-    //QList<QScreen *> screens = QGuiApplication::screens();
-
     QScreen * Scr = QGuiApplication::primaryScreen();
+    int ScrOffsetX = Scr->geometry().x();
+    int ScrOffsetY = Scr->geometry().y();
     if (!Scr)
     {
         return;
@@ -1067,6 +1065,22 @@ void PicThread::WorkLoop()
                 {
                     PicX = MouseX - (PicW >> 1);
                     PicY = MouseY - (PicH >> 1);
+                    if (PicX < Settings_->BoundX1)
+                    {
+                        PicX = Settings_->BoundX1;
+                    }
+                    if (PicX > (Settings_->BoundX2 - PicW))
+                    {
+                        PicX = (Settings_->BoundX2 - PicW);
+                    }
+                    if (PicY < Settings_->BoundY1)
+                    {
+                        PicY = Settings_->BoundY1;
+                    }
+                    if (PicY > (Settings_->BoundY2 - PicH))
+                    {
+                        PicY = (Settings_->BoundY2 - PicH);
+                    }
                     Settings_->PicX = PicX;
                     Settings_->PicY = PicY;
                 }
@@ -1091,7 +1105,29 @@ void PicThread::WorkLoop()
                 }
 
                 // Capturing source picture
-                BmpI__[PipeI] = Scr->grabWindow(0, PicX, PicY, PicW, PicH).toImage();
+                if (Settings_->Throttle > 0)
+                {
+                    msleep(Settings_->Throttle);
+                }
+                if (Settings_->_PicSrcNet)
+                {
+                    BmpI__[PipeI] = PicNetwork_->PicRecv(PicW, PicH);
+                    if (PicNetwork_->RealPicDiff)
+                    {
+                        Settings_->PicW = PicNetwork_->RealPicW;
+                        Settings_->PicH = PicNetwork_->RealPicH;
+                        NeedReInit = true;
+                        emit PicSetRefresh();
+                    }
+                }
+                else
+                {
+                    BmpI__[PipeI] = Scr->grabWindow(0, PicX - ScrOffsetX, PicY - ScrOffsetY, PicW, PicH).toImage();
+                }
+                if (Settings_->Throttle < 0)
+                {
+                    msleep(0 - Settings_->Throttle);
+                }
                 BmpBuf[PipeI_] = BmpI__[PipeI].bits();
                 if (DelayLineI)
                 {
@@ -1103,7 +1139,7 @@ void PicThread::WorkLoop()
                 MouseX_[PipeI] = MouseX;
                 MouseY_[PipeI] = MouseY;
 
-                PipeThr[PipeI] = new std::thread(&PicThread::ProcessThread, this, PipeI, PipeI_, PipeI__);
+                PipeThr[PipeI] = new std::thread(&PicThread::ProcessThread, this, PipeI, PipeI_);
 
                 PipeI++;
                 if (PipeI == PipeCount)
@@ -1173,6 +1209,22 @@ void PicThread::WorkLoop()
                 {
                     PicX = MouseX - (PicW >> 1);
                     PicY = MouseY - (PicH >> 1);
+                    if (PicX < Settings_->BoundX1)
+                    {
+                        PicX = Settings_->BoundX1;
+                    }
+                    if (PicX > (Settings_->BoundX2 - PicW))
+                    {
+                        PicX = (Settings_->BoundX2 - PicW);
+                    }
+                    if (PicY < Settings_->BoundY1)
+                    {
+                        PicY = Settings_->BoundY1;
+                    }
+                    if (PicY > (Settings_->BoundY2 - PicH))
+                    {
+                        PicY = (Settings_->BoundY2 - PicH);
+                    }
                     Settings_->PicX = PicX;
                     Settings_->PicY = PicY;
                 }
@@ -1183,7 +1235,29 @@ void PicThread::WorkLoop()
                 }
 
                 // Capturing source picture
-                BmpI_ = Scr->grabWindow(0, PicX, PicY, PicW, PicH).toImage();
+                if (Settings_->Throttle > 0)
+                {
+                    msleep(Settings_->Throttle);
+                }
+                if (Settings_->_PicSrcNet)
+                {
+                    BmpI_ = PicNetwork_->PicRecv(PicW, PicH);
+                    if (PicNetwork_->RealPicDiff)
+                    {
+                        Settings_->PicW = PicNetwork_->RealPicW;
+                        Settings_->PicH = PicNetwork_->RealPicH;
+                        NeedReInit = true;
+                        emit PicSetRefresh();
+                    }
+                }
+                else
+                {
+                    BmpI_ = Scr->grabWindow(0, PicX - ScrOffsetX, PicY - ScrOffsetY, PicW, PicH).toImage();
+                }
+                if (Settings_->Throttle < 0)
+                {
+                    msleep(0 - Settings_->Throttle);
+                }
                 BmpBuf[0] = BmpI_.bits();
                 if (DelayLineI)
                 {
@@ -1194,7 +1268,7 @@ void PicThread::WorkLoop()
                 MouseX_[0] = MouseX;
                 MouseY_[0] = MouseY;
 
-                ProcessThread(0, 0, 0);
+                ProcessThread(0, 0);
 
                 // Displaying destination picture
                 if (DelayLineO)
@@ -1220,9 +1294,8 @@ void PicThread::WorkLoop()
         ThrPicLines = NULL;
     }
 
-    Settings_->MTX.lock();
-    PictureScreen->ImgX = NULL;
-    Settings_->MTX.unlock();
+    BmpDisp = NULL;
+    emit UpdatePixmap(BmpDisp);
 
     if (PicRawDummyDisp != NULL)
     {
@@ -1247,10 +1320,10 @@ void PicThread::ProcessThreadDummy()
 
 }
 
-void PicThread::ProcessThread(int PipeI, int PipeI_, int PipeI__)
+void PicThread::ProcessThread(int PipeI, int PipeI_)
 {
     // Drawing mouse pointer
-    if (Settings_->MousePointerType != 0)
+    if ((!Settings_->_PicSrcNet) && (Settings_->MousePointerType != 0))
     {
         int MouseX = MouseX_[PipeI];
         int MouseY = MouseY_[PipeI];
@@ -1379,13 +1452,13 @@ void PicThread::ProcessThread(int PipeI, int PipeI_, int PipeI__)
                 for (P = PicThreads; P > 0; P--)
                 {
                     PP = (OpI << MaxThreadCountBit) + P;
-                    ProcessPicture(ThrMinY[PP], ThrMaxY[PP], ThrStartPtr[PP], OpI, PipeI_, PipeI);
+                    ProcessPicture(ThrMinY[PP], ThrMaxY[PP], ThrStartPtr[PP], OpI, PipeI_);
                 }
 #else
                 for (P = PicThreads; P > 0; P--)
                 {
                     PP = (OpI << MaxThreadCountBit) + P;
-                    Thr[P] = new std::thread(&PicThread::ProcessPicture, this, ThrMinY[PP], ThrMaxY[PP], ThrStartPtr[PP], OpI, PipeI_, PipeI);
+                    Thr[P] = new std::thread(&PicThread::ProcessPicture, this, ThrMinY[PP], ThrMaxY[PP], ThrStartPtr[PP], OpI, PipeI_);
                 }
                 for (P = PicThreads; P > 0; P--)
                 {
@@ -1397,7 +1470,7 @@ void PicThread::ProcessThread(int PipeI, int PipeI_, int PipeI__)
             else
             {
                 // Processing without threads
-                ProcessPicture(0, ThrPicLines[OpI], 0, OpI, PipeI_, PipeI);
+                ProcessPicture(0, ThrPicLines[OpI], 0, OpI, PipeI_);
             }
         }
     }

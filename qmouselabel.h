@@ -6,6 +6,7 @@
 #include <iostream>
 #include <QPainter>
 #include "settings.h"
+#include <mutex>
 
 #define ZoomAccuracy 14
 
@@ -17,7 +18,6 @@ class QMouseLabel : public QLabel
 public:
     explicit QMouseLabel(QWidget *parent = 0);
     QImage * ImgX = NULL;
-    bool DrawAllowed;
     int DrawMarginLeft = 0;
     int DrawMarginRight = 0;
     int DrawMarginTop = 0;
@@ -25,7 +25,7 @@ public:
     int DrawOffsetX = 0;
     int DrawOffsetY = 0;
     int DrawStretched = 0;
-    void CalcDraw(bool MutexLock);
+    void CalcDraw();
     QRect ImgSrc;
     QRect ImgDst;
     QRect ImgDstX;
@@ -33,6 +33,7 @@ public:
     QRect ImgTileDst;
     QSize ImgDstXS;
     Settings * Settings_ = NULL;
+    mutex PaintMTX;
 
     int DebugInt = 0;
     bool ImgCorrect = false;
@@ -45,6 +46,7 @@ public slots:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *event);
+    void Repaint_();
 };
 
 #endif // QMOUSELABEL_H

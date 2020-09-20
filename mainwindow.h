@@ -10,6 +10,7 @@
 #include "winsettings.h"
 #include "settings.h"
 #include "transformcore.h"
+#include "picnetwork.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,18 +40,28 @@ public:
     Settings * Settings_;
     TransformCore * TransformCore_;
     void SetBackColor();
+    PicNetwork * PicNetwork_;
+    void FullScreenEvent();
 
 private slots:
     void on_PictureScreen_MouseMove(int Btn, int X, int Y);
     void on_PictureScreen_MousePress(int Btn, int X, int Y);
     void on_PictureScreen_MouseRelease(int Btn, int X, int Y);
-    void SetWindow(int X, int Y, int W, int H);
+    void SetWindow(int X, int Y, int W, int H, bool FullScreen);
     void UpdatePixmap(QImage *Img);
     void RunCommand(int Cmd);
+    void resizeEvent(QResizeEvent *event);
+    void moveEvent(QResizeEvent *event);
 
 private:
     Ui::MainWindow *ui;
     void RunSettings();
+    bool FullScreen_ = false;
+    bool FullScreen__ = false;
+    void MouseCursor(int Cur);
+    void MouseCursorVisible(QCursor Cur);
+    void MouseCursorMode(bool Btn, int X, int Y, int W, int H);
+    int MouseCursorType = -1;
 
 };
 

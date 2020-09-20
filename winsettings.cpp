@@ -6,10 +6,15 @@ WinSettings::WinSettings(QWidget *parent) :
     ui(new Ui::WinSettings)
 {
     ui->setupUi(this);
+    srand(time(NULL));
 
-    Qt::WindowFlags flags = this->windowFlags();
-    flags = flags | Qt::WindowStaysOnTopHint;
-    setWindowFlags(flags);
+    Settings_ = new Settings();
+    if (Settings_->StayOnTopSet)
+    {
+        Qt::WindowFlags flags = this->windowFlags();
+        flags = flags | Qt::WindowStaysOnTopHint;
+        setWindowFlags(flags);
+    }
 
     FPS = new QTimer(this);
     QObject::connect(FPS, SIGNAL(timeout()), this, SLOT(FPSDisp()));
@@ -48,6 +53,22 @@ void WinSettings::AfterShow()
 void WinSettings::LoadSettings(bool Window)
 {
     EventActive = false;
+
+    ui->ScreenBoundsX1->setValue(Settings_->BoundX1);
+    ui->ScreenBoundsY1->setValue(Settings_->BoundX1);
+    ui->ScreenBoundsX2->setValue(Settings_->BoundX2);
+    ui->ScreenBoundsY2->setValue(Settings_->BoundY2);
+    ui->NetAddrT->setText(Eden::ToQStr(Settings_->NetAddr));
+    ui->NetPortT->setValue(Settings_->NetPort);
+    ui->NetQuality1T->setValue(Settings_->NetQuality1);
+    ui->NetQuality2T->setValue(Settings_->NetQuality2);
+    ui->NetPicSrcDst->setCurrentIndex(Settings_->PicSrcDst);
+
+    ui->OnTopPictuceC->setChecked(Settings_->StayOnTopPic);
+    ui->OnTopSettingsC->setChecked(Settings_->StayOnTopSet);
+    ui->SetCloseApp->setChecked(Settings_->SetCloseApp);
+    ui->ViewFullscreenT->setChecked(Settings_->ViewFullscreen);
+
     ui->PicXT->setValue(Settings_->PicX);
     ui->PicYT->setValue(Settings_->PicY);
     ui->PicWT->setValue(Settings_->PicW);
@@ -59,6 +80,7 @@ void WinSettings::LoadSettings(bool Window)
     ui->PicMouseMarginT->setValue(Settings_->MouseMargin);
     ui->PicGammaT->setValue(Settings_->Gamma);
 
+    ui->ThrottleT->setValue(Settings_->Throttle);
     ui->DelayLineCountT->setValue(Settings_->DelayLineCount);
     ui->DelayLineFileNameT->setText(Eden::ToQStr(Settings_->DelayLineFileName));
 
@@ -84,6 +106,7 @@ void WinSettings::LoadSettings(bool Window)
 void WinSettings::FPSDisp()
 {
     ui->MainFPS->setText("FPS: " + Eden::ToQStr(PicThread_->FPS));
+    ui->NetStatus->setText(PicNetwork_->StatsGet());
     PicThread_->FPS = 0;
 }
 
@@ -182,7 +205,7 @@ void WinSettings::UpdateWindow()
 {
     if (EventActive)
     {
-        emit SetWindow(Settings_->ViewX, Settings_->ViewY, Settings_->ViewW, Settings_->ViewH);
+        emit SetWindow(Settings_->ViewX, Settings_->ViewY, Settings_->ViewW, Settings_->ViewH, Settings_->ViewFullscreen);
     }
 }
 
@@ -221,17 +244,27 @@ void WinSettings::closeEvent(QCloseEvent *event)
         ui->MainFPS->setText("FPS");
         FPS_ = false;
     }
+    if (!ForceCloseEvent)
+    {
+        if (Settings_->SetCloseApp)
+        {
+            emit RunCommand(0);
+        }
+    }
+    ForceCloseEvent = false;
     event->accept();
 }
 
 void WinSettings::on_MainClose_clicked()
 {
+    ForceCloseEvent = true;
     emit RunCommand(0);
     close();
 }
 
 void WinSettings::on_MainClose0_clicked()
 {
+    ForceCloseEvent = true;
     close();
 }
 
@@ -1933,3 +1966,166 @@ void WinSettings::on_Trans4LcdChromaX_currentIndexChanged(int index)
 {
     TransformSet();
 }
+
+void WinSettings::on_OnTopPictuceC_toggled(bool checked)
+{
+    Settings_->StayOnTopPic = checked;
+}
+
+void WinSettings::on_OnTopSettingsC_toggled(bool checked)
+{
+    Settings_->StayOnTopSet = checked;
+}
+
+void WinSettings::on_SetCloseApp_toggled(bool checked)
+{
+    Settings_->SetCloseApp = checked;
+}
+
+void WinSettings::on_ThrottleT_valueChanged(int arg1)
+{
+    Settings_->Throttle = arg1;
+}
+
+void WinSettings::on_NetAddrT_textChanged(const QString &arg1)
+{
+    Settings_->NetAddr = Eden::ToStr(arg1);
+}
+
+void WinSettings::on_NetPortT_valueChanged(int arg1)
+{
+    Settings_->NetPort = arg1;
+}
+
+void WinSettings::on_NetStartSrv_clicked()
+{
+    PicNetwork_->StartSrv(ui->NetAddrT->text(), ui->NetPortT->value());
+}
+
+void WinSettings::on_NetStartCli_clicked()
+{
+    PicNetwork_->StartCli(ui->NetAddrT->text(), ui->NetPortT->value());
+}
+
+void WinSettings::on_NetStop_clicked()
+{
+    PicNetwork_->Stop();
+}
+
+void WinSettings::on_NetMsgSend_clicked()
+{
+    PicNetwork_->MsgSend("0" + PicNetwork_->ToQS(rand()));
+}
+
+void WinSettings::on_NetMsgClear_clicked()
+{
+    ui->NetMsgLog->clear();
+}
+
+void WinSettings::PicNetLog(QString Msg)
+{
+    ui->NetMsgLog->appendPlainText(Msg);
+}
+
+void WinSettings::on_NetPicSrcDst_currentIndexChanged(int index)
+{
+    Settings_->PicSrcDst = index;
+    Settings_->RefreshWorkingSettings();
+    emit ViewRepaint();
+}
+
+void WinSettings::on_NetQuality1T_valueChanged(int arg1)
+{
+    Settings_->NetQuality1 = arg1;
+}
+
+void WinSettings::on_NetQuality2T_valueChanged(int arg1)
+{
+    Settings_->NetQuality2 = arg1;
+}
+
+void WinSettings::on_ScreenBoundsX1_valueChanged(int arg1)
+{
+    Settings_->BoundX1 = arg1;
+}
+
+void WinSettings::on_ScreenBoundsY1_valueChanged(int arg1)
+{
+    Settings_->BoundY1 = arg1;
+}
+
+void WinSettings::on_ScreenBoundsX2_valueChanged(int arg1)
+{
+    Settings_->BoundX2 = arg1;
+}
+
+void WinSettings::on_ScreenBoundsY2_valueChanged(int arg1)
+{
+    Settings_->BoundY2 = arg1;
+}
+
+void WinSettings::on_NetStartBind_clicked()
+{
+    PicNetwork_->StartBind(ui->NetAddrT->text(), ui->NetPortT->value());
+}
+
+void WinSettings::on_ViewFullscreenT_toggled(bool checked)
+{
+    Settings_->ViewFullscreen = checked;
+    UpdateWindow();
+}
+
+void WinSettings::PicSetRefresh()
+{
+    ui->PicWT->setValue(Settings_->PicW);
+    ui->PicHT->setValue(Settings_->PicH);
+}
+
+void WinSettings::on_ScreenBoundsAuto_clicked()
+{
+    uint Idx = Settings_->_BoundX1.size();
+    for (uint I = 0; I < Settings_->_BoundX1.size(); I++)
+    {
+        if ((ui->ScreenBoundsX1->value() == Settings_->_BoundX1[I]) && (ui->ScreenBoundsY1->value() == Settings_->_BoundY1[I]))
+        {
+            if ((ui->ScreenBoundsX2->value() == Settings_->_BoundX2[I]) && (ui->ScreenBoundsY2->value() == Settings_->_BoundY2[I]))
+            {
+                Idx = I;
+            }
+        }
+    }
+    if (Idx == Settings_->_BoundX1.size())
+    {
+        Idx = 0;
+    }
+    else
+    {
+        Idx++;
+    }
+    if (Idx == Settings_->_BoundX1.size())
+    {
+        Idx = 0;
+    }
+    ui->ScreenBoundsX1->setValue(Settings_->_BoundX1[Idx]);
+    ui->ScreenBoundsY1->setValue(Settings_->_BoundY1[Idx]);
+    ui->ScreenBoundsX2->setValue(Settings_->_BoundX2[Idx]);
+    ui->ScreenBoundsY2->setValue(Settings_->_BoundY2[Idx]);
+}
+
+void WinSettings::on_NetPicSrcDstRefresh_clicked()
+{
+    if (Settings_->_PicDstNet)
+    {
+        PicNetwork_->ForceNewPic(true);
+    }
+    if (Settings_->_PicSrcNet)
+    {
+        PicNetwork_->MsgSend("3X");
+    }
+}
+
+void WinSettings::on_NetMsgTest_clicked()
+{
+    PicNetwork_->MsgSend("4" + PicNetwork_->ToQS(rand()));
+}
+

@@ -2,7 +2,6 @@
 
 QMouseLabel::QMouseLabel(QWidget *parent) : QLabel(parent)
 {
-    DrawAllowed = false;
     setMouseTracking(false);
 }
 
@@ -19,111 +18,124 @@ void QMouseLabel::mousePressEvent(QMouseEvent *event)
 void QMouseLabel::mouseReleaseEvent(QMouseEvent *event)
 {
     emit MouseRelease(event->buttons(), event->x(), event->y());
-    CalcDraw(true);
+    PaintMTX.lock();
+    CalcDraw();
+    PaintMTX.unlock();
+}
+
+void QMouseLabel::Repaint_()
+{
+    this->repaint();
 }
 
 void QMouseLabel::paintEvent(QPaintEvent *event)
 {
     event->isAccepted();
 
-    if ((ImgX != NULL) && DrawAllowed && ImgCorrect)
+    if (PaintMTX.try_lock())
     {
-        if (Settings_ == NULL)
+        if ((ImgX != NULL) && ImgCorrect)
         {
-            return;
-        }
-
-        // 0 - Center
-        // 1 - Margin
-        // 2 - Margin int
-        // 3 - Fill
-        // 4 - Fill int
-        // 5 - Stretch
-        // 6 - Stretch int
-        // 7 - Tile 1
-        // 8 - Tile 2
-
-        QPainter painter(this);
-        if (DrawStretched == 0)
-        {
-            painter.drawImage(ImgDst, *ImgX, ImgSrc);
-        }
-        else
-        {
-            if ((DrawStretched != 7) && (DrawStretched != 8))
+            if (Settings_ == NULL)
             {
-                if ((DrawStretched == 2) || (DrawStretched == 4) || (DrawStretched == 6))
-                {
-                    painter.drawImage(ImgDst, (*ImgX).scaled(ImgDstXS, Qt::IgnoreAspectRatio, Qt::SmoothTransformation), ImgDstX);
-                }
-                else
-                {
-                    painter.drawImage(ImgDst, *ImgX, ImgSrc);
-                }
+                PaintMTX.unlock();
+                return;
+            }
+
+            if (Settings_->_PicDstNet)
+            {
+                PaintMTX.unlock();
+                return;
+            }
+
+            // 0 - Center
+            // 1 - Margin
+            // 2 - Margin int
+            // 3 - Fill
+            // 4 - Fill int
+            // 5 - Stretch
+            // 6 - Stretch int
+            // 7 - Tile 1
+            // 8 - Tile 2
+
+            QPainter painter(this);
+            if (DrawStretched == 0)
+            {
+                painter.drawImage(ImgDst, *ImgX, ImgSrc);
             }
             else
             {
-                int X, Y;
-                int X0 = DrawOffsetX;
-                int Y0 = DrawOffsetY;
-                int W = ImgDst.width();
-                int H = ImgDst.height();
-                int W0 = ImgSrc.width();
-                int H0 = ImgSrc.height();
-
-                if (DrawStretched == 7)
+                if ((DrawStretched != 7) && (DrawStretched != 8))
                 {
-                    X0 += (W - W0) >> 1;
-                    Y0 += (H - H0) >> 1;
+                    if ((DrawStretched == 2) || (DrawStretched == 4) || (DrawStretched == 6))
+                    {
+                        painter.drawImage(ImgDst, (*ImgX).scaled(ImgDstXS, Qt::IgnoreAspectRatio, Qt::SmoothTransformation), ImgDstX);
+                    }
+                    else
+                    {
+                        painter.drawImage(ImgDst, *ImgX, ImgSrc);
+                    }
                 }
                 else
                 {
-                    X0 += W >> 1;
-                    Y0 += H >> 1;
-                }
+                    int X, Y;
+                    int X0 = DrawOffsetX;
+                    int Y0 = DrawOffsetY;
+                    int W = ImgDst.width();
+                    int H = ImgDst.height();
+                    int W0 = ImgSrc.width();
+                    int H0 = ImgSrc.height();
 
-
-                while (X0 > 0) { X0 -= W0; }
-                while (Y0 > 0) { Y0 -= H0; }
-                while (X0 < (0 - W0)) { X0 += W0; }
-                while (Y0 < (0 - H0)) { Y0 += H0; }
-
-                ImgTileDst.setX(ImgDst.x());
-                ImgTileDst.setY(ImgDst.y());
-                ImgTileDst.setWidth(ImgDst.width());
-                ImgTileDst.setHeight(ImgDst.height());
-
-                for (Y = Y0; Y < H; Y += H0)
-                {
-                    for (X = X0; X < W; X += W0)
+                    if (DrawStretched == 7)
                     {
-                        int XX = X;
-                        int YY = Y;
-                        int W00 = W0;
-                        int H00 = H0;
-                        int SX = 0;
-                        int SY = 0;
-                        if (X < 0) { XX = 0; SX = 0 - X; }
-                        if (Y < 0) { YY = 0; SY = 0 - Y; }
-                        if ((XX + DrawMarginLeft + W0) > W) { W00 = W - XX; }
-                        if ((YY + DrawMarginTop + H0) > H) { H00 = H - YY; }
-                        painter.drawImage(XX + DrawMarginLeft, YY + DrawMarginTop, *ImgX, SX, SY, W00, H00);
+                        X0 += (W - W0) >> 1;
+                        Y0 += (H - H0) >> 1;
+                    }
+                    else
+                    {
+                        X0 += W >> 1;
+                        Y0 += H >> 1;
+                    }
+
+
+                    while (X0 > 0) { X0 -= W0; }
+                    while (Y0 > 0) { Y0 -= H0; }
+                    while (X0 < (0 - W0)) { X0 += W0; }
+                    while (Y0 < (0 - H0)) { Y0 += H0; }
+
+                    ImgTileDst.setX(ImgDst.x());
+                    ImgTileDst.setY(ImgDst.y());
+                    ImgTileDst.setWidth(ImgDst.width());
+                    ImgTileDst.setHeight(ImgDst.height());
+
+                    for (Y = Y0; Y < H; Y += H0)
+                    {
+                        for (X = X0; X < W; X += W0)
+                        {
+                            int XX = X;
+                            int YY = Y;
+                            int W00 = W0;
+                            int H00 = H0;
+                            int SX = 0;
+                            int SY = 0;
+                            if (X < 0) { XX = 0; SX = 0 - X; }
+                            if (Y < 0) { YY = 0; SY = 0 - Y; }
+                            if ((XX + DrawMarginLeft + W0) > W) { W00 = W - XX; }
+                            if ((YY + DrawMarginTop + H0) > H) { H00 = H - YY; }
+                            painter.drawImage(XX + DrawMarginLeft, YY + DrawMarginTop, *ImgX, SX, SY, W00, H00);
+                        }
                     }
                 }
             }
         }
+        PaintMTX.unlock();
     }
 }
 
-void QMouseLabel::CalcDraw(bool MutexLock)
+void QMouseLabel::CalcDraw()
 {
     if ((ImgX != NULL))
     {
-        if (MutexLock)
-        {
-            Settings_->MTX.lock();
-        }
-
         QRect Geo = this->geometry();
 
         int BaseX = DrawMarginLeft;
@@ -333,11 +345,6 @@ void QMouseLabel::CalcDraw(bool MutexLock)
             {
                 ImgCorrect = true;
             }
-        }
-
-        if (MutexLock)
-        {
-            Settings_->MTX.unlock();
         }
     }
 }

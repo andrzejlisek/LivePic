@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include "transformcore.h"
 #include <QInputDialog>
+#include "picnetwork.h"
 
 namespace Ui {
 class WinSettings;
@@ -23,6 +24,7 @@ public:
     explicit WinSettings(QWidget *parent = 0);
     ~WinSettings();
     PicThread * PicThread_;
+    PicNetwork * PicNetwork_;
     Settings * Settings_;
     void LoadSettings(bool Window);
     void AfterShow();
@@ -41,10 +43,16 @@ public:
     bool TransformSetAllow = true;
     string InputBox(string Query, string Title, string Default);
     bool InputBoxOK;
+    bool ForceCloseEvent = 0;
 
 signals:
-    void SetWindow(int X, int Y, int W, int H);
+    void SetWindow(int X, int Y, int W, int H, bool Fullscreen);
     void RunCommand(int Cmd);
+    void ViewRepaint();
+
+public slots:
+    void PicNetLog(QString Msg);
+    void PicSetRefresh();
 
 private slots:
     void closeEvent(QCloseEvent *event);
@@ -500,6 +508,52 @@ private slots:
     void on_Trans4LcdChromaV_currentIndexChanged(int index);
 
     void on_Trans4LcdChromaX_currentIndexChanged(int index);
+
+    void on_OnTopPictuceC_toggled(bool checked);
+
+    void on_OnTopSettingsC_toggled(bool checked);
+
+    void on_SetCloseApp_toggled(bool checked);
+
+    void on_ThrottleT_valueChanged(int arg1);
+
+    void on_NetAddrT_textChanged(const QString &arg1);
+
+    void on_NetPortT_valueChanged(int arg1);
+
+    void on_NetStartSrv_clicked();
+
+    void on_NetStartCli_clicked();
+
+    void on_NetStop_clicked();
+
+    void on_NetMsgSend_clicked();
+
+    void on_NetMsgClear_clicked();
+
+    void on_NetPicSrcDst_currentIndexChanged(int index);
+
+    void on_NetQuality1T_valueChanged(int arg1);
+
+    void on_NetQuality2T_valueChanged(int arg1);
+
+    void on_ScreenBoundsX1_valueChanged(int arg1);
+
+    void on_ScreenBoundsY1_valueChanged(int arg1);
+
+    void on_ScreenBoundsX2_valueChanged(int arg1);
+
+    void on_ScreenBoundsY2_valueChanged(int arg1);
+
+    void on_NetStartBind_clicked();
+
+    void on_ViewFullscreenT_toggled(bool checked);
+
+    void on_ScreenBoundsAuto_clicked();
+
+    void on_NetPicSrcDstRefresh_clicked();
+
+    void on_NetMsgTest_clicked();
 
 private:
     Ui::WinSettings *ui;

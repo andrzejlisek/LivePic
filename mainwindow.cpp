@@ -5,43 +5,50 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    Settings_ = new Settings();
+    Settings_ = WinSettings_.Settings_;
+    PicNetwork_ = new PicNetwork();
+    PicNetwork_->Settings_ = Settings_;
     TransformCore_ = new TransformCore();
     TransformCore_->Settings_ = Settings_;
     WinSettings_.TransformCore_ = TransformCore_;
+    WinSettings_.PicNetwork_ = PicNetwork_;
+    connect(PicNetwork_, SIGNAL(NetLog(QString)), &WinSettings_, SLOT(PicNetLog(QString)));
     MouseBtn = false;
-    Qt::WindowFlags flags = 0;
-    /*if (Settings_->MainWindowBorder)
+    Qt::WindowFlags flags = windowFlags();
     {
-        flags = Qt::Window;
+        flags = flags | Qt::FramelessWindowHint;
     }
-    else*/
+    if (Settings_->StayOnTopPic)
     {
-        flags = Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint;
+        flags = flags | Qt::WindowStaysOnTopHint;
     }
-    //flags |= Qt::WindowMaximizeButtonHint;
-    //flags |= Qt::WindowContextHelpButtonHint;
-    //flags |= Qt::WindowCloseButtonHint;
     setWindowFlags(flags);
 
     SetBackColor();
 
     ui->setupUi(this);
-    //ui->PictureScreen->setCursor(Qt::BlankCursor);
-    SetWindow(Settings_->ViewX, Settings_->ViewY, Settings_->ViewW, Settings_->ViewH);
-    QObject::connect(&WinSettings_, SIGNAL(SetWindow(int, int, int, int)), this, SLOT(SetWindow(int, int, int, int)));
+    connect(&WinSettings_, SIGNAL(ViewRepaint()), ui->PictureScreen, SLOT(Repaint_()));
+
+    MouseCursor(0);
+    SetWindow(Settings_->ViewX, Settings_->ViewY, Settings_->ViewW, Settings_->ViewH, Settings_->ViewFullscreen);
+    QObject::connect(&WinSettings_, SIGNAL(SetWindow(int, int, int, int, bool)), this, SLOT(SetWindow(int, int, int, int, bool)));
     QObject::connect(&WinSettings_, SIGNAL(RunCommand(int)), this, SLOT(RunCommand(int)));
 
     PicThread_ = new PicThread();
+    PicThread_->PicNetwork_ = PicNetwork_;
     PicThread_->TransformCore_ = TransformCore_;
     PicThread_->PictureScreen = ui->PictureScreen;
     PicThread_->Settings_ = Settings_;
     WinSettings_.Settings_ = Settings_;
     WinSettings_.PicThread_ = PicThread_;
     QObject::connect(PicThread_, SIGNAL(UpdatePixmap(QImage*)), this, SLOT(UpdatePixmap(QImage*)));
+    QObject::connect(PicThread_, SIGNAL(PicSetRefresh()), &WinSettings_, SLOT(PicSetRefresh()));
 
     ui->PictureScreen->Settings_ = Settings_;
     TransformCore_->ListLoad(Eden::ApplicationDirectory() + "Transform.txt");
+
+    setMouseTracking(true);
+    ui->PictureScreen->setMouseTracking(true);
 
     RunSettings();
 }
@@ -55,6 +62,7 @@ MainWindow::~MainWindow()
     ui->PictureScreen->ImgX = NULL;
     //delete PicThread_;
     //delete Settings_;
+    delete PicNetwork_;
 }
 
 void MainWindow::SetBackColor()
@@ -67,37 +75,54 @@ void MainWindow::SetBackColor()
 
 void MainWindow::UpdatePixmap(QImage *Img)
 {
+    if (Settings_->_PicDstNet)
+    {
+        PicNetwork_->PicSend(Img);
+        return;
+    }
     if (Settings_->MTX.try_lock())
     {
+        ui->PictureScreen->PaintMTX.lock();
         if (Img != NULL)
         {
-                ui->PictureScreen->ImgX = Img;
-                if (Settings_->NeedRecalc)
+            if (ui->PictureScreen->ImgX != Img)
+            {
+                if (ui->PictureScreen->ImgX != NULL)
                 {
-                    Settings_->NeedRecalc = false;
-                    ui->PictureScreen->CalcDraw(false);
+                    delete ui->PictureScreen->ImgX;
                 }
-                ui->PictureScreen->DrawAllowed = true;
-                ui->PictureScreen->repaint();
-                ui->PictureScreen->DrawAllowed = false;
+            }
+            ui->PictureScreen->ImgX = Img;
+            if (Settings_->NeedRecalc)
+            {
+                Settings_->NeedRecalc = false;
+                ui->PictureScreen->CalcDraw();
+            }
         }
         else
         {
+            if (ui->PictureScreen->ImgX != NULL)
+            {
+                delete ui->PictureScreen->ImgX;
+            }
             ui->PictureScreen->ImgX = NULL;
-            ui->PictureScreen->repaint();
         }
+        ui->PictureScreen->PaintMTX.unlock();
+        ui->PictureScreen->repaint();
         Settings_->MTX.unlock();
     }
 }
 
 void MainWindow::on_PictureScreen_MouseMove(int Btn, int X, int Y)
 {
+    int _W = this->width();
+    int _H = this->height();
+    MouseCursorMode(MouseBtn, X, Y, _W, _H);
+
     if (MouseBtn)
     {
         int _X = this->x();
         int _Y = this->y();
-        int _W = this->width();
-        int _H = this->height();
 
         // Position
         if ((SizeModeH == 0) && (SizeModeV == 0))
@@ -137,7 +162,7 @@ void MainWindow::on_PictureScreen_MouseMove(int Btn, int X, int Y)
         Settings_->ViewW = _W;
         Settings_->ViewH = _H;
         WinSettings_.LoadSettings(true);
-        SetWindow(_X, _Y, _W, _H);
+        SetWindow(_X, _Y, _W, _H, Settings_->ViewFullscreen);
     }
 }
 
@@ -149,6 +174,7 @@ void MainWindow::on_PictureScreen_MousePress(int Btn, int X, int Y)
     PicY = this->y();
     PicW = this->width();
     PicH = this->height();
+    MouseCursorMode(true, X, Y, PicW, PicH);
 
     SizeModeH = 0;
     SizeModeV = 0;
@@ -164,7 +190,6 @@ void MainWindow::on_PictureScreen_MousePress(int Btn, int X, int Y)
     }
     else
     {
-        //WinSettings_.MainPause();
         MouseBtn = true;
     }
 }
@@ -172,7 +197,7 @@ void MainWindow::on_PictureScreen_MousePress(int Btn, int X, int Y)
 void MainWindow::on_PictureScreen_MouseRelease(int Btn, int X, int Y)
 {
     MouseBtn = false;
-    //WinSettings_.MainResume();
+    MouseCursorMode(false, X, Y, this->width(), this->height());
 }
 
 void MainWindow::RunSettings()
@@ -186,9 +211,27 @@ void MainWindow::RunSettings()
     WinSettings_.TransListRefresh();
 }
 
-void MainWindow::SetWindow(int X, int Y, int W, int H)
+void MainWindow::SetWindow(int X, int Y, int W, int H, bool FullScreen)
 {
-    this->setGeometry(X, Y, W, H);
+    if (FullScreen_ != FullScreen)
+    {
+        if (FullScreen)
+        {
+            showFullScreen();
+        }
+        else
+        {
+            showNormal();
+            this->setGeometry(X, Y, W, H);
+        }
+    }
+    else
+    {
+        if (!FullScreen)
+        {
+            this->setGeometry(X, Y, W, H);
+        }
+    }
 
     ui->PictureScreen->DrawMarginTop = Settings_->ViewMarginTop;
     ui->PictureScreen->DrawMarginLeft = Settings_->ViewMarginLeft;
@@ -199,7 +242,9 @@ void MainWindow::SetWindow(int X, int Y, int W, int H)
 
     ui->PictureScreen->DrawStretched = Settings_->ViewStretched;
     ui->PictureScreen->setGeometry(0, 0, W, H);
-    ui->PictureScreen->CalcDraw(false);
+    ui->PictureScreen->CalcDraw();
+
+    FullScreen_ = FullScreen;
 }
 
 void MainWindow::RunCommand(int Cmd)
@@ -210,10 +255,118 @@ void MainWindow::RunCommand(int Cmd)
     }
     if (Cmd == 1)
     {
-        ui->PictureScreen->CalcDraw(false);
+        ui->PictureScreen->CalcDraw();
     }
     if (Cmd == 2)
     {
         SetBackColor();
+    }
+}
+
+void MainWindow::FullScreenEvent()
+{
+    if (FullScreen__ != FullScreen_)
+    {
+        if (!FullScreen_)
+        {
+            setGeometry(Settings_->ViewX, Settings_->ViewY, Settings_->ViewW, Settings_->ViewH);
+        }
+        Settings_->ViewX = this->x();
+        Settings_->ViewY = this->y();
+        Settings_->ViewW = this->width();
+        Settings_->ViewH = this->height();
+
+        FullScreen__ = FullScreen_;
+        WinSettings_.LoadSettings(true);
+        WinSettings_.UpdateWindow();
+    }
+}
+
+void MainWindow::moveEvent(QResizeEvent *event)
+{
+    FullScreenEvent();
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    FullScreenEvent();
+}
+
+void MainWindow::MouseCursor(int Cur)
+{
+    if (Cur == MouseCursorType)
+    {
+        return;
+    }
+    switch (Cur)
+    {
+        case 0:
+            setCursor(Qt::BlankCursor);
+            ui->PictureScreen->setCursor(Qt::BlankCursor);
+            break;
+        case 1:
+            unsetCursor();
+            ui->PictureScreen->unsetCursor();
+            break;
+        case 2:
+            setCursor(Qt::BlankCursor);
+            ui->PictureScreen->setCursor(Qt::PointingHandCursor);
+            break;
+        case 3:
+            setCursor(Qt::BlankCursor);
+            ui->PictureScreen->setCursor(Qt::SizeHorCursor);
+            break;
+        case 4:
+            setCursor(Qt::BlankCursor);
+            ui->PictureScreen->setCursor(Qt::SizeVerCursor);
+            break;
+    }
+    MouseCursorType = Cur;
+}
+
+void MainWindow::MouseCursorVisible(QCursor Cur)
+{
+    setCursor(Cur);
+    ui->PictureScreen->setCursor(Cur);
+}
+
+void MainWindow::MouseCursorMode(bool Btn, int X, int Y, int W, int H)
+{
+    bool _SizeModeH = false;
+    bool _SizeModeV = false;
+    int MouseMarginX = Min(Settings_->MouseMargin, W / 2);
+    if (X < MouseMarginX) { _SizeModeH = true; }
+    if (X >= (W - MouseMarginX)) { _SizeModeH = true; }
+    int MouseMarginY = Min(Settings_->MouseMargin, H / 2);
+    if (Y < MouseMarginY) { _SizeModeV = true; }
+    if (Y >= (H - MouseMarginY)) { _SizeModeV = true; }
+    if ((!_SizeModeH) && (!_SizeModeV))
+    {
+        if (Btn)
+        {
+            MouseCursor(1);
+        }
+        else
+        {
+            MouseCursor(0);
+        }
+    }
+    else
+    {
+        if ((_SizeModeH) && (_SizeModeV))
+        {
+            MouseCursor(2);
+        }
+        else
+        {
+            if (_SizeModeH)
+            {
+                MouseCursor(3);
+            }
+            else
+            {
+                MouseCursor(4);
+            }
+        }
     }
 }
