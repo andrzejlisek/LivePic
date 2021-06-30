@@ -9,6 +9,9 @@
 #include <cstdio>
 #include <cmath>
 #include <fstream>
+#include <ctime>
+#include <chrono>
+
 #define Diff(X, Y) ((((X) - (Y)) > 0) ? ((X) - (Y)) : ((Y) - (X)))
 #define Abs(X) (((X) > 0) ? (X) : (0 - (X)))
 #define AbsD(X) (((X) > 0.0) ? (X) : (0.0 - (X)))
@@ -62,6 +65,11 @@ public:
     static QString ToQStr(string S);
     static string ToStr(QString S);
 
+    static QString ToQStrLocal(string S);
+    static string ToStrLocal(QString S);
+    static string StringUtfToLocal(string S);
+    static string StringLocalToUtf(string S);
+
     static float ToFloat(string S);
     static double ToDouble(string S);
     static ldouble ToLDouble(string S);
@@ -108,6 +116,12 @@ public:
     static string Trim(string X);
     static string ToUpper(string X);
     static string ToLower(string X);
+
+    static string Timestamp(bool Format);
+    static string TimestampMs(bool Format);
+
+    static string File(string FileName);
+    static string File(QString FileName);
 };
 
 #endif // EDEN_H

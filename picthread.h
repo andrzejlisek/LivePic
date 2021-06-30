@@ -19,6 +19,16 @@
 #include "stopwatch.h"
 #include "transformcore.h"
 #include "picnetwork.h"
+#include <queue>
+
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QTextCodec>
+
+#include "googleconvert.h"
+#include "recorder.h"
+#include "textcapture.h"
 
 using namespace std;
 
@@ -41,6 +51,7 @@ class PicThread : public QThread
 
     Q_OBJECT
 public:
+    Recorder * Recorder_;
     PicNetwork * PicNetwork_;
     int PicThreads = 1;
     uchar ColorDiv3[65536 * 3];
@@ -58,10 +69,12 @@ public:
 
     explicit PicThread(QObject *parent = 0);
     ~PicThread();
+    void WorkLoopSleep(int WorkLoopSleepTime);
     void WorkLoop();
     void run();
     void Stop();
     Settings * Settings_;
+    TextCapture * TextCapture_;
     int FPS = 0;
     void OpLoad();
     string DebugInfo = "";
@@ -580,6 +593,21 @@ public:
     #define HQ4X_PIXEL33_81    C33 = HQX_Interp8(W5, W6);
     #define HQ4X_PIXEL33_82    C33 = HQX_Interp8(W5, W8);
 
+    struct DelayLineAsyncThreadData
+    {
+    public:
+        int Type;
+        int Id;
+        int Pos;
+        QByteArray Data;
+        QString Url;
+    };
+
+    queue<DelayLineAsyncThreadData> DelayLineAsyncThreadRequest;
+
+    queue<DelayLineAsyncThreadData> DelayLineAsyncThreadResult;
+
+
 
 private:
     int PicWMax, PicHMax, OpC, OpC1;
@@ -653,6 +681,7 @@ private:
     int * ThrStartPtr;
     int * ThrLineDiv;
     uchar * ThrMultiThread;
+    void DrawMousePointer(int PipeI, int PipeI_);
     void ProcessThread(int PipeI, int PipeI_);
     void ProcessThreadDummy();
     int MouseX_[MaxThreadCount];
@@ -662,19 +691,119 @@ private:
     int PipeCount = 1;
 
     int DelayLineCount = 0;
+    int DelayLinePos = 0;
     int DelayLinePointer = 0;
-    int DelayLinePointerCount = 0;
     int DelayLineChunkSize = 0;
     string DelayLineFileName = "";
+    bool RecorderI1 = false;
+    bool RecorderI2 = false;
+    bool RecorderO1 = false;
+    bool RecorderO2 = false;
     bool DelayLineI = false;
     bool DelayLineO = false;
     bool DelayLineFile = false;
     uchar * DelayLineBuf = NULL;
     fstream * DelayLineFileObj = NULL;
+    int * DelayLineId = NULL;
+    void DelayLinePrepare();
     void DelayLineProcess(uchar *Data);
+    void DelayLineCleanUp();
+    int DelayLineIdCounter = 0;
+
+    int DelayLineAsyncDecimateI;
+    int DelayLineAsyncDecimateC;
+
+    struct DelayLineAsyncDef
+    {
+    public:
+        int Id;
+        int Pos;
+        QImage RawImg;
+        uchar * Raw;
+
+    };
+    vector<DelayLineAsyncDef> DelayLineAsyncList;
+    void DelayLineAsyncBegin(int Pos, int Id);
+    void DelayLineAsyncEnd();
+    void DelayLineAsyncPaint(uchar *Raw);
+    QTimer * Timeout;
+
+    struct DelayLinePaintCmdDef
+    {
+        int Cmd;
+        vector<int> Id;
+        char Needed;
+        QString PaintText;
+        int PaintX1;
+        int PaintY1;
+        int PaintX2;
+        int PaintY2;
+        int * PointX1;
+        int * PointX2;
+        int * PointY1;
+        int * PointY2;
+        int PaintRot;
+        int CmdId;
+    };
+    vector<DelayLinePaintCmdDef> DelayLinePaintCmdList;
+
+    int DelayLinePaintCmdTextId;
+
+    int DelayLinePaintCmdAdd(vector<int> Id, int Cmd, int X1, int Y1, int X2, int Y2, QString Text, int Rot, int *PointX1, int *PointX2, int *PointY1, int *PointY2);
+
+    int DelayLineAsyncBitmapIdx(int Pos);
+    void DelayLineAsyncBitmapFlush(int Idx);
+
+    int * DelayLineAsyncBitmapMaskMinX = NULL;
+    int * DelayLineAsyncBitmapMaskMinX_R = NULL;
+    int * DelayLineAsyncBitmapMaskMinX_G = NULL;
+    int * DelayLineAsyncBitmapMaskMinX_B = NULL;
+
+    int * DelayLineAsyncBitmapMaskMinY = NULL;
+    int * DelayLineAsyncBitmapMaskMinY_R = NULL;
+    int * DelayLineAsyncBitmapMaskMinY_G = NULL;
+    int * DelayLineAsyncBitmapMaskMinY_B = NULL;
+
+    int * DelayLineAsyncBitmapMaskMaxX = NULL;
+    int * DelayLineAsyncBitmapMaskMaxX_R = NULL;
+    int * DelayLineAsyncBitmapMaskMaxX_G = NULL;
+    int * DelayLineAsyncBitmapMaskMaxX_B = NULL;
+
+    int * DelayLineAsyncBitmapMaskMaxY = NULL;
+    int * DelayLineAsyncBitmapMaskMaxY_R = NULL;
+    int * DelayLineAsyncBitmapMaskMaxY_G = NULL;
+    int * DelayLineAsyncBitmapMaskMaxY_B = NULL;
+
+    struct DelayLineAsyncTextObjDef
+    {
+    public:
+        int ObjType;
+        int X1;
+        int Y1;
+        int X2;
+        int Y2;
+        int X3;
+        int Y3;
+        int X4;
+        int Y4;
+        int MidX;
+        int MidY;
+        int MinX;
+        int MaxX;
+        int MinY;
+        int MaxY;
+        string ObjText;
+        int BreakType;
+        int TextState;
+        int TextColor;
+        int TextRotate;
+    };
+
 signals:
     void UpdatePixmap(QImage *Img);
     void PicSetRefresh();
+    void RecorderInit();
+    void TextCaptureFinish();
 
 public slots:
 };

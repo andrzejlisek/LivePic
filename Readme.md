@@ -34,6 +34,14 @@ If you can test tiled display of any image, the grab size have to match image si
 
 You can use LivePic to send video to another computer via wireless network instead of special video senders\. The only requirement is having another computer, on which you can also run LivePic application\. The one computer will act as server and the other computer will act as client, there is not difference, which computer \(sending or receiving\) acts as a server\. After you set connection, you can send picture in both ways \(by one way at a time\)\. The sending computer captures picture and sends into network, and the receiving computer displays picture based on data from network\. The audio can not be sent, you can use wireless sender to send it\. The keyboard and mouse input are not relayed bedcause such thing is platform\-specified, Qt library does not have API required to do this and you can achieve this using any wireless keyboard/mouse\. Both, for autio transmission and keyboard/mouse input you can use appropriate Bluetooth device instead of specialized wireless device\.
 
+### Capturing and translating text from screen
+
+Using Google Cloud API with valid key, you can recognize \(using OCR technique\) and save text existing on the screen\. If the text is in language, which is not understandable for you, you can enable translation into selected language, which is understandable for you\. The original text will be covered and the translated text will be superimposed\. By the such way, you can lively translate applications, web pages, movies with subtitles and more, which contains the text\. You can save the text into file if you need to get the text from image\.
+
+### Recording and slow motion
+
+In some amateur or documentary movies, some scenes seems be displayed too fast to take a look at them\. You can record the movie display and you can watch the captured image frame by frame or play it slower or faster in forward or backward direction\.
+
 # Picture and display settings
 
 After program running you are set the picture grabbing and display settings, which are meaning for:
@@ -44,11 +52,11 @@ After program running you are set the picture grabbing and display settings, whi
 * **View position** \- Position of viewing window\.
 * **View size** \- Size of viewing window\.
 * **Fullscreen** \- Switch viewing window between normal display and fullscreen display\. In some cases after switching wiewing window may display picture impropertly, in such case drag mouse cursor in the viewing window or click **Restart** button\.
-* **Folow mouse** \- Move grab position according mouse cursor movement\.
 * **Mouse type** \- Mouse cursor draw type:
   * **None** \- no mouse cursor\.
   * **High contrast** \- draw mouse cursor using only minimum and maximum values of channels\.
   * **Negative** \- draw mouse cursor using color negative\.
+* **Folow mouse** \- Move grab position according mouse cursor movement\.
 * **Mouse size** \- Size of mouse cursor crosshair legs \(length and thickness\)\.
 * **Margin left, top, right, bottom** \- The distance between window edge and viewing picture edge, the negative value allow cropping picture\.
 * **View mode** \- Sets view stretch mode:
@@ -70,7 +78,10 @@ The other settings are:
   * **Negative values** \- Display picture after capturing\.
 * **Threads** \- Number of threads used in one picture transform step, except from some special case\.
 * **Throttle** \- Additional sleep time before \(positive value\) or after \(negative value\) picture capture\.
-* **Delay line length** \- Length of delay line in frames\.
+* **Delay line length** \- Length of delay line in frames and delay line position in image processing line:
+  * **Auto** \- Use this position, which handles the less amount of temporaty data\.
+  * **Before** \- Place delay line before transform\.
+  * **After** \- Place delay line after transform\.
 * **Delay line temp file** \- Name of temporary file to store temporary delay line memory, when blank, the delay line will be stored in memory\.
 * **Mouse margin** \- Distance from viewing window edge, which is sensitive to mouse, placing cursor within this margin it is possible to resize window \(indicated as double arrow cursor\) or display **Settings** window if you click in the corner or viewing window \(indicated as hand cursor\)\. You can move the window if you place the cursor beyond the margins, \(the cursor on this area is invisible\) followed by drag and drop\.
 * **Gamma x1000** \- Set display gamma correction used in some transform types to operate on perceived color value instread of real color value\.
@@ -80,12 +91,12 @@ The other settings are:
 On the **Transform** tab, you can define picture transform sequence\. Below sequence list, there are following buttons:
 
 
-* **Load list** \- Load transform list from file
-* **Save list** \- Save transform list to file
-* **Add item** \- Add transform item
-* **Remove item** \- Remove transform item
-* **Move up**, **Move down** \- Move transform item on the list
-* **Enable/disable** \- Enable or disable selected item
+* **Add list** \- Add transform list to the item on the drop\-down list above the transform list\.
+* **Remove list** \- Remove selected transform list on the drop\-down list above the transform list\.
+* **Add item** \- Add transform item\.
+* **Remove item** \- Remove transform item\.
+* **Move up**, **Move down** \- Move transform item on the list\.
+* **Enable/disable** \- Enable or disable selected item\.
 
 The tab box below buttons is used to define transform item\. If transform list is empty or there is not selected item, the settings does not matter in picture transform\.
 
@@ -279,8 +290,9 @@ Using settings on the **Input/Output** tab, you can achieve transmitting picture
 On this tab there are following settings, which are not related to network transmitting:
 
 
-* **Picture window on top** \- Show Picture window at the top of other windows \(requires application restart\)\.
-* **Settings window on top** \- Show Settings window at the top of other windows \(requires application restart\)\.
+* **Picture window on top** \- Show Picture window on the top of other windows \(requires application restart\)\.
+* **Settings window on top** \- Show Settings window on the top of other windows \(requires application restart\)\.
+* **Recorder window on top** \- Show Recorder window on the top of other windows \(requires application restart\)\.
 * **Close application by closing Settings window** \- If checked, when you close Settings window using system X button, the whole application will be closed\.
 * **Screen bounds \(Left, Top, Right, Bottom\)** \- Coordinates of bounds, within which grabbing area will be kept while mouse ursor following is turned on\. This is usable to avoid messy image when you grab area outside screen area or limit grabbing to one screen or part of the screen\. You can press the **Auto** button to switch between bounds, which covers all displays \(if you have more than one\), one display and not bounded \(bounds from \-999999 to 999999 in both axis\)\. If you changed bounds manually, the **Auto** button \(if pressed once\) will switch to default bounds, which covers all screens\.
 
@@ -311,22 +323,22 @@ Actually, in the UDP protocol, there is not an logical connection and computers 
 
 On the both computer set the address in the **Address** field to **0\.0\.0\.0** and set port number in the **Port** field to any number, but port number on both computers must be different\. Instead of **0\.0\.0\.0** you can set the real computer IP address\. Then, click the **Bind UDP** on both computers\.
 
-After binding with address and port on both computers, futher proceeding depends on your networ configuration, especially relation between computers\.
+After binding with address and port on both computers, futher proceeding depends on your network configuration, especially relation between computers\.
 
 
 * Both computers are directly accessible from each other \(scenario 1\):
-   1. On the transmitting computer input the IP address of the receiving computer into **Address** field\.
-   2. On the transmitting computer input the same port number into **Port** field, which was choosen on the receiving computer\.
-   3. On the receiving computer input the IP address of the transmitting computer into **Address** field\.
-   4. On the receiving computer input the same port number into **Port** field, which was choosen on the transmitting computer\.
-   5. Perform the two\-way communication test by clicking the **Two\-way test** button on one of the computers\.
+  1. On the transmitting computer input the IP address of the receiving computer into **Address** field\.
+  2. On the transmitting computer input the same port number into **Port** field, which was choosen on the receiving computer\.
+  3. On the receiving computer input the IP address of the transmitting computer into **Address** field\.
+  4. On the receiving computer input the same port number into **Port** field, which was choosen on the transmitting computer\.
+  5. Perform the two\-way communication test by clicking the **Two\-way test** button on one of the computers\.
 * One computer is directly inaccesible brom the other computer \(scenario 2 or scenario 3\):
-   1. On the inaccessible computer input the IP address of the accessible computer into **Address** field\.
-   2. On the inaccessible computer input the same port number into **Port** field, which was choosen on the accessible computer\.
-   3. Perform the one\-way communication test by clicking the **One\-way test** button on the inaccessible computer\. During the test, the router, which hides the inaccessible computer from the accessible computer will allow to sending the messages in opposite direction\.
-   4. On the accessible computer input the IP address displayed in the received message into **Address** field \(there will be probably the address of router\)\.
-   5. On the accessible computer input the port number displayed in the received message into **Port** field \(there will be probably the same port number, which was choosen on the inaccessible computer\)\.
-   6. Perform the two\-way communication test by clicking the **Two\-way test** button on one of the computers\.
+  1. On the inaccessible computer input the IP address of the accessible computer into **Address** field\.
+  2. On the inaccessible computer input the same port number into **Port** field, which was choosen on the accessible computer\.
+  3. Perform the one\-way communication test by clicking the **One\-way test** button on the inaccessible computer\. During the test, the router, which hides the inaccessible computer from the accessible computer will allow to sending the messages in opposite direction\.
+  4. On the accessible computer input the IP address displayed in the received message into **Address** field \(there will be probably the address of router\)\.
+  5. On the accessible computer input the port number displayed in the received message into **Port** field \(there will be probably the same port number, which was choosen on the inaccessible computer\)\.
+  6. Perform the two\-way communication test by clicking the **Two\-way test** button on one of the computers\.
 * If your configuration meets the scenario 3, there is not necessary to get two\-way communication working\. You can treat the UDP connection as established directly after successfully performed one\-way communication test \(the step 3\)\. In this case, the **Refresh** button on the receiving computer will not work\.
 
 The **Disconnect** button unbounds address and port\. You have to do it on both computers\.
@@ -378,6 +390,121 @@ If transmission is not stable or LivePic hangs up during transmission, you may:
 * Decrease **Picture quality** values\.
 * Increase the **Throttling** value on the transmitting computer\.
 * Reduce size of transmitted image by reducing grab size or applying appropriate resize transform on transmitting computer\.
+
+# Google Cloud settings
+
+If you have access to the the Google Cloud Platform with valid API key, you can capture or translate displayed capture text\. Settings related to the Google Cloud are on the Google Cloud tab\.
+
+There are the following settings relatet to the Google Cloud:
+
+
+* **Enable Google Cloud text capture and translation** \- Enable and use optical character recognition and translation\. It requites and uses delay line\.
+* **Google API access key** \- Input valid Google Cloud Platform API key\. LivePic requires **Vision API** and **Translation API** to be aenabled\.
+* **Connection slots** \- Number of simultaneous connection slots, changing the setting requires application restart\. There is number of all simultaneous connection with Google\. The connections are asynchronous, each text recognition and translation uses new connection, which is performed on the first free slot\. If the number of connections are exceeded, the text will not be captured\. In most cases, recommended number is **1000**\.
+* **Image quality** \- JPEG quality used to send image to Google server\. You can set value from **0** to **100** to use **JPEG** or set **\-1** to use **PNG**, which is the largest and most accurate image format\.
+* **Mask overlay** \- Additional border size around detected text field on the image to use more smooth overpainting original text in the image\.
+* **Frame decimate** \- Number of frames in the row per once text capture and translation\. If you set small throttle in **Picture and display** tab appropiate to watch movie, you can set decimation between **10** and **20** to process text once or twice per second\. The higher text capturing frequency usually is not needed, but generates significially more network traffic and spends more money for Google services\.
+* **Language \(from / to\)** \- Source and destination language used to translate captured text\.
+* **Font name and size** \- Font name and size for captured and translated text\.
+* **Text alignment** \- The text alignment in each detected text block\.
+* **Automatic font size** \- If set, the font size will be adjusted to match the tekst inside text block\. In this case, the font size set in **Font name and size** field is used as minimum font size\.
+* **Automatic vertical text** \- Google does not give information about text orientation, it gives only the coordinates of the field points, so the Google does not give any information if the text is written horizontally or vertically \(rotated by right angle\)\. The text orientation will be guessed by better font size matching\.
+* **Preserve line breaks** \- Google Translate API does not preserve line breaks, but uses some tricks to force line breaks preservation\.
+* **HTML percentage text size** \- Percentage text size in HTML capture file\. It is recommendedn to use value between **80** and **90** to avoid HTML field distortion in certain cases\.
+
+Changing settings other than **Connection slots** and **Frame decimate** are visible immediately during capturing and displaying picture \(you do not have to restart capturing to get efeect of settings change\)\.
+
+# Translating text from screen
+
+The main purpose of text capture is translating all visible text on the fly\. To do this, enable Google Cloud text capture and adjust delay line length to about between 3 and 5 seconds\. the text is captured and translated asynchronously within delay line\. While you are usng the feature, there is difference, if the delay line is before or after image processing, this affects the OCR quality and superimposed text looking\.
+
+During processing, the original text is overpainted and there is superimposed translated captured text\.
+
+If captured and translated text is not displayed or flickers, you can do:
+
+
+* Increase frame decimate\.
+* Increase delay line length\.
+* Increate throttle\.
+* Check if API access key is valid and the Google services are turned on\.
+
+You can also display original text, if you select **\(no translation\)** as destination language in the **Google Cloud** tab\. In such case, the translation service will not be used\.
+
+Because the Google services is called asynchronously, you can achieve fluently text translating regardless time required from sending image to get translated text\.
+
+# Recording image and text
+
+You can record captured image into memory or disk using recorder available by clicking the **Recorder** button\. You can also watch recording in slow motion, fast motion or manually frame by frame\. You can also capture text to text files\.
+
+Recorder can work only while the picture capture and display works \(after clicking the **Start** button in the **Settings** window\)\.
+
+## Recorder mode
+
+The recorder works as pipeline element, which can be placed in one of the four places\. The place can be sed using **Recoder mode** field\. If you set **None**, the recorder will not be used\. After changing recoder mode, you have to click the **Restart** button\.
+
+If the delay line is placed after transform, there is not difference between **Before transform, before delay line** and **Before transform, after delay line**\. Analogically, if the delay line is placed before transform, there is not difference between **After transform, before delay line** and **After transform, after delay line**\.
+
+The recorder mode affects the following things:
+
+
+* If translation is enabled, recoded images can be original or with superimposed translated text\.
+* Image size if transform changes the image size\.
+* Possibility of text translation on the fly during playing\.
+
+## Recording settings
+
+Before recording, you have to set the following fields:
+
+
+* **Directory** \- To this directory pictures will be saved if you not set the **Memory** mode\. You can select the directory using **Browse** button or manually input path\.\.
+* **Picture format** \- The format and quality, which will be used to save pictures:
+  * **RAW** \- Raw format, without additional processing\.
+  * **BMP** \- BMP format
+  * **PNG** \- PNG format
+  * **JPEG** \- JPEG format, set quality between **0** and **100** using the field on the right\.
+* **Memory** \- Memory mode, the pictures will not be saved on the disk\.
+
+After set above fields, you have to click the **Apply** button\. The existing recording will be cleared, but generated files will remain\. If you selected **JPEG** format, during live view, there will be shown decompressed **JPEG** picture to check the picture quality\.
+
+After clicking the **Apply** button, you can change settings in **Directory** and **Picture format** fields to manually capture single frame\.
+
+## Record and playback
+
+To start the recording click the **Rec start** button, after recording, click the **Rec stop** button\. You can record sequence several times, the newly recorded images will be appended to the end of sequence regardless the playback position\.
+
+The progress bar shows two values\. The first is the playback position, the second is the sequence length\. You can record picture during playback\.
+
+There are the following playback controls:
+
+
+* **\[ \]** \- Stop playback and display live picture\.
+* **\[X\]** \- Stop playback and display freezed frame\.
+* **\[<\]** and **\[>\]** \- Move position by one frame and display freezed frame\.
+* **<&#124;** and **&#124;>** \- Play slow motion one frame per several live frames\. The playback speed is determined by first value in **Speed factors** field\.
+* **<** and **>** \- Play in natural tempo
+* **<<** and **>>** \- Play fast motion several frames per one live frame\. The playback speed is determined by second value in **Speed factors** field\.
+
+## Capture one frame and text
+
+If recorder is activated by setting **Recorder mode** to other than **None**, you can save one frame with captured text\. To do this, select directory and picture format in the **Directory** and **Picture format** fields\. Next, set the value in **Capture frame** field\. There is number of frames, which will be waited before capturing, so you have hide the **Recorder** windowand prepare data to capture within the time\. To start capture process, click the **Capture** button\. The time to capture will be presented in progress bar\. You can break the waiting by clicking the **Capture** button one more before filling the time bar\.
+
+There will be saved the picture file in the directory\. The file name consists of current date and time\. The picture will be based on displayed picture, so you can save any recorded frame\.
+
+If the delay line and capturing text are enabled, there will be saved two additional files:
+
+
+* **HTML** \- File containing the image and text fields looking similarly to picture view\. The background image is embedded into HTML file in JPEG or PNG format\. If you use RAW or BMP format, the empedded image will be in PNG format\.
+* **CSV** \- File containing the list of detected text fields\. It is recommended to open this file in spreadsheed application\.
+
+## Save sequence
+
+If you capture sequence into memory, you can save the sequence to serie of files by clicking the save sequence\. You can adjust, how many pictures will be saved per one live frame by adjusting the **Capture frame** value:
+
+
+* If the value is too low, the sequence saving process will unnecessary take long time\.
+* If the value is too high, the application can be freezed or crashed during saving the sequence\.
+
+You have to adjust the value experimentally\. The file name of each picture will consist of date and time, when the picture was recorded\.
 
 # Performance settings and recommendations
 
@@ -469,6 +596,16 @@ Apart from transform optimization, you may increase performance and fluenty by f
 * Increase number of threads or pipes, you have to experimentally choose optimal values with FPS and usage of processor cores checking\.
 * Otherwise, if high FPS is not required, set throttle time value as high as acceptable\.
 * If you want to send picture via network, attempt to achieve as small picture as possible, use the lowest quality as acceptable\.
+
+## Google cloud
+
+If you use capturing text with Google Cloud services, usu the following settings:
+
+
+* **Throttling \(ms\)** \- About 20\-50 for dynamic images \(like movies\) or above 200ms for static images like photos, applications, web pages\.
+* **Frame decimation** \- Dependts on **throttling \(ms\)**, optimally is to achieve capture speed at most 2 or 3 times per one second\.
+* **Delay line length** \- You can set as short as possible without text flickering\. In most cases, the optimal delay line length is the number of frames, which gives from 2 to 5 seconds depending on picture size\. The time depends on **throttling \(ms\)** value\.
+* **Image quality** \- Set between 70 and 90 for smaller images or between 50 and 70 for large images\. Use As low value as possible, but use enough high values to remain text readable\. The size of picture, which will be sent to server depends on the settings\. Use **100** or **\-1** value for small images and for images with text written using very small font size\.
 
 
 

@@ -31,7 +31,7 @@ public:
     QTimer * FPS;
     bool FPS_ = false;
     void UpdateWindow();
-    bool EventActive;
+    bool EventActive = false;
     void WinCommand(int I);
     bool WorkPause();
     void WorkResume(bool Paused);
@@ -45,10 +45,16 @@ public:
     bool InputBoxOK;
     bool ForceCloseEvent = 0;
 
+    vector<string> LangName;
+    vector<string> LangCode;
+    string LangIndexSet(int Idx);
+    int LangIndexGet(string Code);
+
 signals:
     void SetWindow(int X, int Y, int W, int H, bool Fullscreen);
     void RunCommand(int Cmd);
     void ViewRepaint();
+    void ShowRecorder();
 
 public slots:
     void PicNetLog(QString Msg);
@@ -555,7 +561,48 @@ private slots:
 
     void on_NetMsgTest_clicked();
 
+    void on_TransList_currentIndexChanged(int index);
+
+    void on_DelayLineModeT_currentIndexChanged(int index);
+
+    void on_GoogleEnableT_toggled(bool checked);
+
+    void on_GoogleKeyT_textChanged(const QString &arg1);
+
+    void on_GoogleMaskOverlayT_valueChanged(int arg1);
+
+    void on_GoogleDecimateT_valueChanged(int arg1);
+
+    void on_GoogleLangSrcT_currentIndexChanged(int index);
+
+    void on_GoogleLangDstT_currentIndexChanged(int index);
+
+    void on_GoogleFontNameT_textChanged(const QString &arg1);
+
+    void on_GoogleFontSizeT_valueChanged(int arg1);
+
+    void on_GoogleFontAutoT_toggled(bool checked);
+
+    void on_GoogleLinesT_toggled(bool checked);
+
+    void on_GoogleAlignH_currentIndexChanged(int index);
+
+    void on_GoogleAlignV_currentIndexChanged(int index);
+
+    void on_MainRecorder_clicked();
+
+    void on_OnTopRecorderC_toggled(bool checked);
+
+    void on_GoogleTextRotate_toggled(bool checked);
+
+    void on_GoogleImageQualityT_valueChanged(int arg1);
+
+    void on_GoogleCaptureTextSizeT_valueChanged(int arg1);
+
+    void on_GoogleSlotCountT_valueChanged(int arg1);
+
 private:
+    bool TransListEvent;
     Ui::WinSettings *ui;
     bool Working;
     QString LastPath;

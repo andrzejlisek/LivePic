@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Settings</string>
+   <string>LivePic - settings</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="1" column="0">
@@ -21,6 +21,13 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="3">
+       <widget class="QPushButton" name="MainRestart">
+        <property name="text">
+         <string>Restart</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
        <widget class="QPushButton" name="MainClose">
         <property name="text">
          <string>Close app</string>
@@ -28,20 +35,20 @@
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QPushButton" name="MainRestart">
+       <widget class="QPushButton" name="MainStop">
         <property name="text">
-         <string>Restart</string>
+         <string>Stop</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="4">
+      <item row="0" column="6">
        <widget class="QPushButton" name="MainClose0">
         <property name="text">
          <string>Close set</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="5">
+      <item row="0" column="8">
        <widget class="QLabel" name="MainFPS">
         <property name="text">
          <string>FPS</string>
@@ -49,16 +56,19 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QPushButton" name="MainStop">
-        <property name="text">
-         <string>Stop</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
        <widget class="QPushButton" name="MainStart">
         <property name="text">
          <string>Start</string>
+        </property>
+        <property name="default">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="QPushButton" name="MainRecorder">
+        <property name="text">
+         <string>Recorder</string>
         </property>
        </widget>
       </item>
@@ -522,6 +532,25 @@
          </property>
         </widget>
        </item>
+       <item row="11" column="2">
+        <widget class="QComboBox" name="DelayLineModeT">
+         <item>
+          <property name="text">
+           <string>Auto</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Before</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>After</string>
+          </property>
+         </item>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="Tab3">
@@ -529,63 +558,10 @@
        <string>Transform</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_10">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QListWidget" name="TransListView"/>
        </item>
-       <item row="1" column="0">
-        <layout class="QGridLayout" name="ProcessBtn">
-         <item row="0" column="4">
-          <widget class="QPushButton" name="TransMoveUp">
-           <property name="text">
-            <string>Move up</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="TransAdd">
-           <property name="text">
-            <string>Add item</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QPushButton" name="TransListLoad">
-           <property name="text">
-            <string>Load list</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="TransListSave">
-           <property name="text">
-            <string>Save list</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="TransRemove">
-           <property name="text">
-            <string>Remove item</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="4">
-          <widget class="QPushButton" name="TransMoveDown">
-           <property name="text">
-            <string>Move down</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QPushButton" name="TransEnable">
-           <property name="text">
-            <string>Enable/disable</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QTabWidget" name="ProcessTabs">
          <property name="enabled">
           <bool>true</bool>
@@ -1225,7 +1201,7 @@
            <item row="0" column="4" rowspan="5">
             <widget class="QTabWidget" name="Trans2Chan">
              <property name="currentIndex">
-              <number>0</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="Trans2R">
               <attribute name="title">
@@ -2277,6 +2253,62 @@
          </widget>
         </widget>
        </item>
+       <item row="2" column="0">
+        <layout class="QGridLayout" name="ProcessBtn">
+         <item row="0" column="4">
+          <widget class="QPushButton" name="TransMoveUp">
+           <property name="text">
+            <string>Move item up</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="TransAdd">
+           <property name="text">
+            <string>Add item</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="TransListLoad">
+           <property name="text">
+            <string>Add list</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="TransListSave">
+           <property name="text">
+            <string>Remove list</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="TransRemove">
+           <property name="text">
+            <string>Remove item</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QPushButton" name="TransMoveDown">
+           <property name="text">
+            <string>Move item dn</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QPushButton" name="TransEnable">
+           <property name="text">
+            <string>Enable/disable</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0">
+        <widget class="QComboBox" name="TransList"/>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="Tab4">
@@ -2284,9 +2316,6 @@
        <string>Input/Output</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_9">
-       <item row="7" column="0">
-        <widget class="QPlainTextEdit" name="NetMsgLog"/>
-       </item>
        <item row="0" column="0">
         <widget class="QCheckBox" name="OnTopPictuceC">
          <property name="text">
@@ -2294,7 +2323,35 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="8" column="0">
+        <widget class="QPlainTextEdit" name="NetMsgLog"/>
+       </item>
+       <item row="9" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QPushButton" name="NetMsgSend">
+           <property name="text">
+            <string>One-way test</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="NetMsgTest">
+           <property name="text">
+            <string>Two-way test</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="NetMsgClear">
+           <property name="text">
+            <string>Clear log</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="6" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QLabel" name="NetAddrL">
@@ -2349,46 +2406,7 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="SetCloseApp">
-         <property name="text">
-          <string>Close application by closing Settings window</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
-         <item>
-          <widget class="QPushButton" name="NetMsgSend">
-           <property name="text">
-            <string>One-way test</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="NetMsgTest">
-           <property name="text">
-            <string>Two-way test</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="NetMsgClear">
-           <property name="text">
-            <string>Clear log</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="OnTopSettingsC">
-         <property name="text">
-          <string>Settings window on top</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
+       <item row="7" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QPushButton" name="NetStartSrv">
@@ -2420,7 +2438,21 @@
          </item>
         </layout>
        </item>
-       <item row="4" column="0">
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="OnTopSettingsC">
+         <property name="text">
+          <string>Settings window on top</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QCheckBox" name="SetCloseApp">
+         <property name="text">
+          <string>Close application by closing Settings window</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
           <widget class="QLabel" name="NetPicSrcDstL">
@@ -2462,7 +2494,7 @@
          </item>
         </layout>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
           <widget class="QLabel" name="ScreenBoundsT">
@@ -2520,12 +2552,236 @@
          </item>
         </layout>
        </item>
-       <item row="9" column="0">
+       <item row="10" column="0">
         <widget class="QLabel" name="NetStatus">
          <property name="text">
           <string>Status:
 Size:
 Transfer:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="OnTopRecorderC">
+         <property name="text">
+          <string>Recorder window on top</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Tab5">
+      <attribute name="title">
+       <string>Google Cloud</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_25">
+       <item row="1" column="0">
+        <widget class="QLabel" name="GoogleKeyL">
+         <property name="text">
+          <string>Google API access key:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0" colspan="3">
+        <widget class="QCheckBox" name="GoogleTextRotate">
+         <property name="text">
+          <string>Automatic vertical text</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1" colspan="2">
+        <widget class="QSpinBox" name="GoogleDecimateT">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" colspan="2">
+        <widget class="QSpinBox" name="GoogleImageQualityT">
+         <property name="minimum">
+          <number>-1</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="GoogleFontL">
+         <property name="text">
+          <string>Font name and size:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0" colspan="3">
+        <widget class="QCheckBox" name="GoogleLinesT">
+         <property name="text">
+          <string>Preserve line breaks</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0">
+        <widget class="QLabel" name="GoogleCaptureTextSizeL">
+         <property name="text">
+          <string>HTML percentage text size:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QComboBox" name="GoogleAlignH">
+         <item>
+          <property name="text">
+           <string>Left</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Center</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Right</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Justify</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QSpinBox" name="GoogleFontSizeT">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QLineEdit" name="GoogleKeyT"/>
+       </item>
+       <item row="0" column="0" colspan="3">
+        <widget class="QCheckBox" name="GoogleEnableT">
+         <property name="text">
+          <string>Enable Google Cloud text capture and translation</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" colspan="2">
+        <widget class="QSpinBox" name="GoogleMaskOverlayT">
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="GoogleMaskOverlayL">
+         <property name="text">
+          <string>Mask overlay:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="GoogleLangL">
+         <property name="text">
+          <string>Language (from / to):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0" colspan="3">
+        <widget class="QCheckBox" name="GoogleFontAutoT">
+         <property name="text">
+          <string>Automatic font size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QComboBox" name="GoogleAlignV">
+         <item>
+          <property name="text">
+           <string>Top</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Middle</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Bottom</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="GoogleAlignL">
+         <property name="text">
+          <string>Text alignment:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QComboBox" name="GoogleLangDstT"/>
+       </item>
+       <item row="6" column="1">
+        <widget class="QComboBox" name="GoogleLangSrcT"/>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="GoogleFontNameT">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="GoogleDecimateL">
+         <property name="text">
+          <string>Frame decimate:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1" colspan="2">
+        <widget class="QSpinBox" name="GoogleCaptureTextSizeT">
+         <property name="maximum">
+          <number>200</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="GoogleImageQualityL">
+         <property name="text">
+          <string>Image quality:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="GoogleSlotCountL">
+         <property name="text">
+          <string>Connection slots:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="2">
+        <widget class="QSpinBox" name="GoogleSlotCountT">
+         <property name="maximum">
+          <number>1000000</number>
          </property>
         </widget>
        </item>
@@ -2554,6 +2810,7 @@ Transfer:</string>
   <tabstop>PicThreadsT</tabstop>
   <tabstop>ThrottleT</tabstop>
   <tabstop>DelayLineCountT</tabstop>
+  <tabstop>DelayLineModeT</tabstop>
   <tabstop>DelayLineFileNameT</tabstop>
   <tabstop>DelayLineFileNameB</tabstop>
   <tabstop>MarginLeftT</tabstop>
@@ -2566,14 +2823,15 @@ Transfer:</string>
   <tabstop>ViewColor</tabstop>
   <tabstop>PicMouseMarginT</tabstop>
   <tabstop>PicGammaT</tabstop>
+  <tabstop>TransList</tabstop>
   <tabstop>TransListView</tabstop>
   <tabstop>TransListLoad</tabstop>
-  <tabstop>TransListSave</tabstop>
   <tabstop>TransAdd</tabstop>
-  <tabstop>TransRemove</tabstop>
   <tabstop>TransMoveUp</tabstop>
-  <tabstop>TransMoveDown</tabstop>
   <tabstop>TransEnable</tabstop>
+  <tabstop>TransListSave</tabstop>
+  <tabstop>TransRemove</tabstop>
+  <tabstop>TransMoveDown</tabstop>
   <tabstop>ProcessTabs</tabstop>
   <tabstop>Trans0Op0</tabstop>
   <tabstop>Trans0File</tabstop>
@@ -2607,12 +2865,12 @@ Transfer:</string>
   <tabstop>Trans1Op1</tabstop>
   <tabstop>Trans1Sat</tabstop>
   <tabstop>Trans1Op2</tabstop>
-  <tabstop>Trans1Op3</tabstop>
   <tabstop>Trans1YuvType</tabstop>
   <tabstop>Trans1YuvWeightR</tabstop>
   <tabstop>Trans1YuvWeightG</tabstop>
   <tabstop>Trans1YuvWeightB</tabstop>
   <tabstop>Trans1YuvLumaT</tabstop>
+  <tabstop>Trans1Op3</tabstop>
   <tabstop>Trans1Op4</tabstop>
   <tabstop>Trans1Chan</tabstop>
   <tabstop>Trans2Gamma</tabstop>
@@ -2703,10 +2961,10 @@ Transfer:</string>
   <tabstop>Trans2ChanB43</tabstop>
   <tabstop>Trans2ChanB44</tabstop>
   <tabstop>Trans3Add</tabstop>
-  <tabstop>Trans3Rem</tabstop>
   <tabstop>Trans3MovePrev</tabstop>
-  <tabstop>Trans3MoveNext</tabstop>
   <tabstop>Trans3DispPrev</tabstop>
+  <tabstop>Trans3Rem</tabstop>
+  <tabstop>Trans3MoveNext</tabstop>
   <tabstop>Trans3DispNext</tabstop>
   <tabstop>Trans3Color1</tabstop>
   <tabstop>Trans3Color2</tabstop>
@@ -2763,6 +3021,7 @@ Transfer:</string>
   <tabstop>Trans5RotateT</tabstop>
   <tabstop>OnTopPictuceC</tabstop>
   <tabstop>OnTopSettingsC</tabstop>
+  <tabstop>OnTopRecorderC</tabstop>
   <tabstop>SetCloseApp</tabstop>
   <tabstop>ScreenBoundsX1</tabstop>
   <tabstop>ScreenBoundsY1</tabstop>
@@ -2783,11 +3042,28 @@ Transfer:</string>
   <tabstop>NetMsgSend</tabstop>
   <tabstop>NetMsgTest</tabstop>
   <tabstop>NetMsgClear</tabstop>
+  <tabstop>GoogleEnableT</tabstop>
+  <tabstop>GoogleKeyT</tabstop>
+  <tabstop>GoogleSlotCountT</tabstop>
+  <tabstop>GoogleImageQualityT</tabstop>
+  <tabstop>GoogleMaskOverlayT</tabstop>
+  <tabstop>GoogleDecimateT</tabstop>
+  <tabstop>GoogleLangSrcT</tabstop>
+  <tabstop>GoogleLangDstT</tabstop>
+  <tabstop>GoogleFontNameT</tabstop>
+  <tabstop>GoogleFontSizeT</tabstop>
+  <tabstop>GoogleAlignH</tabstop>
+  <tabstop>GoogleAlignV</tabstop>
+  <tabstop>GoogleFontAutoT</tabstop>
+  <tabstop>GoogleTextRotate</tabstop>
+  <tabstop>GoogleLinesT</tabstop>
+  <tabstop>GoogleCaptureTextSizeT</tabstop>
   <tabstop>MainStart</tabstop>
   <tabstop>MainStop</tabstop>
   <tabstop>MainRestart</tabstop>
   <tabstop>MainClose</tabstop>
   <tabstop>MainClose0</tabstop>
+  <tabstop>MainRecorder</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -49,7 +49,7 @@ Settings::Settings()
     _BoundX2.push_back(999999);
     _BoundY2.push_back(999999);
 
-    CF.FileLoad(Eden::ApplicationDirectory() + "Config.txt");
+    CF.FileLoad(Eden::File(Eden::ApplicationDirectory() + "Config.txt"));
     CF.ParamGet("PicX", PicX);
     CF.ParamGet("PicY", PicY);
     CF.ParamGet("PicW", PicW);
@@ -93,6 +93,33 @@ Settings::Settings()
     CF.ParamGet("BoundX2", BoundX2);
     CF.ParamGet("BoundY2", BoundY2);
     CF.ParamGet("ViewFullscreen", ViewFullscreen);
+
+    CF.ParamGet("GoogleCloudEnabled", GoogleCloudEnabled);
+    CF.ParamGet("GoogleCloudSlotCount", GoogleCloudSlotCount);
+    CF.ParamGet("GoogleCloudKey", GoogleCloudKey);
+    CF.ParamGet("GoogleCloudImageQuality", GoogleCloudImageQuality);
+    CF.ParamGet("GoogleCloudMaskOverlay", GoogleCloudMaskOverlay);
+    CF.ParamGet("GoogleCloudDecimate", GoogleCloudDecimate);
+    CF.ParamGet("GoogleCloudLangSrc", GoogleCloudLangSrc);
+    CF.ParamGet("GoogleCloudLangDst", GoogleCloudLangDst);
+    CF.ParamGet("GoogleCloudFontName", GoogleCloudFontName);
+    CF.ParamGet("GoogleCloudFontAutoSize", GoogleCloudFontAutoSize);
+    CF.ParamGet("GoogleCloudFontSize", GoogleCloudFontSize);
+    CF.ParamGet("GoogleCloudTextRotate", GoogleCloudTextRotate);
+    CF.ParamGet("GoogleCloudTranslateLines", GoogleCloudTranslateLines);
+    CF.ParamGet("GoogleCloudTranslateAlignH", GoogleCloudTranslateAlignH);
+    CF.ParamGet("GoogleCloudTranslateAlignV", GoogleCloudTranslateAlignV);
+
+    CF.ParamGet("RecorderMode", RecorderMode);
+    CF.ParamGet("RecorderWindowOnTop", RecorderWindowOnTop);
+    CF.ParamGet("RecorderDirectory", RecorderDirectory);
+    CF.ParamGet("RecorderMemory", RecorderMemory);
+    CF.ParamGet("RecorderFactor1", RecorderFactor1);
+    CF.ParamGet("RecorderFactor2", RecorderFactor2);
+    CF.ParamGet("RecorderFormat", RecorderFormat);
+    CF.ParamGet("RecorderQuality", RecorderQuality);
+    CF.ParamGet("RecorderTextTimeout", RecorderTextTimeout);
+    CF.ParamGet("RecorderTextSize", RecorderTextSize);
 
     RefreshWorkingSettings();
 }
@@ -147,7 +174,34 @@ void Settings::Save()
     CF.ParamSet("BoundY2", BoundY2);
     CF.ParamSet("ViewFullscreen", ViewFullscreen);
 
-    CF.FileSave(Eden::ApplicationDirectory() + "Config.txt");
+    CF.ParamSet("GoogleCloudEnabled", GoogleCloudEnabled);
+    CF.ParamSet("GoogleCloudSlotCount", GoogleCloudSlotCount);
+    CF.ParamSet("GoogleCloudKey", GoogleCloudKey);
+    CF.ParamSet("GoogleCloudImageQuality", GoogleCloudImageQuality);
+    CF.ParamSet("GoogleCloudMaskOverlay", GoogleCloudMaskOverlay);
+    CF.ParamSet("GoogleCloudDecimate", GoogleCloudDecimate);
+    CF.ParamSet("GoogleCloudLangSrc", GoogleCloudLangSrc);
+    CF.ParamSet("GoogleCloudLangDst", GoogleCloudLangDst);
+    CF.ParamSet("GoogleCloudFontName", GoogleCloudFontName);
+    CF.ParamSet("GoogleCloudFontAutoSize", GoogleCloudFontAutoSize);
+    CF.ParamSet("GoogleCloudFontSize", GoogleCloudFontSize);
+    CF.ParamSet("GoogleCloudTextRotate", GoogleCloudTextRotate);
+    CF.ParamSet("GoogleCloudTranslateLines", GoogleCloudTranslateLines);
+    CF.ParamSet("GoogleCloudTranslateAlignH", GoogleCloudTranslateAlignH);
+    CF.ParamSet("GoogleCloudTranslateAlignV", GoogleCloudTranslateAlignV);
+
+    CF.ParamSet("RecorderMode", RecorderMode);
+    CF.ParamSet("RecorderWindowOnTop", RecorderWindowOnTop);
+    CF.ParamSet("RecorderDirectory", RecorderDirectory);
+    CF.ParamSet("RecorderMemory", RecorderMemory);
+    CF.ParamSet("RecorderFactor1", RecorderFactor1);
+    CF.ParamSet("RecorderFactor2", RecorderFactor2);
+    CF.ParamSet("RecorderFormat", RecorderFormat);
+    CF.ParamSet("RecorderQuality", RecorderQuality);
+    CF.ParamSet("RecorderTextTimeout", RecorderTextTimeout);
+    CF.ParamSet("RecorderTextSize", RecorderTextSize);
+
+    CF.FileSave(Eden::File(Eden::ApplicationDirectory() + "Config.txt"));
 }
 
 void Settings::RefreshWorkingSettings()

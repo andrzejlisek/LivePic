@@ -453,7 +453,7 @@ void TransformItem::FillLUT(uchar *LUT_R, uchar *LUT_G, uchar *LUT_B)
                             string FileTypeSignature = Eden::ToLower(Trans0File.substr(Trans0File.size() - 4));
                             if (FileTypeSignature == ".txt")
                             {
-                                fstream TransFileX(Trans0File, ios::in);
+                                fstream TransFileX(Eden::File(Trans0File), ios::in);
                                 if (TransFileX.is_open())
                                 {
                                     vector<string> Buf;
@@ -492,7 +492,7 @@ void TransformItem::FillLUT(uchar *LUT_R, uchar *LUT_G, uchar *LUT_B)
                             }
                             if (FileTypeSignature == ".bin")
                             {
-                                fstream TransFileX(Trans0File, ios::in | ios::binary);
+                                fstream TransFileX(Eden::File(Trans0File), ios::in | ios::binary);
                                 if (TransFileX.is_open())
                                 {
                                     uchar * FileRaw = new uchar[768];
@@ -769,7 +769,7 @@ void TransformItem::FillLUT(uchar *LUT_R, uchar *LUT_G, uchar *LUT_B)
                             string FileTypeSignature = Eden::ToLower(Trans1File.substr(Trans1File.size() - 4));
                             if (FileTypeSignature == ".txt")
                             {
-                                fstream TransFileX(Trans1File, ios::in);
+                                fstream TransFileX(Eden::File(Trans1File), ios::in);
                                 if (TransFileX.is_open())
                                 {
                                     vector<string> Buf;
@@ -842,7 +842,7 @@ void TransformItem::FillLUT(uchar *LUT_R, uchar *LUT_G, uchar *LUT_B)
                             }
                             if (FileTypeSignature == ".bin")
                             {
-                                fstream TransFileX(Trans1File, ios::in | ios::binary);
+                                fstream TransFileX(Eden::File(Trans1File), ios::in | ios::binary);
                                 if (TransFileX.is_open())
                                 {
                                     uchar * FileRaw = new uchar[1];
@@ -1630,7 +1630,7 @@ void TransformItem::SaveLUT(string FileName, int Resolution)
                 uchar * TempG = new uchar[256];
                 uchar * TempB = new uchar[256];
                 FillLUT(TempR, TempG, TempB);
-                fstream FS(FileName, Binary ? (ios::out | ios::binary) : (ios::out));
+                fstream FS(Eden::File(FileName), Binary ? (ios::out | ios::binary) : (ios::out));
                 if (FS.is_open())
                 {
                     uchar * TempX;
@@ -1706,7 +1706,7 @@ void TransformItem::SaveLUT(string FileName, int Resolution)
                 uchar * TempG = new uchar[16777216];
                 uchar * TempB = new uchar[16777216];
                 FillLUT(TempR, TempG, TempB);
-                fstream FS(FileName, Binary ? (ios::out | ios::binary) : (ios::out));
+                fstream FS(Eden::File(FileName), Binary ? (ios::out | ios::binary) : (ios::out));
                 if (FS.is_open())
                 {
                     int I_L = 0;

@@ -10,7 +10,14 @@
 #include "winsettings.h"
 #include "settings.h"
 #include "transformcore.h"
+#include "winrecorder.h"
 #include "picnetwork.h"
+
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
+#include <QObject>
+#include <iostream>
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +30,18 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    struct DelayLineAsyncSlot
+    {
+    public:
+        QNetworkAccessManager* Manager;
+        QNetworkRequest Request;
+        int State;
+        int Pos;
+        int Id;
+        int Type;
+    };
+    vector<DelayLineAsyncSlot> DelayLineAsyncSlotList;
+
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     QPixmap Bmp;
@@ -37,6 +56,7 @@ public:
     int PicW;
     int PicH;
     WinSettings WinSettings_;
+    WinRecorder WinRecorder_;
     Settings * Settings_;
     TransformCore * TransformCore_;
     void SetBackColor();
@@ -52,6 +72,8 @@ private slots:
     void RunCommand(int Cmd);
     void resizeEvent(QResizeEvent *event);
     void moveEvent(QResizeEvent *event);
+    void closeEvent(QCloseEvent *event);
+    void ShowRecorder();
 
 private:
     Ui::MainWindow *ui;

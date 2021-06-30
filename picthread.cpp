@@ -111,10 +111,10 @@ void PicThread::OpLoad()
         int OpTypeX = 0;
         int LastItem = -1;
 
-        IL = TransformCore_->TransformList.size();
+        IL = TransformCore_->TransformListItem[TransformCore_->TransformListCurrent].size();
         for (I = 0; I < IL; I++)
         {
-            TransformItem TransformItem_ = TransformCore_->TransformList[I];
+            TransformItem TransformItem_ = TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][I];
             if (TransformItem_.TransEnabled)
             {
                 uchar * OpMatrixX = NULL;
@@ -646,6 +646,8 @@ void PicThread::ReInit()
     PicHDisp = PicH;
     PicWMax = PicW;
     PicHMax = PicW;
+    Settings_->PicW_disp = PicWDisp;
+    Settings_->PicH_disp = PicHDisp;
 
 
     OpC = OpType.size();
@@ -691,6 +693,8 @@ void PicThread::ReInit()
         }
         PicWDisp = BmpBufW[OpC];
         PicHDisp = BmpBufH[OpC];
+        Settings_->PicW_disp = PicWDisp;
+        Settings_->PicH_disp = PicHDisp;
 
 
         int P, PP;
@@ -741,6 +745,8 @@ void PicThread::ReInit()
             ThrMaxY[PP + PicThreads] = ThrPicLines[OpI];
         }
     }
+
+    emit RecorderInit();
 
     PicRawSizeDisp = (PicWDisp * PicHDisp) << 2;
     if (PicRawDummyDisp != NULL)
@@ -881,96 +887,21 @@ void PicThread::ReInit()
         }
     }
 
-
-    if (DelayLineBuf != NULL)
-    {
-        delete[] DelayLineBuf;
-        DelayLineBuf = NULL;
-    }
-    if (DelayLineFileObj != NULL)
-    {
-        if (DelayLineFileObj->is_open())
-        {
-            DelayLineFileObj->close();
-            remove(DelayLineFileName.c_str());
-        }
-        delete DelayLineFileObj;
-        DelayLineFileObj = NULL;
-    }
-    DelayLineCount = Settings_->DelayLineCount;
-    DelayLinePointer = 0;
-    DelayLineI = false;
-    DelayLineO = false;
-    if (DelayLineCount > 0)
-    {
-        if ((PicW * PicH) <= (PicWDisp * PicHDisp))
-        {
-            DelayLineI = true;
-            DelayLineChunkSize = PicW * PicH * 4;
-        }
-        else
-        {
-            DelayLineO = true;
-            DelayLineChunkSize = PicWDisp * PicHDisp * 4;
-        }
-        if (Settings_->DelayLineFileName != "")
-        {
-            DelayLineFileName = Settings_->DelayLineFileName;
-            DelayLineFile = true;
-            DelayLineFileObj = new fstream(DelayLineFileName, ios::out | ios::binary);
-            DelayLineBuf = new uchar[DelayLineChunkSize];
-            for (int I = 0; I < (DelayLineCount + 1); I++)
-            {
-                for (int II = 0; II < DelayLineChunkSize; II++)
-                {
-                    DelayLineBuf[II] = rand();
-                }
-                DelayLineFileObj->write((char*)DelayLineBuf, DelayLineChunkSize);
-            }
-            DelayLineFileObj->close();
-            delete DelayLineFileObj;
-            DelayLineFileObj = new fstream(DelayLineFileName, ios::in | ios::out | ios::binary);
-            delete[] DelayLineBuf;
-            DelayLineBuf = NULL;
-        }
-        else
-        {
-            DelayLineFile = false;
-            int DelayLineBufL = (DelayLineCount + 1) * DelayLineChunkSize;
-            DelayLineBuf = new uchar[DelayLineBufL];
-            for (int II = 0; II < DelayLineBufL; II++)
-            {
-                DelayLineBuf[II] = rand();
-            }
-        }
-    }
-    DelayLinePointerCount = (DelayLineCount + 1) * DelayLineChunkSize;
+    DelayLinePrepare();
+    RecorderI1 = false;
+    RecorderI2 = false;
+    RecorderO1 = false;
+    RecorderO2 = false;
+    if (Settings_->RecorderMode == 1) { RecorderI1 = true; }
+    if (Settings_->RecorderMode == 2) { RecorderI2 = true; }
+    if (Settings_->RecorderMode == 3) { RecorderO1 = true; }
+    if (Settings_->RecorderMode == 4) { RecorderO2 = true; }
 }
 
-void PicThread::DelayLineProcess(uchar *Data)
+
+void PicThread::WorkLoopSleep(int WorkLoopSleepTime)
 {
-    if (DelayLineFile)
-    {
-        DelayLineFileObj->seekp(DelayLinePointer);
-        DelayLineFileObj->write((char*)Data, DelayLineChunkSize);
-        DelayLinePointer += DelayLineChunkSize;
-        if (DelayLinePointer == DelayLinePointerCount)
-        {
-            DelayLinePointer = 0;
-        }
-        DelayLineFileObj->seekg(DelayLinePointer);
-        DelayLineFileObj->read((char*)Data, DelayLineChunkSize);
-    }
-    else
-    {
-        memcpy(DelayLineBuf + DelayLinePointer, Data, DelayLineChunkSize);
-        DelayLinePointer += DelayLineChunkSize;
-        if (DelayLinePointer == DelayLinePointerCount)
-        {
-            DelayLinePointer = 0;
-        }
-        memcpy(Data, DelayLineBuf + DelayLinePointer, DelayLineChunkSize);
-    }
+    this_thread::sleep_for(std::chrono::milliseconds(WorkLoopSleepTime));
 }
 
 void PicThread::WorkLoop()
@@ -1021,6 +952,8 @@ void PicThread::WorkLoop()
 
     int MouseX, MouseY, PicX, PicY;
     QPoint MouseP;
+
+    std::thread * WorkLoopSleepThread = new std::thread(&PicThread::WorkLoopSleep, this, Abs(Settings_->Throttle));
 
     if (PipeCount > 0)
     {
@@ -1094,9 +1027,17 @@ void PicThread::WorkLoop()
                 if (DispBefore)
                 {
                     PipeThr[PipeI]->join();
+                    if (RecorderO1)
+                    {
+                        Recorder_->RecorderProcess(BmpBuf[PipeI_ + OpC]);
+                    }
                     if (DelayLineO)
                     {
                         DelayLineProcess(BmpBuf[PipeI_ + OpC]);
+                    }
+                    if (RecorderO2)
+                    {
+                        Recorder_->RecorderProcess(BmpBuf[PipeI_ + OpC]);
                     }
                     memcpy(BmpDispRaw, BmpBuf[PipeI_ + OpC], PicRawSizeDisp);
                     emit UpdatePixmap(BmpDisp);
@@ -1107,7 +1048,11 @@ void PicThread::WorkLoop()
                 // Capturing source picture
                 if (Settings_->Throttle > 0)
                 {
-                    msleep(Settings_->Throttle);
+                    WorkLoopSleepThread->join();
+                    delete WorkLoopSleepThread;
+                    WorkLoopSleepThread = new std::thread(&PicThread::WorkLoopSleep, this, Settings_->Throttle);
+                    //this_thread::sleep_for(ThrottleSleep);
+                    //msleep(Settings_->Throttle);
                 }
                 if (Settings_->_PicSrcNet)
                 {
@@ -1126,12 +1071,25 @@ void PicThread::WorkLoop()
                 }
                 if (Settings_->Throttle < 0)
                 {
-                    msleep(0 - Settings_->Throttle);
+                    WorkLoopSleepThread->join();
+                    delete WorkLoopSleepThread;
+                    WorkLoopSleepThread = new std::thread(&PicThread::WorkLoopSleep, this, 0 - Settings_->Throttle);
+                    //this_thread::sleep_for(ThrottleSleep);
+                    //msleep(0 - Settings_->Throttle);
                 }
                 BmpBuf[PipeI_] = BmpI__[PipeI].bits();
+                DrawMousePointer(PipeI_, PipeI_);
+                if (RecorderI1)
+                {
+                    Recorder_->RecorderProcess(BmpBuf[PipeI_]);
+                }
                 if (DelayLineI)
                 {
                     DelayLineProcess(BmpBuf[PipeI_]);
+                }
+                if (RecorderI2)
+                {
+                    Recorder_->RecorderProcess(BmpBuf[PipeI_]);
                 }
 
                 PicX_[PipeI] = PicX;
@@ -1158,9 +1116,17 @@ void PicThread::WorkLoop()
                 if (DispAfter)
                 {
                     PipeThr[PipeI]->join();
+                    if (RecorderO1)
+                    {
+                        Recorder_->RecorderProcess(BmpBuf[PipeI_ + OpC]);
+                    }
                     if (DelayLineO)
                     {
                         DelayLineProcess(BmpBuf[PipeI_ + OpC]);
+                    }
+                    if (RecorderO2)
+                    {
+                        Recorder_->RecorderProcess(BmpBuf[PipeI_ + OpC]);
                     }
                     memcpy(BmpDispRaw, BmpBuf[PipeI_ + OpC], PicRawSizeDisp);
                     emit UpdatePixmap(BmpDisp);
@@ -1237,7 +1203,11 @@ void PicThread::WorkLoop()
                 // Capturing source picture
                 if (Settings_->Throttle > 0)
                 {
-                    msleep(Settings_->Throttle);
+                    WorkLoopSleepThread->join();
+                    delete WorkLoopSleepThread;
+                    WorkLoopSleepThread = new std::thread(&PicThread::WorkLoopSleep, this, Settings_->Throttle);
+                    //this_thread::sleep_for(ThrottleSleep);
+                    //msleep(Settings_->Throttle);
                 }
                 if (Settings_->_PicSrcNet)
                 {
@@ -1256,12 +1226,25 @@ void PicThread::WorkLoop()
                 }
                 if (Settings_->Throttle < 0)
                 {
-                    msleep(0 - Settings_->Throttle);
+                    WorkLoopSleepThread->join();
+                    delete WorkLoopSleepThread;
+                    WorkLoopSleepThread = new std::thread(&PicThread::WorkLoopSleep, this, 0 - Settings_->Throttle);
+                    //this_thread::sleep_for(ThrottleSleep);
+                    //msleep(0 - Settings_->Throttle);
                 }
                 BmpBuf[0] = BmpI_.bits();
+                DrawMousePointer(0, 0);
+                if (RecorderI1)
+                {
+                    Recorder_->RecorderProcess(BmpBuf[0]);
+                }
                 if (DelayLineI)
                 {
                     DelayLineProcess(BmpBuf[0]);
+                }
+                if (RecorderI2)
+                {
+                    Recorder_->RecorderProcess(BmpBuf[0]);
                 }
                 PicX_[0] = PicX;
                 PicY_[0] = PicY;
@@ -1271,9 +1254,17 @@ void PicThread::WorkLoop()
                 ProcessThread(0, 0);
 
                 // Displaying destination picture
+                if (RecorderO1)
+                {
+                    Recorder_->RecorderProcess(BmpBuf[OpC]);
+                }
                 if (DelayLineO)
                 {
                     DelayLineProcess(BmpBuf[OpC]);
+                }
+                if (RecorderO2)
+                {
+                    Recorder_->RecorderProcess(BmpBuf[OpC]);
                 }
                 memcpy(BmpDispRaw, BmpBuf[OpC], PicRawSizeDisp);
                 emit UpdatePixmap(BmpDisp);
@@ -1283,6 +1274,8 @@ void PicThread::WorkLoop()
             FPS++;
         }
     }
+    WorkLoopSleepThread->join();
+    delete WorkLoopSleepThread;
 
     if (ThrPicLines != NULL)
     {
@@ -1303,24 +1296,10 @@ void PicThread::WorkLoop()
         PicRawDummyDisp = NULL;
     }
 
-    if (DelayLineFileObj != NULL)
-    {
-        if (DelayLineFileObj->is_open())
-        {
-            DelayLineFileObj->close();
-            remove(DelayLineFileName.c_str());
-        }
-        delete DelayLineFileObj;
-        DelayLineFileObj = NULL;
-    }
+    DelayLineCleanUp();
 }
 
-void PicThread::ProcessThreadDummy()
-{
-
-}
-
-void PicThread::ProcessThread(int PipeI, int PipeI_)
+void PicThread::DrawMousePointer(int PipeI, int PipeI_)
 {
     // Drawing mouse pointer
     if ((!Settings_->_PicSrcNet) && (Settings_->MousePointerType != 0))
@@ -1437,7 +1416,15 @@ void PicThread::ProcessThread(int PipeI, int PipeI_)
 
         }
     }
+}
 
+void PicThread::ProcessThreadDummy()
+{
+
+}
+
+void PicThread::ProcessThread(int PipeI, int PipeI_)
+{
     // Picture processing
     if (OpC > 0)
     {

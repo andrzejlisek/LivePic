@@ -5,8 +5,135 @@ WinSettings::WinSettings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WinSettings)
 {
+    // https://cloud.google.com/translate/docs/languages
+    // ceb (ISO-639-2)
+    // zh-CN or zh (BCP-47)
+    // zh-TW (BCP-47)
+    // haw (ISO-639-2)
+    // he or iw
+    // hmn (ISO-639-2)
+    LangCode.push_back("");   LangName.push_back("");
+    LangCode.push_back("af"); LangName.push_back("Afrikaans");
+    LangCode.push_back("sq"); LangName.push_back("Albanian");
+    LangCode.push_back("am"); LangName.push_back("Amharic");
+    LangCode.push_back("ar"); LangName.push_back("Arabic");
+    LangCode.push_back("hy"); LangName.push_back("Armenian");
+    LangCode.push_back("az"); LangName.push_back("Azerbaijani");
+    LangCode.push_back("eu"); LangName.push_back("Basque");
+    LangCode.push_back("be"); LangName.push_back("Belarusian");
+    LangCode.push_back("bn"); LangName.push_back("Bengali");
+    LangCode.push_back("bs"); LangName.push_back("Bosnian");
+    LangCode.push_back("bg"); LangName.push_back("Bulgarian");
+    LangCode.push_back("ca"); LangName.push_back("Catalan");
+    LangCode.push_back("ceb");LangName.push_back("Cebuano");
+    LangCode.push_back("zh-CN"); LangName.push_back("Chinese (Simplified)");
+    LangCode.push_back("zh-TW"); LangName.push_back("Chinese (Traditional)");
+    LangCode.push_back("co"); LangName.push_back("Corsican");
+    LangCode.push_back("hr"); LangName.push_back("Croatian");
+    LangCode.push_back("cs"); LangName.push_back("Czech");
+    LangCode.push_back("da"); LangName.push_back("Danish");
+    LangCode.push_back("nl"); LangName.push_back("Dutch");
+    LangCode.push_back("en"); LangName.push_back("English");
+    LangCode.push_back("eo"); LangName.push_back("Esperanto");
+    LangCode.push_back("et"); LangName.push_back("Estonian");
+    LangCode.push_back("fi"); LangName.push_back("Finnish");
+    LangCode.push_back("fr"); LangName.push_back("French");
+    LangCode.push_back("fy"); LangName.push_back("Frisian");
+    LangCode.push_back("gl"); LangName.push_back("Galician");
+    LangCode.push_back("ka"); LangName.push_back("Georgian");
+    LangCode.push_back("de"); LangName.push_back("German");
+    LangCode.push_back("el"); LangName.push_back("Greek");
+    LangCode.push_back("gu"); LangName.push_back("Gujarati");
+    LangCode.push_back("ht"); LangName.push_back("Haitian Creole");
+    LangCode.push_back("ha"); LangName.push_back("Hausa");
+    LangCode.push_back("haw");LangName.push_back("Hawaiian");
+    LangCode.push_back("he"); LangName.push_back("Hebrew");
+    LangCode.push_back("hi"); LangName.push_back("Hindi");
+    LangCode.push_back("hmn");LangName.push_back("Hmong");
+    LangCode.push_back("hu"); LangName.push_back("Hungarian");
+    LangCode.push_back("is"); LangName.push_back("Icelandic");
+    LangCode.push_back("ig"); LangName.push_back("Igbo");
+    LangCode.push_back("id"); LangName.push_back("Indonesian");
+    LangCode.push_back("ga"); LangName.push_back("Irish");
+    LangCode.push_back("it"); LangName.push_back("Italian");
+    LangCode.push_back("ja"); LangName.push_back("Japanese");
+    LangCode.push_back("jv"); LangName.push_back("Javanese");
+    LangCode.push_back("kn"); LangName.push_back("Kannada");
+    LangCode.push_back("kk"); LangName.push_back("Kazakh");
+    LangCode.push_back("km"); LangName.push_back("Khmer");
+    LangCode.push_back("rw"); LangName.push_back("Kinyarwanda");
+    LangCode.push_back("ko"); LangName.push_back("Korean");
+    LangCode.push_back("ku"); LangName.push_back("Kurdish");
+    LangCode.push_back("ky"); LangName.push_back("Kyrgyz");
+    LangCode.push_back("lo"); LangName.push_back("Lao");
+    LangCode.push_back("la"); LangName.push_back("Latin");
+    LangCode.push_back("lv"); LangName.push_back("Latvian");
+    LangCode.push_back("lt"); LangName.push_back("Lithuanian");
+    LangCode.push_back("lb"); LangName.push_back("Luxembourgish");
+    LangCode.push_back("mk"); LangName.push_back("Macedonian");
+    LangCode.push_back("mg"); LangName.push_back("Malagasy");
+    LangCode.push_back("ms"); LangName.push_back("Malay");
+    LangCode.push_back("ml"); LangName.push_back("Malayalam");
+    LangCode.push_back("mt"); LangName.push_back("Maltese");
+    LangCode.push_back("mi"); LangName.push_back("Maori");
+    LangCode.push_back("mr"); LangName.push_back("Marathi");
+    LangCode.push_back("mn"); LangName.push_back("Mongolian");
+    LangCode.push_back("my"); LangName.push_back("Myanmar (Burmese)");
+    LangCode.push_back("ne"); LangName.push_back("Nepali");
+    LangCode.push_back("no"); LangName.push_back("Norwegian");
+    LangCode.push_back("ny"); LangName.push_back("Nyanja (Chichewa)");
+    LangCode.push_back("or"); LangName.push_back("Odia (Oriya)");
+    LangCode.push_back("ps"); LangName.push_back("Pashto");
+    LangCode.push_back("fa"); LangName.push_back("Persian");
+    LangCode.push_back("pl"); LangName.push_back("Polish");
+    LangCode.push_back("pt"); LangName.push_back("Portuguese (Portugal, Brazil)");
+    LangCode.push_back("pa"); LangName.push_back("Punjabi");
+    LangCode.push_back("ro"); LangName.push_back("Romanian");
+    LangCode.push_back("ru"); LangName.push_back("Russian");
+    LangCode.push_back("sm"); LangName.push_back("Samoan");
+    LangCode.push_back("gd"); LangName.push_back("Scots Gaelic");
+    LangCode.push_back("sr"); LangName.push_back("Serbian");
+    LangCode.push_back("st"); LangName.push_back("Sesotho");
+    LangCode.push_back("sn"); LangName.push_back("Shona");
+    LangCode.push_back("sd"); LangName.push_back("Sindhi");
+    LangCode.push_back("si"); LangName.push_back("Sinhala (Sinhalese)");
+    LangCode.push_back("sk"); LangName.push_back("Slovak");
+    LangCode.push_back("sl"); LangName.push_back("Slovenian");
+    LangCode.push_back("so"); LangName.push_back("Somali");
+    LangCode.push_back("es"); LangName.push_back("Spanish");
+    LangCode.push_back("su"); LangName.push_back("Sundanese");
+    LangCode.push_back("sw"); LangName.push_back("Swahili");
+    LangCode.push_back("sv"); LangName.push_back("Swedish");
+    LangCode.push_back("tl"); LangName.push_back("Tagalog (Filipino)");
+    LangCode.push_back("tg"); LangName.push_back("Tajik");
+    LangCode.push_back("ta"); LangName.push_back("Tamil");
+    LangCode.push_back("tt"); LangName.push_back("Tatar");
+    LangCode.push_back("te"); LangName.push_back("Telugu");
+    LangCode.push_back("th"); LangName.push_back("Thai");
+    LangCode.push_back("tr"); LangName.push_back("Turkish");
+    LangCode.push_back("tk"); LangName.push_back("Turkmen");
+    LangCode.push_back("uk"); LangName.push_back("Ukrainian");
+    LangCode.push_back("ur"); LangName.push_back("Urdu");
+    LangCode.push_back("ug"); LangName.push_back("Uyghur");
+    LangCode.push_back("uz"); LangName.push_back("Uzbek");
+    LangCode.push_back("vi"); LangName.push_back("Vietnamese");
+    LangCode.push_back("cy"); LangName.push_back("Welsh");
+    LangCode.push_back("xh"); LangName.push_back("Xhosa");
+    LangCode.push_back("yi"); LangName.push_back("Yiddish");
+    LangCode.push_back("yo"); LangName.push_back("Yoruba");
+    LangCode.push_back("zu"); LangName.push_back("Zulu");
+
     ui->setupUi(this);
     srand(time(NULL));
+
+
+    for (int I = 0; I < LangCode.size(); I++)
+    {
+        ui->GoogleLangSrcT->addItem(Eden::ToQStr(LangName[I]));
+        ui->GoogleLangDstT->addItem(Eden::ToQStr(LangName[I]));
+    }
+    ui->GoogleLangSrcT->setItemText(0, "(auto detect)");
+    ui->GoogleLangDstT->setItemText(0, "(no translation)");
 
     Settings_ = new Settings();
     if (Settings_->StayOnTopSet)
@@ -66,6 +193,7 @@ void WinSettings::LoadSettings(bool Window)
 
     ui->OnTopPictuceC->setChecked(Settings_->StayOnTopPic);
     ui->OnTopSettingsC->setChecked(Settings_->StayOnTopSet);
+    ui->OnTopRecorderC->setChecked(Settings_->RecorderWindowOnTop);
     ui->SetCloseApp->setChecked(Settings_->SetCloseApp);
     ui->ViewFullscreenT->setChecked(Settings_->ViewFullscreen);
 
@@ -82,7 +210,25 @@ void WinSettings::LoadSettings(bool Window)
 
     ui->ThrottleT->setValue(Settings_->Throttle);
     ui->DelayLineCountT->setValue(Settings_->DelayLineCount);
+    ui->DelayLineModeT->setCurrentIndex(Settings_->DelayLineMode);
     ui->DelayLineFileNameT->setText(Eden::ToQStr(Settings_->DelayLineFileName));
+
+    ui->GoogleEnableT->setChecked(Settings_->GoogleCloudEnabled);
+    ui->GoogleKeyT->setText(Eden::ToQStr(Settings_->GoogleCloudKey));
+    ui->GoogleSlotCountT->setValue(Settings_->GoogleCloudSlotCount);
+    ui->GoogleImageQualityT->setValue(Settings_->GoogleCloudImageQuality);
+    ui->GoogleMaskOverlayT->setValue(Settings_->GoogleCloudMaskOverlay);
+    ui->GoogleDecimateT->setValue(Settings_->GoogleCloudDecimate);
+    ui->GoogleLangSrcT->setCurrentIndex(LangIndexGet(Settings_->GoogleCloudLangSrc));
+    ui->GoogleLangDstT->setCurrentIndex(LangIndexGet(Settings_->GoogleCloudLangDst));
+    ui->GoogleFontNameT->setText(Eden::ToQStr(Settings_->GoogleCloudFontName));
+    ui->GoogleFontSizeT->setValue(Settings_->GoogleCloudFontSize);
+    ui->GoogleTextRotate->setChecked(Settings_->GoogleCloudTextRotate);
+    ui->GoogleFontAutoT->setChecked(Settings_->GoogleCloudFontAutoSize);
+    ui->GoogleLinesT->setChecked(Settings_->GoogleCloudTranslateLines);
+    ui->GoogleAlignH->setCurrentIndex(Settings_->GoogleCloudTranslateAlignH);
+    ui->GoogleAlignV->setCurrentIndex(Settings_->GoogleCloudTranslateAlignV);
+    ui->GoogleCaptureTextSizeT->setValue(Settings_->RecorderTextSize);
 
     if (!Window)
     {
@@ -373,9 +519,43 @@ void WinSettings::on_PicMouseTypeT_currentIndexChanged(int index)
 ///
 void WinSettings::TransListRefresh()
 {
-    string X = TransformCore_->GetItemTextList(false);
+    TransListEvent = false;
+    string X = TransformCore_->GetListNames(-1);
     int T = 0;
     string Buf = "";
+    for (uint I = 0; I < X.length(); I++)
+    {
+        if (X[I] != '|')
+        {
+            Buf = Buf + X[I];
+        }
+        else
+        {
+            if (T >= ui->TransList->count())
+            {
+                ui->TransList->addItem(Eden::ToQStr(Buf));
+            }
+            else
+            {
+                ui->TransList->setItemText(T, Eden::ToQStr(Buf));
+            }
+            T++;
+            Buf = "";
+        }
+    }
+    while (T < ui->TransList->count())
+    {
+        ui->TransList->removeItem(T);
+    }
+    if (ui->TransList->currentIndex() != TransformCore_->TransformListCurrent)
+    {
+        ui->TransList->setCurrentIndex(TransformCore_->TransformListCurrent);
+    }
+    TransListEvent = true;
+
+    X = TransformCore_->GetItemTextList(false);
+    T = 0;
+    Buf = "";
     for (uint I = 0; I < X.length(); I++)
     {
         if (X[I] != '|')
@@ -420,13 +600,17 @@ void WinSettings::TransListRefreshItem()
 ///
 void WinSettings::on_TransListLoad_clicked()
 {
-    QString FileNameX = QFileDialog::getOpenFileName(this, "Set transform file", LastPath, "Text (*.txt)");
+    string ListName = InputBox("Transform list name", "", TransformCore_->GetListNames(TransformCore_->TransformListCurrent));
+    TransformCore_->ListAdd(ListName);
+    TransListRefresh();
+
+    /*QString FileNameX = QFileDialog::getOpenFileName(this, "Set transform file", LastPath, "Text (*.txt)");
     SaveLastPath(FileNameX, false);
     if (!FileNameX.isEmpty())
     {
         TransformCore_->ListLoad(Eden::ToStr(FileNameX));
     }
-    TransListRefresh();
+    TransListRefresh();*/
 }
 
 ///
@@ -434,13 +618,16 @@ void WinSettings::on_TransListLoad_clicked()
 ///
 void WinSettings::on_TransListSave_clicked()
 {
-    QString FileNameX = QFileDialog::getSaveFileName(this, "Set transform file", LastPath, "Text (*.txt)");
+    TransformCore_->ListRem();
+    TransListRefresh();
+
+    /*QString FileNameX = QFileDialog::getSaveFileName(this, "Set transform file", LastPath, "Text (*.txt)");
     SaveLastPath(FileNameX, false);
     if (!FileNameX.isEmpty())
     {
         TransformCore_->ListSave(Eden::ToStr(FileNameX));
     }
-    TransListRefresh();
+    TransListRefresh();*/
 }
 
 ///
@@ -508,194 +695,194 @@ void WinSettings::TransformSet()
 
     if (TransformCore_->SelectedItem >= 0)
     {
-        TransformCore_->TransformList[TransformCore_->SelectedItem].TransType = ui->ProcessTabs->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].TransType = ui->ProcessTabs->currentIndex();
 
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0Type = 0;
-        if (ui->Trans0Op0->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0Type = 0; }
-        if (ui->Trans0Op1->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0Type = 1; }
-        if (ui->Trans0Op2->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0Type = 2; }
-        if (ui->Trans0Op3->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0Type = 3; }
-        if (ui->Trans0Op4->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0Type = 4; }
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0File = Eden::ToStr(ui->Trans0File->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0Gamma = ui->Trans0Gamma->isChecked();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0BriR = ui->Trans0BriR->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0BriG = ui->Trans0BriG->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0BriB = ui->Trans0BriB->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConR = ui->Trans0ConR->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConG = ui->Trans0ConG->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConB = ui->Trans0ConB->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasR = ui->Trans0ConBiasR->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasG = ui->Trans0ConBiasG->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasB = ui->Trans0ConBiasB->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvR = ui->Trans0InvR->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvG = ui->Trans0InvG->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvB = ui->Trans0InvB->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0GammaR = ui->Trans0GammaR->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0GammaG = ui->Trans0GammaG->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0GammaB = ui->Trans0GammaB->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0Type = 0;
+        if (ui->Trans0Op0->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0Type = 0; }
+        if (ui->Trans0Op1->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0Type = 1; }
+        if (ui->Trans0Op2->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0Type = 2; }
+        if (ui->Trans0Op3->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0Type = 3; }
+        if (ui->Trans0Op4->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0Type = 4; }
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0File = Eden::ToStr(ui->Trans0File->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0Gamma = ui->Trans0Gamma->isChecked();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0BriR = ui->Trans0BriR->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0BriG = ui->Trans0BriG->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0BriB = ui->Trans0BriB->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConR = ui->Trans0ConR->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConG = ui->Trans0ConG->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConB = ui->Trans0ConB->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConBiasR = ui->Trans0ConBiasR->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConBiasG = ui->Trans0ConBiasG->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConBiasB = ui->Trans0ConBiasB->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0InvR = ui->Trans0InvR->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0InvG = ui->Trans0InvG->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0InvB = ui->Trans0InvB->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0GammaR = ui->Trans0GammaR->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0GammaG = ui->Trans0GammaG->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0GammaB = ui->Trans0GammaB->value();
 
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Type = 0;
-        if (ui->Trans1Op0->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Type = 0; }
-        if (ui->Trans1Op1->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Type = 1; }
-        if (ui->Trans1Op2->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Type = 2; }
-        if (ui->Trans1Op3->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Type = 3; }
-        if (ui->Trans1Op4->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Type = 4; }
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1File = Eden::ToStr(ui->Trans1File->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Gamma = ui->Trans1Gamma->isChecked();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Sat = ui->Trans1Sat->value();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Chan = ui->Trans1Chan->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1YuvType = ui->Trans1YuvType->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1YuvWeightR = Eden::ToInt(ui->Trans1YuvWeightR->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1YuvWeightG = Eden::ToInt(ui->Trans1YuvWeightG->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1YuvWeightB = Eden::ToInt(ui->Trans1YuvWeightB->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1YuvLuma = Eden::ToInt(ui->Trans1YuvLumaT->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Type = 0;
+        if (ui->Trans1Op0->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Type = 0; }
+        if (ui->Trans1Op1->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Type = 1; }
+        if (ui->Trans1Op2->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Type = 2; }
+        if (ui->Trans1Op3->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Type = 3; }
+        if (ui->Trans1Op4->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Type = 4; }
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1File = Eden::ToStr(ui->Trans1File->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Gamma = ui->Trans1Gamma->isChecked();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Sat = ui->Trans1Sat->value();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Chan = ui->Trans1Chan->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1YuvType = ui->Trans1YuvType->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1YuvWeightR = Eden::ToInt(ui->Trans1YuvWeightR->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1YuvWeightG = Eden::ToInt(ui->Trans1YuvWeightG->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1YuvWeightB = Eden::ToInt(ui->Trans1YuvWeightB->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1YuvLuma = Eden::ToInt(ui->Trans1YuvLumaT->text());
 
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset1R = Eden::ToInt(ui->Trans2Offset1R->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset1G = Eden::ToInt(ui->Trans2Offset1G->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset1B = Eden::ToInt(ui->Trans2Offset1B->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2GainR = Eden::ToInt(ui->Trans2GainR->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2GainG = Eden::ToInt(ui->Trans2GainG->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2GainB = Eden::ToInt(ui->Trans2GainB->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset2R = Eden::ToInt(ui->Trans2Offset2R->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset2G = Eden::ToInt(ui->Trans2Offset2G->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset2B = Eden::ToInt(ui->Trans2Offset2B->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Gamma = ui->Trans2Gamma->isChecked();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Common = ui->Trans2CommonT->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset1R = Eden::ToInt(ui->Trans2Offset1R->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset1G = Eden::ToInt(ui->Trans2Offset1G->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset1B = Eden::ToInt(ui->Trans2Offset1B->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2GainR = Eden::ToInt(ui->Trans2GainR->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2GainG = Eden::ToInt(ui->Trans2GainG->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2GainB = Eden::ToInt(ui->Trans2GainB->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset2R = Eden::ToInt(ui->Trans2Offset2R->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset2G = Eden::ToInt(ui->Trans2Offset2G->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset2B = Eden::ToInt(ui->Trans2Offset2B->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Gamma = ui->Trans2Gamma->isChecked();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Common = ui->Trans2CommonT->currentIndex();
 
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[0]  = Eden::ToInt(ui->Trans2ChanR00->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[1]  = Eden::ToInt(ui->Trans2ChanR01->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[2]  = Eden::ToInt(ui->Trans2ChanR02->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[3]  = Eden::ToInt(ui->Trans2ChanR03->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[4]  = Eden::ToInt(ui->Trans2ChanR04->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[5]  = Eden::ToInt(ui->Trans2ChanR10->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[6]  = Eden::ToInt(ui->Trans2ChanR11->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[7]  = Eden::ToInt(ui->Trans2ChanR12->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[8]  = Eden::ToInt(ui->Trans2ChanR13->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[9]  = Eden::ToInt(ui->Trans2ChanR14->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[10] = Eden::ToInt(ui->Trans2ChanR20->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[11] = Eden::ToInt(ui->Trans2ChanR21->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[12] = Eden::ToInt(ui->Trans2ChanR22->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[13] = Eden::ToInt(ui->Trans2ChanR23->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[14] = Eden::ToInt(ui->Trans2ChanR24->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[15] = Eden::ToInt(ui->Trans2ChanR30->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[16] = Eden::ToInt(ui->Trans2ChanR31->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[17] = Eden::ToInt(ui->Trans2ChanR32->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[18] = Eden::ToInt(ui->Trans2ChanR33->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[19] = Eden::ToInt(ui->Trans2ChanR34->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[20] = Eden::ToInt(ui->Trans2ChanR40->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[21] = Eden::ToInt(ui->Trans2ChanR41->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[22] = Eden::ToInt(ui->Trans2ChanR42->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[23] = Eden::ToInt(ui->Trans2ChanR43->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[24] = Eden::ToInt(ui->Trans2ChanR44->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[0]  = Eden::ToInt(ui->Trans2ChanR00->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[1]  = Eden::ToInt(ui->Trans2ChanR01->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[2]  = Eden::ToInt(ui->Trans2ChanR02->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[3]  = Eden::ToInt(ui->Trans2ChanR03->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[4]  = Eden::ToInt(ui->Trans2ChanR04->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[5]  = Eden::ToInt(ui->Trans2ChanR10->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[6]  = Eden::ToInt(ui->Trans2ChanR11->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[7]  = Eden::ToInt(ui->Trans2ChanR12->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[8]  = Eden::ToInt(ui->Trans2ChanR13->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[9]  = Eden::ToInt(ui->Trans2ChanR14->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[10] = Eden::ToInt(ui->Trans2ChanR20->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[11] = Eden::ToInt(ui->Trans2ChanR21->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[12] = Eden::ToInt(ui->Trans2ChanR22->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[13] = Eden::ToInt(ui->Trans2ChanR23->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[14] = Eden::ToInt(ui->Trans2ChanR24->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[15] = Eden::ToInt(ui->Trans2ChanR30->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[16] = Eden::ToInt(ui->Trans2ChanR31->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[17] = Eden::ToInt(ui->Trans2ChanR32->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[18] = Eden::ToInt(ui->Trans2ChanR33->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[19] = Eden::ToInt(ui->Trans2ChanR34->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[20] = Eden::ToInt(ui->Trans2ChanR40->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[21] = Eden::ToInt(ui->Trans2ChanR41->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[22] = Eden::ToInt(ui->Trans2ChanR42->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[23] = Eden::ToInt(ui->Trans2ChanR43->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[24] = Eden::ToInt(ui->Trans2ChanR44->text());
 
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[0]  = Eden::ToInt(ui->Trans2ChanG00->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[1]  = Eden::ToInt(ui->Trans2ChanG01->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[2]  = Eden::ToInt(ui->Trans2ChanG02->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[3]  = Eden::ToInt(ui->Trans2ChanG03->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[4]  = Eden::ToInt(ui->Trans2ChanG04->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[5]  = Eden::ToInt(ui->Trans2ChanG10->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[6]  = Eden::ToInt(ui->Trans2ChanG11->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[7]  = Eden::ToInt(ui->Trans2ChanG12->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[8]  = Eden::ToInt(ui->Trans2ChanG13->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[9]  = Eden::ToInt(ui->Trans2ChanG14->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[10] = Eden::ToInt(ui->Trans2ChanG20->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[11] = Eden::ToInt(ui->Trans2ChanG21->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[12] = Eden::ToInt(ui->Trans2ChanG22->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[13] = Eden::ToInt(ui->Trans2ChanG23->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[14] = Eden::ToInt(ui->Trans2ChanG24->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[15] = Eden::ToInt(ui->Trans2ChanG30->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[16] = Eden::ToInt(ui->Trans2ChanG31->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[17] = Eden::ToInt(ui->Trans2ChanG32->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[18] = Eden::ToInt(ui->Trans2ChanG33->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[19] = Eden::ToInt(ui->Trans2ChanG34->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[20] = Eden::ToInt(ui->Trans2ChanG40->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[21] = Eden::ToInt(ui->Trans2ChanG41->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[22] = Eden::ToInt(ui->Trans2ChanG42->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[23] = Eden::ToInt(ui->Trans2ChanG43->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[24] = Eden::ToInt(ui->Trans2ChanG44->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[0]  = Eden::ToInt(ui->Trans2ChanG00->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[1]  = Eden::ToInt(ui->Trans2ChanG01->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[2]  = Eden::ToInt(ui->Trans2ChanG02->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[3]  = Eden::ToInt(ui->Trans2ChanG03->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[4]  = Eden::ToInt(ui->Trans2ChanG04->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[5]  = Eden::ToInt(ui->Trans2ChanG10->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[6]  = Eden::ToInt(ui->Trans2ChanG11->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[7]  = Eden::ToInt(ui->Trans2ChanG12->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[8]  = Eden::ToInt(ui->Trans2ChanG13->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[9]  = Eden::ToInt(ui->Trans2ChanG14->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[10] = Eden::ToInt(ui->Trans2ChanG20->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[11] = Eden::ToInt(ui->Trans2ChanG21->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[12] = Eden::ToInt(ui->Trans2ChanG22->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[13] = Eden::ToInt(ui->Trans2ChanG23->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[14] = Eden::ToInt(ui->Trans2ChanG24->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[15] = Eden::ToInt(ui->Trans2ChanG30->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[16] = Eden::ToInt(ui->Trans2ChanG31->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[17] = Eden::ToInt(ui->Trans2ChanG32->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[18] = Eden::ToInt(ui->Trans2ChanG33->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[19] = Eden::ToInt(ui->Trans2ChanG34->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[20] = Eden::ToInt(ui->Trans2ChanG40->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[21] = Eden::ToInt(ui->Trans2ChanG41->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[22] = Eden::ToInt(ui->Trans2ChanG42->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[23] = Eden::ToInt(ui->Trans2ChanG43->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[24] = Eden::ToInt(ui->Trans2ChanG44->text());
 
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[0]  = Eden::ToInt(ui->Trans2ChanB00->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[1]  = Eden::ToInt(ui->Trans2ChanB01->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[2]  = Eden::ToInt(ui->Trans2ChanB02->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[3]  = Eden::ToInt(ui->Trans2ChanB03->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[4]  = Eden::ToInt(ui->Trans2ChanB04->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[5]  = Eden::ToInt(ui->Trans2ChanB10->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[6]  = Eden::ToInt(ui->Trans2ChanB11->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[7]  = Eden::ToInt(ui->Trans2ChanB12->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[8]  = Eden::ToInt(ui->Trans2ChanB13->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[9]  = Eden::ToInt(ui->Trans2ChanB14->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[10] = Eden::ToInt(ui->Trans2ChanB20->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[11] = Eden::ToInt(ui->Trans2ChanB21->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[12] = Eden::ToInt(ui->Trans2ChanB22->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[13] = Eden::ToInt(ui->Trans2ChanB23->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[14] = Eden::ToInt(ui->Trans2ChanB24->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[15] = Eden::ToInt(ui->Trans2ChanB30->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[16] = Eden::ToInt(ui->Trans2ChanB31->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[17] = Eden::ToInt(ui->Trans2ChanB32->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[18] = Eden::ToInt(ui->Trans2ChanB33->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[19] = Eden::ToInt(ui->Trans2ChanB34->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[20] = Eden::ToInt(ui->Trans2ChanB40->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[21] = Eden::ToInt(ui->Trans2ChanB41->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[22] = Eden::ToInt(ui->Trans2ChanB42->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[23] = Eden::ToInt(ui->Trans2ChanB43->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[24] = Eden::ToInt(ui->Trans2ChanB44->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[0]  = Eden::ToInt(ui->Trans2ChanB00->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[1]  = Eden::ToInt(ui->Trans2ChanB01->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[2]  = Eden::ToInt(ui->Trans2ChanB02->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[3]  = Eden::ToInt(ui->Trans2ChanB03->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[4]  = Eden::ToInt(ui->Trans2ChanB04->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[5]  = Eden::ToInt(ui->Trans2ChanB10->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[6]  = Eden::ToInt(ui->Trans2ChanB11->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[7]  = Eden::ToInt(ui->Trans2ChanB12->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[8]  = Eden::ToInt(ui->Trans2ChanB13->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[9]  = Eden::ToInt(ui->Trans2ChanB14->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[10] = Eden::ToInt(ui->Trans2ChanB20->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[11] = Eden::ToInt(ui->Trans2ChanB21->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[12] = Eden::ToInt(ui->Trans2ChanB22->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[13] = Eden::ToInt(ui->Trans2ChanB23->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[14] = Eden::ToInt(ui->Trans2ChanB24->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[15] = Eden::ToInt(ui->Trans2ChanB30->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[16] = Eden::ToInt(ui->Trans2ChanB31->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[17] = Eden::ToInt(ui->Trans2ChanB32->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[18] = Eden::ToInt(ui->Trans2ChanB33->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[19] = Eden::ToInt(ui->Trans2ChanB34->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[20] = Eden::ToInt(ui->Trans2ChanB40->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[21] = Eden::ToInt(ui->Trans2ChanB41->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[22] = Eden::ToInt(ui->Trans2ChanB42->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[23] = Eden::ToInt(ui->Trans2ChanB43->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[24] = Eden::ToInt(ui->Trans2ChanB44->text());
 
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentProp1 = Eden::ToInt(ui->Trans3Color1->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentProp2 = Eden::ToInt(ui->Trans3Color2->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentProp3 = Eden::ToInt(ui->Trans3Color3->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentProp4 = Eden::ToInt(ui->Trans3Color4->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentRot0 = ui->Trans3Rot0->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentRot1 = ui->Trans3Rot1->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentRot2 = ui->Trans3Rot2->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentRot3 = ui->Trans3Rot3->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[0]  = Eden::ToInt(ui->Trans3Matrix00->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[1]  = Eden::ToInt(ui->Trans3Matrix01->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[2]  = Eden::ToInt(ui->Trans3Matrix02->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[3]  = Eden::ToInt(ui->Trans3Matrix03->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[4]  = Eden::ToInt(ui->Trans3Matrix04->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[5]  = Eden::ToInt(ui->Trans3Matrix10->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[6]  = Eden::ToInt(ui->Trans3Matrix11->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[7]  = Eden::ToInt(ui->Trans3Matrix12->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[8]  = Eden::ToInt(ui->Trans3Matrix13->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[9]  = Eden::ToInt(ui->Trans3Matrix14->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[10] = Eden::ToInt(ui->Trans3Matrix20->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[11] = Eden::ToInt(ui->Trans3Matrix21->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[12] = Eden::ToInt(ui->Trans3Matrix22->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[13] = Eden::ToInt(ui->Trans3Matrix23->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[14] = Eden::ToInt(ui->Trans3Matrix24->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[15] = Eden::ToInt(ui->Trans3Matrix30->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[16] = Eden::ToInt(ui->Trans3Matrix31->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[17] = Eden::ToInt(ui->Trans3Matrix32->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[18] = Eden::ToInt(ui->Trans3Matrix33->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[19] = Eden::ToInt(ui->Trans3Matrix34->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[20] = Eden::ToInt(ui->Trans3Matrix40->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[21] = Eden::ToInt(ui->Trans3Matrix41->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[22] = Eden::ToInt(ui->Trans3Matrix42->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[23] = Eden::ToInt(ui->Trans3Matrix43->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[24] = Eden::ToInt(ui->Trans3Matrix44->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentSet();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentProp1 = Eden::ToInt(ui->Trans3Color1->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentProp2 = Eden::ToInt(ui->Trans3Color2->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentProp3 = Eden::ToInt(ui->Trans3Color3->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentProp4 = Eden::ToInt(ui->Trans3Color4->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentRot0 = ui->Trans3Rot0->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentRot1 = ui->Trans3Rot1->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentRot2 = ui->Trans3Rot2->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentRot3 = ui->Trans3Rot3->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[0]  = Eden::ToInt(ui->Trans3Matrix00->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[1]  = Eden::ToInt(ui->Trans3Matrix01->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[2]  = Eden::ToInt(ui->Trans3Matrix02->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[3]  = Eden::ToInt(ui->Trans3Matrix03->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[4]  = Eden::ToInt(ui->Trans3Matrix04->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[5]  = Eden::ToInt(ui->Trans3Matrix10->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[6]  = Eden::ToInt(ui->Trans3Matrix11->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[7]  = Eden::ToInt(ui->Trans3Matrix12->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[8]  = Eden::ToInt(ui->Trans3Matrix13->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[9]  = Eden::ToInt(ui->Trans3Matrix14->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[10] = Eden::ToInt(ui->Trans3Matrix20->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[11] = Eden::ToInt(ui->Trans3Matrix21->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[12] = Eden::ToInt(ui->Trans3Matrix22->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[13] = Eden::ToInt(ui->Trans3Matrix23->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[14] = Eden::ToInt(ui->Trans3Matrix24->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[15] = Eden::ToInt(ui->Trans3Matrix30->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[16] = Eden::ToInt(ui->Trans3Matrix31->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[17] = Eden::ToInt(ui->Trans3Matrix32->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[18] = Eden::ToInt(ui->Trans3Matrix33->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[19] = Eden::ToInt(ui->Trans3Matrix34->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[20] = Eden::ToInt(ui->Trans3Matrix40->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[21] = Eden::ToInt(ui->Trans3Matrix41->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[22] = Eden::ToInt(ui->Trans3Matrix42->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[23] = Eden::ToInt(ui->Trans3Matrix43->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[24] = Eden::ToInt(ui->Trans3Matrix44->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentSet();
 
-        if (ui->Trans4Op0->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Type = 0; }
-        if (ui->Trans4Op1->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Type = 1; }
-        if (ui->Trans4Op2->isChecked()) { TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Type = 2; }
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Size = ui->Trans4Size->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Size1W = Eden::ToInt(ui->Trans4Size1W->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Size1H = Eden::ToInt(ui->Trans4Size1H->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Size2W = Eden::ToInt(ui->Trans4Size2W->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Size2H = Eden::ToInt(ui->Trans4Size2H->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Scale = ui->Trans4Scale->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Channels = ui->Trans4ScaleChannels->isChecked();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdType = ui->Trans4LcdType->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdOp = ui->Trans4LcdOp->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaB = ui->Trans4LcdChromaB->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaV = ui->Trans4LcdChromaV->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaX = ui->Trans4LcdChromaX->currentIndex();
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightR = Eden::ToInt(ui->Trans4LcdWeightR->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightG = Eden::ToInt(ui->Trans4LcdWeightG->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightB = Eden::ToInt(ui->Trans4LcdWeightB->text());
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdInterpolation = ui->Trans4LcdInterpolation->isChecked();
+        if (ui->Trans4Op0->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Type = 0; }
+        if (ui->Trans4Op1->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Type = 1; }
+        if (ui->Trans4Op2->isChecked()) { TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Type = 2; }
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Size = ui->Trans4Size->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Size1W = Eden::ToInt(ui->Trans4Size1W->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Size1H = Eden::ToInt(ui->Trans4Size1H->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Size2W = Eden::ToInt(ui->Trans4Size2W->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Size2H = Eden::ToInt(ui->Trans4Size2H->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Scale = ui->Trans4Scale->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Channels = ui->Trans4ScaleChannels->isChecked();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdType = ui->Trans4LcdType->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdOp = ui->Trans4LcdOp->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdChromaB = ui->Trans4LcdChromaB->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdChromaV = ui->Trans4LcdChromaV->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdChromaX = ui->Trans4LcdChromaX->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdWeightR = Eden::ToInt(ui->Trans4LcdWeightR->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdWeightG = Eden::ToInt(ui->Trans4LcdWeightG->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdWeightB = Eden::ToInt(ui->Trans4LcdWeightB->text());
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdInterpolation = ui->Trans4LcdInterpolation->isChecked();
 
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans5Rotate = ui->Trans5RotateT->currentIndex();
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans5Rotate = ui->Trans5RotateT->currentIndex();
     }
     TransListRefreshItem();
 }
@@ -708,9 +895,9 @@ void WinSettings::TransformGet()
     TransformSetAllow = false;
     if (TransformCore_->SelectedItem >= 0)
     {
-        ui->ProcessTabs->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].TransType);
+        ui->ProcessTabs->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].TransType);
 
-        switch (TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0Type)
+        switch (TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0Type)
         {
             case 0: ui->Trans0Op0->setChecked(true); break;
             case 1: ui->Trans0Op1->setChecked(true); break;
@@ -718,25 +905,25 @@ void WinSettings::TransformGet()
             case 3: ui->Trans0Op3->setChecked(true); break;
             case 4: ui->Trans0Op4->setChecked(true); break;
         }
-        ui->Trans0File->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0File));
-        ui->Trans0Gamma->setChecked(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0Gamma);
-        ui->Trans0BriR->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0BriR);
-        ui->Trans0BriG->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0BriG);
-        ui->Trans0BriB->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0BriB);
-        ui->Trans0ConR->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConR);
-        ui->Trans0ConG->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConG);
-        ui->Trans0ConB->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConB);
-        ui->Trans0ConBiasR->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasR);
-        ui->Trans0ConBiasG->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasG);
-        ui->Trans0ConBiasB->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0ConBiasB);
-        ui->Trans0InvR->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvR);
-        ui->Trans0InvG->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvG);
-        ui->Trans0InvB->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0InvB);
-        ui->Trans0GammaR->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0GammaR);
-        ui->Trans0GammaG->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0GammaG);
-        ui->Trans0GammaB->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans0GammaB);
+        ui->Trans0File->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0File));
+        ui->Trans0Gamma->setChecked(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0Gamma);
+        ui->Trans0BriR->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0BriR);
+        ui->Trans0BriG->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0BriG);
+        ui->Trans0BriB->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0BriB);
+        ui->Trans0ConR->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConR);
+        ui->Trans0ConG->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConG);
+        ui->Trans0ConB->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConB);
+        ui->Trans0ConBiasR->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConBiasR);
+        ui->Trans0ConBiasG->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConBiasG);
+        ui->Trans0ConBiasB->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0ConBiasB);
+        ui->Trans0InvR->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0InvR);
+        ui->Trans0InvG->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0InvG);
+        ui->Trans0InvB->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0InvB);
+        ui->Trans0GammaR->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0GammaR);
+        ui->Trans0GammaG->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0GammaG);
+        ui->Trans0GammaB->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans0GammaB);
 
-        switch (TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Type)
+        switch (TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Type)
         {
             case 0: ui->Trans1Op0->setChecked(true); break;
             case 1: ui->Trans1Op1->setChecked(true); break;
@@ -744,166 +931,166 @@ void WinSettings::TransformGet()
             case 3: ui->Trans1Op3->setChecked(true); break;
             case 4: ui->Trans1Op4->setChecked(true); break;
         }
-        ui->Trans1File->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1File));
-        ui->Trans1Gamma->setChecked(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Gamma);
-        ui->Trans1Sat->setValue(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Sat);
-        ui->Trans1Chan->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1Chan);
-        ui->Trans1YuvType->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1YuvType);
-        ui->Trans1YuvWeightR->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1YuvWeightR));
-        ui->Trans1YuvWeightG->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1YuvWeightG));
-        ui->Trans1YuvWeightB->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1YuvWeightB));
-        ui->Trans1YuvLumaT->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans1YuvLuma));
+        ui->Trans1File->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1File));
+        ui->Trans1Gamma->setChecked(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Gamma);
+        ui->Trans1Sat->setValue(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Sat);
+        ui->Trans1Chan->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1Chan);
+        ui->Trans1YuvType->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1YuvType);
+        ui->Trans1YuvWeightR->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1YuvWeightR));
+        ui->Trans1YuvWeightG->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1YuvWeightG));
+        ui->Trans1YuvWeightB->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1YuvWeightB));
+        ui->Trans1YuvLumaT->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans1YuvLuma));
 
-        ui->Trans2Offset1R->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset1R));
-        ui->Trans2Offset1G->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset1G));
-        ui->Trans2Offset1B->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset1B));
-        ui->Trans2GainR->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2GainR));
-        ui->Trans2GainG->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2GainG));
-        ui->Trans2GainB->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2GainB));
-        ui->Trans2Offset2R->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset2R));
-        ui->Trans2Offset2G->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset2G));
-        ui->Trans2Offset2B->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Offset2B));
-        ui->Trans2Gamma->setChecked(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Gamma);
-        ui->Trans2CommonT->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2Common);
+        ui->Trans2Offset1R->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset1R));
+        ui->Trans2Offset1G->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset1G));
+        ui->Trans2Offset1B->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset1B));
+        ui->Trans2GainR->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2GainR));
+        ui->Trans2GainG->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2GainG));
+        ui->Trans2GainB->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2GainB));
+        ui->Trans2Offset2R->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset2R));
+        ui->Trans2Offset2G->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset2G));
+        ui->Trans2Offset2B->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Offset2B));
+        ui->Trans2Gamma->setChecked(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Gamma);
+        ui->Trans2CommonT->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2Common);
 
-        ui->Trans2ChanR00->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[0]));
-        ui->Trans2ChanR01->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[1]));
-        ui->Trans2ChanR02->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[2]));
-        ui->Trans2ChanR03->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[3]));
-        ui->Trans2ChanR04->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[4]));
-        ui->Trans2ChanR10->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[5]));
-        ui->Trans2ChanR11->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[6]));
-        ui->Trans2ChanR12->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[7]));
-        ui->Trans2ChanR13->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[8]));
-        ui->Trans2ChanR14->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[9]));
-        ui->Trans2ChanR20->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[10]));
-        ui->Trans2ChanR21->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[11]));
-        ui->Trans2ChanR22->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[12]));
-        ui->Trans2ChanR23->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[13]));
-        ui->Trans2ChanR24->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[14]));
-        ui->Trans2ChanR30->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[15]));
-        ui->Trans2ChanR31->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[16]));
-        ui->Trans2ChanR32->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[17]));
-        ui->Trans2ChanR33->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[18]));
-        ui->Trans2ChanR34->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[19]));
-        ui->Trans2ChanR40->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[20]));
-        ui->Trans2ChanR41->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[21]));
-        ui->Trans2ChanR42->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[22]));
-        ui->Trans2ChanR43->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[23]));
-        ui->Trans2ChanR44->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixR[24]));
+        ui->Trans2ChanR00->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[0]));
+        ui->Trans2ChanR01->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[1]));
+        ui->Trans2ChanR02->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[2]));
+        ui->Trans2ChanR03->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[3]));
+        ui->Trans2ChanR04->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[4]));
+        ui->Trans2ChanR10->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[5]));
+        ui->Trans2ChanR11->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[6]));
+        ui->Trans2ChanR12->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[7]));
+        ui->Trans2ChanR13->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[8]));
+        ui->Trans2ChanR14->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[9]));
+        ui->Trans2ChanR20->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[10]));
+        ui->Trans2ChanR21->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[11]));
+        ui->Trans2ChanR22->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[12]));
+        ui->Trans2ChanR23->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[13]));
+        ui->Trans2ChanR24->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[14]));
+        ui->Trans2ChanR30->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[15]));
+        ui->Trans2ChanR31->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[16]));
+        ui->Trans2ChanR32->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[17]));
+        ui->Trans2ChanR33->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[18]));
+        ui->Trans2ChanR34->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[19]));
+        ui->Trans2ChanR40->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[20]));
+        ui->Trans2ChanR41->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[21]));
+        ui->Trans2ChanR42->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[22]));
+        ui->Trans2ChanR43->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[23]));
+        ui->Trans2ChanR44->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixR[24]));
 
-        ui->Trans2ChanG00->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[0]));
-        ui->Trans2ChanG01->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[1]));
-        ui->Trans2ChanG02->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[2]));
-        ui->Trans2ChanG03->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[3]));
-        ui->Trans2ChanG04->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[4]));
-        ui->Trans2ChanG10->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[5]));
-        ui->Trans2ChanG11->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[6]));
-        ui->Trans2ChanG12->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[7]));
-        ui->Trans2ChanG13->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[8]));
-        ui->Trans2ChanG14->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[9]));
-        ui->Trans2ChanG20->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[10]));
-        ui->Trans2ChanG21->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[11]));
-        ui->Trans2ChanG22->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[12]));
-        ui->Trans2ChanG23->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[13]));
-        ui->Trans2ChanG24->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[14]));
-        ui->Trans2ChanG30->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[15]));
-        ui->Trans2ChanG31->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[16]));
-        ui->Trans2ChanG32->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[17]));
-        ui->Trans2ChanG33->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[18]));
-        ui->Trans2ChanG34->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[19]));
-        ui->Trans2ChanG40->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[20]));
-        ui->Trans2ChanG41->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[21]));
-        ui->Trans2ChanG42->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[22]));
-        ui->Trans2ChanG43->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[23]));
-        ui->Trans2ChanG44->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixG[24]));
+        ui->Trans2ChanG00->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[0]));
+        ui->Trans2ChanG01->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[1]));
+        ui->Trans2ChanG02->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[2]));
+        ui->Trans2ChanG03->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[3]));
+        ui->Trans2ChanG04->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[4]));
+        ui->Trans2ChanG10->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[5]));
+        ui->Trans2ChanG11->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[6]));
+        ui->Trans2ChanG12->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[7]));
+        ui->Trans2ChanG13->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[8]));
+        ui->Trans2ChanG14->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[9]));
+        ui->Trans2ChanG20->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[10]));
+        ui->Trans2ChanG21->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[11]));
+        ui->Trans2ChanG22->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[12]));
+        ui->Trans2ChanG23->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[13]));
+        ui->Trans2ChanG24->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[14]));
+        ui->Trans2ChanG30->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[15]));
+        ui->Trans2ChanG31->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[16]));
+        ui->Trans2ChanG32->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[17]));
+        ui->Trans2ChanG33->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[18]));
+        ui->Trans2ChanG34->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[19]));
+        ui->Trans2ChanG40->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[20]));
+        ui->Trans2ChanG41->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[21]));
+        ui->Trans2ChanG42->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[22]));
+        ui->Trans2ChanG43->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[23]));
+        ui->Trans2ChanG44->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixG[24]));
 
-        ui->Trans2ChanB00->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[0]));
-        ui->Trans2ChanB01->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[1]));
-        ui->Trans2ChanB02->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[2]));
-        ui->Trans2ChanB03->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[3]));
-        ui->Trans2ChanB04->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[4]));
-        ui->Trans2ChanB10->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[5]));
-        ui->Trans2ChanB11->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[6]));
-        ui->Trans2ChanB12->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[7]));
-        ui->Trans2ChanB13->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[8]));
-        ui->Trans2ChanB14->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[9]));
-        ui->Trans2ChanB20->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[10]));
-        ui->Trans2ChanB21->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[11]));
-        ui->Trans2ChanB22->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[12]));
-        ui->Trans2ChanB23->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[13]));
-        ui->Trans2ChanB24->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[14]));
-        ui->Trans2ChanB30->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[15]));
-        ui->Trans2ChanB31->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[16]));
-        ui->Trans2ChanB32->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[17]));
-        ui->Trans2ChanB33->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[18]));
-        ui->Trans2ChanB34->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[19]));
-        ui->Trans2ChanB40->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[20]));
-        ui->Trans2ChanB41->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[21]));
-        ui->Trans2ChanB42->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[22]));
-        ui->Trans2ChanB43->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[23]));
-        ui->Trans2ChanB44->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans2MatrixB[24]));
+        ui->Trans2ChanB00->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[0]));
+        ui->Trans2ChanB01->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[1]));
+        ui->Trans2ChanB02->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[2]));
+        ui->Trans2ChanB03->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[3]));
+        ui->Trans2ChanB04->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[4]));
+        ui->Trans2ChanB10->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[5]));
+        ui->Trans2ChanB11->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[6]));
+        ui->Trans2ChanB12->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[7]));
+        ui->Trans2ChanB13->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[8]));
+        ui->Trans2ChanB14->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[9]));
+        ui->Trans2ChanB20->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[10]));
+        ui->Trans2ChanB21->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[11]));
+        ui->Trans2ChanB22->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[12]));
+        ui->Trans2ChanB23->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[13]));
+        ui->Trans2ChanB24->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[14]));
+        ui->Trans2ChanB30->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[15]));
+        ui->Trans2ChanB31->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[16]));
+        ui->Trans2ChanB32->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[17]));
+        ui->Trans2ChanB33->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[18]));
+        ui->Trans2ChanB34->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[19]));
+        ui->Trans2ChanB40->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[20]));
+        ui->Trans2ChanB41->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[21]));
+        ui->Trans2ChanB42->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[22]));
+        ui->Trans2ChanB43->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[23]));
+        ui->Trans2ChanB44->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans2MatrixB[24]));
 
-        TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentGet();
-        ui->Trans3Info->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentInfo()));
-        ui->Trans3Color1->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentProp1));
-        ui->Trans3Color2->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentProp2));
-        ui->Trans3Color3->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentProp3));
-        ui->Trans3Color4->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentProp4));
-        ui->Trans3Rot0->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentRot0);
-        ui->Trans3Rot1->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentRot1);
-        ui->Trans3Rot2->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentRot2);
-        ui->Trans3Rot3->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentRot3);
-        ui->Trans3Matrix00->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[0]));
-        ui->Trans3Matrix01->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[1]));
-        ui->Trans3Matrix02->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[2]));
-        ui->Trans3Matrix03->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[3]));
-        ui->Trans3Matrix04->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[4]));
-        ui->Trans3Matrix10->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[5]));
-        ui->Trans3Matrix11->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[6]));
-        ui->Trans3Matrix12->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[7]));
-        ui->Trans3Matrix13->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[8]));
-        ui->Trans3Matrix14->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[9]));
-        ui->Trans3Matrix20->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[10]));
-        ui->Trans3Matrix21->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[11]));
-        ui->Trans3Matrix22->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[12]));
-        ui->Trans3Matrix23->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[13]));
-        ui->Trans3Matrix24->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[14]));
-        ui->Trans3Matrix30->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[15]));
-        ui->Trans3Matrix31->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[16]));
-        ui->Trans3Matrix32->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[17]));
-        ui->Trans3Matrix33->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[18]));
-        ui->Trans3Matrix34->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[19]));
-        ui->Trans3Matrix40->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[20]));
-        ui->Trans3Matrix41->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[21]));
-        ui->Trans3Matrix42->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[22]));
-        ui->Trans3Matrix43->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[23]));
-        ui->Trans3Matrix44->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3CurrentMatrix[24]));
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentGet();
+        ui->Trans3Info->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentInfo()));
+        ui->Trans3Color1->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentProp1));
+        ui->Trans3Color2->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentProp2));
+        ui->Trans3Color3->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentProp3));
+        ui->Trans3Color4->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentProp4));
+        ui->Trans3Rot0->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentRot0);
+        ui->Trans3Rot1->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentRot1);
+        ui->Trans3Rot2->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentRot2);
+        ui->Trans3Rot3->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentRot3);
+        ui->Trans3Matrix00->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[0]));
+        ui->Trans3Matrix01->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[1]));
+        ui->Trans3Matrix02->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[2]));
+        ui->Trans3Matrix03->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[3]));
+        ui->Trans3Matrix04->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[4]));
+        ui->Trans3Matrix10->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[5]));
+        ui->Trans3Matrix11->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[6]));
+        ui->Trans3Matrix12->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[7]));
+        ui->Trans3Matrix13->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[8]));
+        ui->Trans3Matrix14->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[9]));
+        ui->Trans3Matrix20->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[10]));
+        ui->Trans3Matrix21->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[11]));
+        ui->Trans3Matrix22->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[12]));
+        ui->Trans3Matrix23->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[13]));
+        ui->Trans3Matrix24->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[14]));
+        ui->Trans3Matrix30->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[15]));
+        ui->Trans3Matrix31->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[16]));
+        ui->Trans3Matrix32->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[17]));
+        ui->Trans3Matrix33->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[18]));
+        ui->Trans3Matrix34->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[19]));
+        ui->Trans3Matrix40->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[20]));
+        ui->Trans3Matrix41->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[21]));
+        ui->Trans3Matrix42->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[22]));
+        ui->Trans3Matrix43->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[23]));
+        ui->Trans3Matrix44->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3CurrentMatrix[24]));
 
-        switch (TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Type)
+        switch (TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Type)
         {
             case 0: ui->Trans4Op0->setChecked(true); break;
             case 1: ui->Trans4Op1->setChecked(true); break;
             case 2: ui->Trans4Op2->setChecked(true); break;
         }
-        ui->Trans4Size->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Size);
-        ui->Trans4Size1W->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Size1W));
-        ui->Trans4Size1H->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Size1H));
-        ui->Trans4Size2W->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Size2W));
-        ui->Trans4Size2H->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Size2H));
-        ui->Trans4Scale->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Scale);
-        ui->Trans4ScaleChannels->setChecked(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4Channels);
-        ui->Trans4LcdType->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdType);
-        ui->Trans4LcdOp->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdOp);
-        ui->Trans4LcdChromaB->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaB);
-        ui->Trans4LcdChromaV->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaV);
-        ui->Trans4LcdChromaX->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdChromaX);
-        ui->Trans4LcdWeightR->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightR));
-        ui->Trans4LcdWeightG->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightG));
-        ui->Trans4LcdWeightB->setText(Eden::ToQStr(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdWeightB));
-        ui->Trans4LcdInterpolation->setChecked(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans4LcdInterpolation);
+        ui->Trans4Size->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Size);
+        ui->Trans4Size1W->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Size1W));
+        ui->Trans4Size1H->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Size1H));
+        ui->Trans4Size2W->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Size2W));
+        ui->Trans4Size2H->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Size2H));
+        ui->Trans4Scale->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Scale);
+        ui->Trans4ScaleChannels->setChecked(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4Channels);
+        ui->Trans4LcdType->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdType);
+        ui->Trans4LcdOp->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdOp);
+        ui->Trans4LcdChromaB->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdChromaB);
+        ui->Trans4LcdChromaV->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdChromaV);
+        ui->Trans4LcdChromaX->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdChromaX);
+        ui->Trans4LcdWeightR->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdWeightR));
+        ui->Trans4LcdWeightG->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdWeightG));
+        ui->Trans4LcdWeightB->setText(Eden::ToQStr(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdWeightB));
+        ui->Trans4LcdInterpolation->setChecked(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans4LcdInterpolation);
 
-        ui->Trans5RotateT->setCurrentIndex(TransformCore_->TransformList[TransformCore_->SelectedItem].Trans5Rotate);
+        ui->Trans5RotateT->setCurrentIndex(TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans5Rotate);
     }
     TransformSetAllow = true;
 }
@@ -1631,42 +1818,42 @@ void WinSettings::on_Trans3Matrix44_textChanged(const QString &arg1)
 
 void WinSettings::on_Trans3Add_clicked()
 {
-    TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3ItemAdd();
+    TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3ItemAdd();
     TransformGet();
     TransListRefreshItem();
 }
 
 void WinSettings::on_Trans3Rem_clicked()
 {
-    TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3ItemRem();
+    TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3ItemRem();
     TransformGet();
     TransListRefreshItem();
 }
 
 void WinSettings::on_Trans3MovePrev_clicked()
 {
-    TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3ItemMovePrev();
+    TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3ItemMovePrev();
     TransformGet();
     TransListRefreshItem();
 }
 
 void WinSettings::on_Trans3MoveNext_clicked()
 {
-    TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3ItemMoveNext();
+    TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3ItemMoveNext();
     TransformGet();
     TransListRefreshItem();
 }
 
 void WinSettings::on_Trans3DispPrev_clicked()
 {
-    TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3ItemPrev();
+    TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3ItemPrev();
     TransformGet();
     TransListRefreshItem();
 }
 
 void WinSettings::on_Trans3DispNext_clicked()
 {
-    TransformCore_->TransformList[TransformCore_->SelectedItem].Trans3ItemNext();
+    TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].Trans3ItemNext();
     TransformGet();
     TransListRefreshItem();
 }
@@ -1747,7 +1934,7 @@ void WinSettings::on_Trans0FileSave_clicked()
     SaveLastPath(FileNameX, false);
     if (!FileNameX.isEmpty())
     {
-        TransformCore_->TransformList[TransformCore_->SelectedItem].SaveLUT(Eden::ToStr(FileNameX), Resolution);
+        TransformCore_->TransformListItem[TransformCore_->TransformListCurrent][TransformCore_->SelectedItem].SaveLUT(Eden::ToStr(FileNameX), Resolution);
     }
     WorkResume(WP);
 }
@@ -2129,3 +2316,130 @@ void WinSettings::on_NetMsgTest_clicked()
     PicNetwork_->MsgSend("4" + PicNetwork_->ToQS(rand()));
 }
 
+
+void WinSettings::on_TransList_currentIndexChanged(int index)
+{
+    if (TransListEvent)
+    {
+        TransformCore_->TransformListCurrent = index;
+        TransListRefresh();
+    }
+}
+
+void WinSettings::on_DelayLineModeT_currentIndexChanged(int index)
+{
+    Settings_->DelayLineMode = index;
+}
+
+void WinSettings::on_GoogleEnableT_toggled(bool checked)
+{
+    Settings_->GoogleCloudEnabled = checked;
+}
+
+void WinSettings::on_GoogleKeyT_textChanged(const QString &arg1)
+{
+    Settings_->GoogleCloudKey = Eden::ToStr(arg1);
+}
+
+void WinSettings::on_GoogleMaskOverlayT_valueChanged(int arg1)
+{
+    Settings_->GoogleCloudMaskOverlay = arg1;
+}
+
+void WinSettings::on_GoogleDecimateT_valueChanged(int arg1)
+{
+    Settings_->GoogleCloudDecimate = arg1;
+}
+
+void WinSettings::on_GoogleLangSrcT_currentIndexChanged(int index)
+{
+    if (EventActive)
+    {
+        Settings_->GoogleCloudLangSrc = LangIndexSet(index);
+    }
+}
+
+void WinSettings::on_GoogleLangDstT_currentIndexChanged(int index)
+{
+    if (EventActive)
+    {
+        Settings_->GoogleCloudLangDst = LangIndexSet(index);
+    }
+}
+
+void WinSettings::on_GoogleFontNameT_textChanged(const QString &arg1)
+{
+    Settings_->GoogleCloudFontName = Eden::ToStr(arg1);
+}
+
+void WinSettings::on_GoogleFontSizeT_valueChanged(int arg1)
+{
+    Settings_->GoogleCloudFontSize = arg1;
+}
+
+void WinSettings::on_GoogleFontAutoT_toggled(bool checked)
+{
+    Settings_->GoogleCloudFontAutoSize = checked;
+}
+
+void WinSettings::on_GoogleLinesT_toggled(bool checked)
+{
+    Settings_->GoogleCloudTranslateLines = checked;
+}
+
+string WinSettings::LangIndexSet(int Idx)
+{
+    return LangCode[Idx];
+}
+
+int WinSettings::LangIndexGet(string Code)
+{
+    for (int I = 0; I < LangCode.size(); I++)
+    {
+        if (LangCode[I] == Code)
+        {
+            return I;
+        }
+    }
+    return 0;
+}
+
+void WinSettings::on_GoogleAlignH_currentIndexChanged(int index)
+{
+    Settings_->GoogleCloudTranslateAlignH = index;
+}
+
+void WinSettings::on_GoogleAlignV_currentIndexChanged(int index)
+{
+    Settings_->GoogleCloudTranslateAlignV = index;
+}
+
+void WinSettings::on_MainRecorder_clicked()
+{
+    emit ShowRecorder();
+}
+
+void WinSettings::on_OnTopRecorderC_toggled(bool checked)
+{
+    Settings_->RecorderWindowOnTop = checked;
+}
+
+void WinSettings::on_GoogleTextRotate_toggled(bool checked)
+{
+    Settings_->GoogleCloudTextRotate = checked;
+}
+
+void WinSettings::on_GoogleImageQualityT_valueChanged(int arg1)
+{
+    Settings_->GoogleCloudImageQuality = arg1;
+}
+
+void WinSettings::on_GoogleCaptureTextSizeT_valueChanged(int arg1)
+{
+    Settings_->RecorderTextSize = arg1;
+}
+
+void WinSettings::on_GoogleSlotCountT_valueChanged(int arg1)
+{
+    Settings_->GoogleCloudSlotCount = arg1;
+}

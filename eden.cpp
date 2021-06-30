@@ -362,6 +362,48 @@ string Eden::ToStr(QString S)
 
 
 ///
+/// \brief Eden::ToQStr - Converts string to QString using local encoding
+/// \param S
+/// \return
+///
+QString Eden::ToQStrLocal(string S)
+{
+    return QString::fromLocal8Bit(S.c_str());
+}
+
+///
+/// \brief Eden::ToStr - Converts QString to string using local encoding
+/// \param S
+/// \return
+///
+string Eden::ToStrLocal(QString S)
+{
+    return S.toLocal8Bit().constData();
+}
+
+///
+/// \brief Eden::StringUtfToLocal - Converts UTF-8 string to string with local encoding
+/// \param S
+/// \return
+///
+string Eden::StringUtfToLocal(string S)
+{
+    return Eden::ToStrLocal(Eden::ToQStr(S));
+}
+
+
+///
+/// \brief Eden::StringLocalToUtf - Converts string with local encoding to UTF-8 string
+/// \param S
+/// \return
+///
+string Eden::StringLocalToUtf(string S)
+{
+    return Eden::ToStr(Eden::ToQStrLocal(S));
+}
+
+
+///
 /// \brief Eden::ToQStr - Converts double number to QString
 /// \param N
 /// \return
@@ -634,7 +676,7 @@ bool Eden::FileExists(string FN)
         return true;
     }
     return false;*/
-    std::ifstream infile(FN);
+    std::ifstream infile(File(FN));
     return infile.good();
 }
 
@@ -645,7 +687,7 @@ bool Eden::FileExists(string FN)
 ///
 llong Eden::FileSize(string FileName)
 {
-    std::ifstream in(FileName.c_str(), std::ifstream::ate | std::ifstream::binary);
+    std::ifstream in(File(FileName), std::ifstream::ate | std::ifstream::binary);
     if (in.is_open())
     {
         llong Size = in.tellg();
@@ -748,7 +790,7 @@ vector<string> Eden::TextListFileLoad(string FileName)
 {
     vector<string> L;
     L.clear();
-    fstream FS(FileName.c_str(), ios::in);
+    fstream FS(File(FileName), ios::in);
     if (FS.is_open())
     {
         string Buf;
@@ -778,7 +820,7 @@ void Eden::TextListFileSave(QString FileName, vector<string> &L)
 ///
 void Eden::TextListFileSave(string FileName, vector<string> &L)
 {
-    fstream FS(FileName.c_str(), ios::out);
+    fstream FS(File(FileName), ios::out);
     if (FS.is_open())
     {
         for (vector<string>::iterator I = L.begin(); I != L.end(); I++)
@@ -1082,4 +1124,78 @@ string Eden::ToLower(string X)
         }
     }
     return XX;
+}
+
+///
+/// \brief Eden::Timestamp - Returns current date and time as string
+/// \param VisualFormat
+/// \return
+///
+string Eden::Timestamp(bool Format)
+{
+    time_t rawtime;
+    tm* timeinfo = localtime(&rawtime);
+    char buffer[20];
+    time(&rawtime);
+    timeinfo = std::localtime(&rawtime);
+    if (Format)
+    {
+        strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
+    }
+    else
+    {
+        strftime(buffer, 20, "%Y%m%d%H%M%S", timeinfo);
+    }
+    return string(buffer);
+}
+
+///
+/// \brief Eden::Timestamp - Returns current date and time including milliseconds as string
+/// \param VisualFormat
+/// \return
+///
+string Eden::TimestampMs(bool Format)
+{
+    std::chrono::milliseconds Tms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
+    std::chrono::seconds Ts = std::chrono::duration_cast<std::chrono::seconds>(Tms);
+    time_t rawtime = Ts.count();
+    tm* timeinfo = localtime(&rawtime);
+    char buffer[20];
+    size_t fractional_seconds = Tms.count() % 1000;
+    if (Format)
+    {
+        strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
+        if (fractional_seconds < 10)
+        {
+            return string(buffer) + ".00" + to_string(fractional_seconds);
+        }
+        if (fractional_seconds < 100)
+        {
+            return string(buffer) + ".0" + to_string(fractional_seconds);
+        }
+        return string(buffer) + "." + to_string(fractional_seconds);
+    }
+    else
+    {
+        strftime(buffer, 20, "%Y%m%d%H%M%S", timeinfo);
+        if (fractional_seconds < 10)
+        {
+            return string(buffer) + "00" + to_string(fractional_seconds);
+        }
+        if (fractional_seconds < 100)
+        {
+            return string(buffer) + "0" + to_string(fractional_seconds);
+        }
+        return string(buffer) + to_string(fractional_seconds);
+    }
+}
+
+string Eden::File(QString FileName)
+{
+    return Eden::ToStrLocal(FileName);
+}
+
+string Eden::File(string FileName)
+{
+    return Eden::StringUtfToLocal(FileName);
 }

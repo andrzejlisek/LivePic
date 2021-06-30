@@ -12,7 +12,14 @@ MainWindow::MainWindow(QWidget *parent) :
     TransformCore_->Settings_ = Settings_;
     WinSettings_.TransformCore_ = TransformCore_;
     WinSettings_.PicNetwork_ = PicNetwork_;
+    WinRecorder_.Recorder_ = new Recorder();
+    WinRecorder_.Recorder_->Settings_ = Settings_;
+    WinRecorder_.Recorder_->TextCapture_ = new TextCapture();
+    WinRecorder_.Init();
+
     connect(PicNetwork_, SIGNAL(NetLog(QString)), &WinSettings_, SLOT(PicNetLog(QString)));
+    connect(&WinRecorder_, SIGNAL(LivePicRestart()), &WinSettings_, SLOT(on_MainRestart_clicked()));
+    connect(&WinSettings_, SIGNAL(ShowRecorder()), this, SLOT(ShowRecorder()));
     MouseBtn = false;
     Qt::WindowFlags flags = windowFlags();
     {
@@ -39,10 +46,14 @@ MainWindow::MainWindow(QWidget *parent) :
     PicThread_->TransformCore_ = TransformCore_;
     PicThread_->PictureScreen = ui->PictureScreen;
     PicThread_->Settings_ = Settings_;
+    PicThread_->Recorder_ = WinRecorder_.Recorder_;
+    PicThread_->TextCapture_ = WinRecorder_.Recorder_->TextCapture_;
     WinSettings_.Settings_ = Settings_;
     WinSettings_.PicThread_ = PicThread_;
     QObject::connect(PicThread_, SIGNAL(UpdatePixmap(QImage*)), this, SLOT(UpdatePixmap(QImage*)));
     QObject::connect(PicThread_, SIGNAL(PicSetRefresh()), &WinSettings_, SLOT(PicSetRefresh()));
+    QObject::connect(PicThread_, SIGNAL(RecorderInit()), &WinRecorder_, SLOT(RecorderInit()));
+    QObject::connect(PicThread_, SIGNAL(TextCaptureFinish()), &WinRecorder_, SLOT(TextCaptureFinish()));
 
     ui->PictureScreen->Settings_ = Settings_;
     TransformCore_->ListLoad(Eden::ApplicationDirectory() + "Transform.txt");
@@ -51,6 +62,44 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->PictureScreen->setMouseTracking(true);
 
     RunSettings();
+
+
+
+    for (int I = 0; I < Settings_->GoogleCloudSlotCount; I++)
+    {
+        QNetworkRequest R;
+        DelayLineAsyncSlot DelayLineAsyncSlot_;
+        DelayLineAsyncSlot_.State = 0;
+        DelayLineAsyncSlot_.Id = 0;
+        DelayLineAsyncSlot_.Pos = 0;
+        DelayLineAsyncSlot_.Manager = new QNetworkAccessManager();
+        DelayLineAsyncSlot_.Request = R;
+        DelayLineAsyncSlotList.push_back(DelayLineAsyncSlot_);
+
+        QObject::connect(DelayLineAsyncSlotList[I].Manager, &QNetworkAccessManager::finished,
+            this, [=](QNetworkReply *reply)
+            {
+                PicThread::DelayLineAsyncThreadData DelayLineAsyncThreadData_;
+                DelayLineAsyncThreadData_.Type = DelayLineAsyncSlotList[I].Type;
+                DelayLineAsyncThreadData_.Id = DelayLineAsyncSlotList[I].Id;
+                DelayLineAsyncThreadData_.Pos = DelayLineAsyncSlotList[I].Pos;
+                if (reply->error())
+                {
+                    DelayLineAsyncThreadData_.Url = reply->errorString();
+                    DelayLineAsyncThreadData_.Data = reply->readAll();
+                    PicThread_->DelayLineAsyncThreadResult.push(DelayLineAsyncThreadData_);
+                }
+                else
+                {
+                    DelayLineAsyncThreadData_.Url = "";
+                    DelayLineAsyncThreadData_.Data = reply->readAll();
+
+                    PicThread_->DelayLineAsyncThreadResult.push(DelayLineAsyncThreadData_);
+                }
+                DelayLineAsyncSlotList[I].State = 0;
+            }
+        );
+    }
 }
 
 MainWindow::~MainWindow()
@@ -75,6 +124,34 @@ void MainWindow::SetBackColor()
 
 void MainWindow::UpdatePixmap(QImage *Img)
 {
+    while (!PicThread_->DelayLineAsyncThreadRequest.empty())
+    {
+        PicThread::DelayLineAsyncThreadData DelayLineAsyncThreadData_ = PicThread_->DelayLineAsyncThreadRequest.front();
+        for (int I = 0; I < DelayLineAsyncSlotList.size(); I++)
+        {
+            if (DelayLineAsyncSlotList[I].State == 0)
+            {
+                DelayLineAsyncSlotList[I].Id = DelayLineAsyncThreadData_.Id;
+                DelayLineAsyncSlotList[I].Pos = DelayLineAsyncThreadData_.Pos;
+                DelayLineAsyncSlotList[I].Type = DelayLineAsyncThreadData_.Type;
+                DelayLineAsyncSlotList[I].State = 1;
+                DelayLineAsyncSlotList[I].Request.setRawHeader("Content-Type", "application/json");
+                DelayLineAsyncSlotList[I].Request.setUrl(QUrl(DelayLineAsyncThreadData_.Url));
+
+                if (DelayLineAsyncThreadData_.Data.size() > 0)
+                {
+                    DelayLineAsyncSlotList[I].Manager->post(DelayLineAsyncSlotList[I].Request, DelayLineAsyncThreadData_.Data);
+                }
+                else
+                {
+                    DelayLineAsyncSlotList[I].Manager->get(DelayLineAsyncSlotList[I].Request);
+                }
+                break;
+            }
+        }
+        PicThread_->DelayLineAsyncThreadRequest.pop();
+    }
+
     if (Settings_->_PicDstNet)
     {
         PicNetwork_->PicSend(Img);
@@ -369,4 +446,18 @@ void MainWindow::MouseCursorMode(bool Btn, int X, int Y, int W, int H)
             }
         }
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    WinRecorder_.close();
+}
+
+void MainWindow::ShowRecorder()
+{
+    WinRecorder_.show();
+    WinRecorder_.activateWindow();
+    WinRecorder_.raise();
+    WinRecorder_.setFocus();
+    WinRecorder_.AfterShow();
 }
